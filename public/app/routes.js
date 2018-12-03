@@ -12,7 +12,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/about.html'
             })
 
-            .when('/register', {
+            .when('/adiregister', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
                 controllerAs: 'register',

@@ -10,39 +10,44 @@ angular.module('olivaControllers', ['userServices'])
             app.errorMsg = false;
             app.disabled = false;
 
-
             if (valid) {
+                Pacient.getPacient($routeParams.id)
+                    .then(function (data) {
+                        $scope.Pacient_Adresa = data.data.pacient.adresa;
+                        var pacient = data.data.pacient.nume;
+                        var pacient_id = data.data.pacient._id;
+                        var telefon_pacient = data.data.pacient.telefon;
+                        Oliva.create(
+                            app.regData,
+                            app.regData.oliva_inregistrat_pacient = pacient,
+                            app.regData.oliva_pacient_id = pacient_id,
+                            app.regData.telefon = telefon_pacient)
+                            .then(function (data) {
 
-                Pacient.getPacient($routeParams.id).then(function (data) {
-                    var pacient = data.data.pacient.nume;
-                    var pacient_id = data.data.pacient._id;
-                    var telefon_pacient = data.data.pacient.telefon;
-                    Oliva.create(app.regData, app.regData.oliva_inregistrat_pacient = pacient, app.regData.oliva_pacient_id = pacient_id, app.regData.telefon = telefon_pacient).then(function (data) {
+                                if (data.data.success) {
+                                    $scope.comanda_oliva = data.data.comanda_oliva + 1;
+                                    app.disabled = true;
+                                    app.successMsg = data.data.message
 
-                        if (data.data.success) {
-                            $scope.comanda_oliva = data.data.comanda_oliva + 1;
-                            app.disabled = true;
-                            app.successMsg = data.data.message
+                                    $timeout(function () {
+                                        window.print();
+                                    }, 300)
 
-                            $timeout(function () {
-                                window.print();
-                            }, 300)
-
-                            $timeout(function () {
-                                $route.reload();
-                            }, 1500)
+                                    $timeout(function () {
+                                        $route.reload();
+                                    }, 1500)
 
 
-                        } else {
-                            app.loading = false;
-                            app.errorMsg = data.data.message;
-                            $timeout(function () {
-                                app.errorMsg = false;
-                            }, 3000)
-                        }
-                    });
+                                } else {
+                                    app.loading = false;
+                                    app.errorMsg = data.data.message;
+                                    $timeout(function () {
+                                        app.errorMsg = false;
+                                    }, 3000)
+                                }
+                            });
 
-                })
+                    })
             } else {
                 app.loading = false;
                 app.errorMsg = 'Completeaza corect Formularul';

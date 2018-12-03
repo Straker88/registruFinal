@@ -213,7 +213,7 @@
 <div class="page-header" style="border-bottom:none;">
     <img class="visible-print-block" style="float:right;margin-top:15px;" src="/assets/img/clarfon_transparent.png">
 
-    <div class="no-print" ng-controller="profilPacientCtrl">
+    <div class="no-print" ng-controller="editProfilPacientCtrl">
 
         <div>
             <h1 style="color:#337ab7;">Profil Pacient:
@@ -588,20 +588,20 @@
     <div style="width:50%;">
 
         <label for="Nume">Nume Pacient: </label>
-        <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="newPacient_Nume"
+        <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="Pacient_Nume"
             autocomplete="off" readonly>
     </div>
     <div style="max-width: 3%;">
         <label for="Sex">Sex: </label>
-        <input type="text" class="form-control" maxlength="1" name="sex" placeholder="-" ng-model="newPacient_Sex"
+        <input type="text" class="form-control" maxlength="1" name="sex" placeholder="-" ng-model="Pacient_Sex"
             autocomplete="off" readonly>
     </div>
 
-    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Varsta(newPacient_Varsta,
+    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Varsta(Pacient_Varsta,
     editPacient.varstaForm.varsta.$valid)"
         name="editPacient.varstaForm" novalidate>
         <label>Varsta:</label>
-        <input maxlength="3" class="form-control" type="text" name="varsta" ng-model="newPacient_Varsta" placeholder="-"
+        <input maxlength="3" class="form-control" type="text" name="varsta" ng-model="Pacient_Varsta" placeholder="-"
             required autocomplete="off">
 
         <div id="regPacAlert" class="row show-hide-message" ng-show="editPacient.successMsgVarsta">
@@ -618,12 +618,12 @@
     </form>
 
 
-    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Telefon(newPacient_Telefon,
+    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Telefon(Pacient_Telefon,
         editPacient.telefonForm.telefon.$valid)"
         name="editPacient.telefonForm" novalidate>
         <label>Telefon:</label>
-        <input maxlength="170" class="form-control" type="text" name="telefon" ng-model="newPacient_Telefon"
-            placeholder="-" required autocomplete="off">
+        <input maxlength="170" class="form-control" type="text" name="telefon" ng-model="Pacient_Telefon" placeholder="-"
+            required autocomplete="off">
 
         <div class="row show-hide-message" ng-show="editPacient.successMsgTelefon">
             <div class="alert alert-success">{{ editPacient.successMsgTelefon }}</div>
@@ -638,11 +638,11 @@
 
     </form>
 
-    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Adresa(newPacient_Adresa,
+    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Adresa(Pacient_Adresa,
     editPacient.adresaForm.adresa.$valid)"
         name="editPacient.adresaForm" novalidate>
         <label>Adresa:</label>
-        <input maxlength="170" class="form-control" type="text" name="adresa" ng-model="newPacient_Adresa" placeholder="-"
+        <input maxlength="170" class="form-control" type="text" name="adresa" ng-model="Pacient_Adresa" placeholder="-"
             required autocomplete="off">
 
         <div class="row show-hide-message" ng-show="editPacient.successMsgAdresa">
@@ -653,10 +653,9 @@
             <div class="alert alert-danger">{{ editPacient.errorMsgAdresa }}</div>
         </div>
         <button style="margin:10px 0 10px 0;" class="btn btn-info btn-sm no-print" type="submit">Salveaza adresa noua</button>
-
+        {{Pacient_Adresa}}
     </form>
 </div>
-
 <!--------------------------------------- Service-uri --------------------------------------------------->
 
 
@@ -796,14 +795,14 @@
                     <div class="col-sm-12">
 
 
-                        <div ng-controller="profilPacientCtrl" style="width:50%;float: left;clear:left;margin-right: 0;"
+                        <div ng-controller="editProfilPacientCtrl" style="width:50%;float: left;clear:left;margin-right: 0;"
                             class="visible-print-block">
                             <label for="Nume">Nume Pacient: </label>
                             <input style="border: none;" readonly type="text" class="form-control" maxlength="26" name="nume"
                                 placeholder="-" ng-model="Pacient_Nume" autocomplete="off">
                         </div>
 
-                        <div ng-controller="profilPacientCtrl" style="width:37%;float:left;margin-right: 0;" class="regPacForm visible-print-block">
+                        <div ng-controller="editProfilPacientCtrl" style="width:37%;float:left;margin-right: 0;" class="regPacForm visible-print-block">
                             <label for="Telefon">Telefon: </label>
                             <input style="border: none;" readonly type="text" class="form-control" maxlength="26" name="telefon"
                                 placeholder="-" ng-model="Pacient_Telefon" autocomplete="off">
@@ -921,7 +920,7 @@
 <div class="d-hide" id="add_oliva">
     <h2 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Comanda Oliva
         <span>
-            - <input ng-controller="profilPacientCtrl" readonly style="border: none;background: #e0f1ff9e;
+            - <input ng-controller="editProfilPacientCtrl" readonly style="border: none;background: #e0f1ff9e;
         width: 300px;"
                 ng-model="Pacient_Cabinet" readonly></span>
     </h2>
@@ -950,7 +949,7 @@
                 <div class="row visible-print-block">
                     <div class="col-sm-12">
 
-                        <div ng-controller="profilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
+                        <div ng-controller="editProfilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
                         float: left;
                         clear: left;"
                             class="">
@@ -959,17 +958,20 @@
                                 autocomplete="off">
                         </div>
 
-                        <div ng-controller="profilPacientCtrl" style="width:35%;float: left;margin-right:11px;" class="">
+                        <div ng-controller="editProfilPacientCtrl" style="width:35%;float: left;margin-right:11px;"
+                            class="">
                             <label for="Telefon">Telefon: </label>
                             <input readonly type="text" class="form-control" name="telefon" placeholder="-" ng-model="Pacient_Telefon"
                                 autocomplete="off">
                         </div>
-                        <div ng-controller="profilPacientCtrl" style="width:6%;float: left;margin-right: 12px;" class="">
+                        <div ng-controller="editProfilPacientCtrl" style="width:6%;float: left;margin-right: 12px;"
+                            class="">
                             <label for="Varsta">Varsta: </label>
                             <input readonly type="text" class="form-control" maxlength="3" name="varsta" placeholder="-"
                                 ng-model="Pacient_Varsta" autocomplete="off">
                         </div>
-                        <div ng-controller="profilPacientCtrl" style="width:5%;float: left;margin-right: 12px;" class="">
+                        <div ng-controller="editProfilPacientCtrl" style="width:5%;float: left;margin-right: 12px;"
+                            class="">
                             <label for="Sex">Sex: </label>
                             <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
                                 autocomplete="off">
@@ -980,8 +982,7 @@
                                 placeholder="-" ng-model="comanda_oliva" autocomplete="off">
                         </div>
 
-                        <div ng-controller="profilPacientCtrl" style="width:100%; margin-bottom: 10px;float: left;"
-                            class="">
+                        <div ng-controller="regOlivaCtrl" style="width:100%; margin-bottom: 10px;float: left;" class="">
                             <label for="Adresa">Adresa: </label>
                             <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
                                 autocomplete="off">
@@ -1261,7 +1262,7 @@
 <div class="d-hide" id="add_ite">
     <h2 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Comanda ITE
         <span>
-            - <input ng-controller="profilPacientCtrl" readonly style="border: none;background: #e0f1ff9e;
+            - <input ng-controller="editProfilPacientCtrl" readonly style="border: none;background: #e0f1ff9e;
             width: 300px;"
                 ng-model="Pacient_Cabinet" readonly></span>
     </h2>
@@ -1293,7 +1294,7 @@
                 <div class="row visible-print-block">
                     <div class="col-sm-12">
 
-                        <div ng-controller="profilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
+                        <div ng-controller="editProfilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
                             float: left;
                             clear: left;"
                             class="">
@@ -1302,17 +1303,19 @@
                                 autocomplete="off">
                         </div>
 
-                        <div ng-controller="profilPacientCtrl" style="width:35%;float: left;margin-right:11px;" class="">
+                        <div ng-controller="editProfilPacientCtrl" style="width:35%;float: left;margin-right:11px;"
+                            class="">
                             <label for="Telefon">Telefon: </label>
                             <input readonly type="text" class="form-control" name="telefon" placeholder="-" ng-model="Pacient_Telefon"
                                 autocomplete="off">
                         </div>
-                        <div ng-controller="profilPacientCtrl" style="width:6%;float: left;margin-right: 12px;" class="">
+                        <div ng-controller="editProfilPacientCtrl" style="width:6%;float: left;margin-right: 12px;"
+                            class="">
                             <label for="Varsta">Varsta: </label>
                             <input readonly type="text" class="form-control" maxlength="3" name="varsta" placeholder="-"
                                 ng-model="Pacient_Varsta" autocomplete="off">
                         </div>
-                        <div ng-controller="profilPacientCtrl" style="width:5%;float: left;margin-right: 12px;text-align: center; "
+                        <div ng-controller="editProfilPacientCtrl" style="width:5%;float: left;margin-right: 12px;text-align: center; "
                             class="">
                             <label for="Sex">Sex: </label>
                             <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
@@ -1324,7 +1327,7 @@
                                 placeholder="-" ng-model="comanda_ite" autocomplete="off">
                         </div>
 
-                        <div ng-controller="profilPacientCtrl" style="width:100%; margin-bottom: 10px;float: left;"
+                        <div ng-controller="editProfilPacientCtrl" style="width:100%; margin-bottom: 10px;float: left;"
                             class="">
                             <label for="Adresa">Adresa: </label>
                             <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"

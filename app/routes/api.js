@@ -741,11 +741,10 @@ module.exports = function (router) {
         Pacient.findOne({ _id: editPacient }, function (err, pacient) {
             if (err) throw err;
             if (!pacient) {
-                res.json({ success: false, message: 'No user found' });
+                res.json({ success: false, message: 'No pacient found' });
 
             } else {
                 res.json({ success: true, pacient: pacient });
-
             }
         });
     });

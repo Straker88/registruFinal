@@ -345,11 +345,13 @@ angular.module('managementController', [])
 
         Pacient.getPacient($routeParams.id).then(function (data) {
             if (data.data.success) {
-                $scope.newPacient_Nume = data.data.pacient.nume;
-                $scope.newPacient_Telefon = data.data.pacient.telefon;
-                $scope.newPacient_Adresa = data.data.pacient.adresa;
-                $scope.newPacient_Varsta = data.data.pacient.varsta;
-                $scope.newPacient_Sex = data.data.pacient.sex;
+                $scope.Pacient_Cabinet = data.data.pacient.cabinet;
+                $scope.Pacient_Nume = data.data.pacient.nume;
+                $scope.Pacient_Data_Inregistrare = data.data.pacient.data_inregistrare;
+                $scope.Pacient_Telefon = data.data.pacient.telefon;
+                $scope.Pacient_Adresa = data.data.pacient.adresa;
+                $scope.Pacient_Varsta = data.data.pacient.varsta;
+                $scope.Pacient_Sex = data.data.pacient.sex;
                 app.currentPacient = data.data.pacient._id;
 
 
@@ -359,17 +361,16 @@ angular.module('managementController', [])
 
         });
 
-        app.updatePacient_Telefon = function (newPacient_Telefon, valid) {
+        app.updatePacient_Telefon = function (Pacient_Telefon, valid) {
             app.errorMsgTelefon = false;
             app.disabled = false;
 
             if (valid) {
                 var pacientObject = {};
                 pacientObject._id = app.currentPacient;
-                pacientObject.telefon = $scope.newPacient_Telefon;
+                pacientObject.telefon = $scope.Pacient_Telefon;
 
                 Pacient.editPacient(pacientObject).then(function (data) {
-
                     if (data.data.success) {
                         app.successMsgTelefon = data.data.message;
 
@@ -392,14 +393,14 @@ angular.module('managementController', [])
             }
         };
 
-        app.updatePacient_Varsta = function (newPacient_Varsta, valid) {
+        app.updatePacient_Varsta = function (Pacient_Varsta, valid) {
             app.errorMsgVarsta = false;
             app.disabled = false;
 
             if (valid) {
                 var pacientObject = {};
                 pacientObject._id = app.currentPacient;
-                pacientObject.varsta = $scope.newPacient_Varsta;
+                pacientObject.varsta = $scope.Pacient_Varsta;
 
                 Pacient.editPacient(pacientObject).then(function (data) {
 
@@ -425,26 +426,25 @@ angular.module('managementController', [])
             }
         };
 
-        app.updatePacient_Adresa = function (newPacient_Adresa, valid) {
+        app.updatePacient_Adresa = function (Pacient_Adresa, valid) {
             app.errorMsgAdresa = false;
             app.disabled = false;
 
             if (valid) {
                 var pacientObject = {};
                 pacientObject._id = app.currentPacient;
-                pacientObject.adresa = $scope.newPacient_Adresa;
+                pacientObject.adresa = $scope.Pacient_Adresa;
 
                 Pacient.editPacient(pacientObject).then(function (data) {
 
                     if (data.data.success) {
                         app.successMsgAdresa = data.data.message;
-
                         $timeout(function () {
                             app.adresaForm.adresa.$setPristine();
                             app.adresaForm.adresa.$setUntouched();
                             app.successMsgAdresa = false;
                             app.disabled = false;
-                            $route.reload();
+                            // $route.reload();
 
                         }, 2000);
 
@@ -535,61 +535,61 @@ angular.module('managementController', [])
 
     })
 
-    .controller('profilPacientCtrl', function ($scope, $routeParams, Pacient) {
+    // .controller('profilPacientCtrl', function ($scope, $routeParams, Pacient) {
 
-        var app = this;
-        app.accessDenied = true;
-        app.errorMsg = false;
-        app.editProfilPacientAccess = false;
-        app.deleteProfilPacientAccess = false;
+    //     var app = this;
+    //     app.accessDenied = true;
+    //     app.errorMsg = false;
+    //     app.editProfilPacientAccess = false;
+    //     app.deleteProfilPacientAccess = false;
 
-        $scope.serviceTab = 'active';
-        app.phase1 = true;
+    //     $scope.serviceTab = 'active';
+    //     app.phase1 = true;
 
-        app.servicePhase = function () {
-            $scope.serviceTab = 'active';
-            $scope.olivaTab = 'default';
-            $scope.iteTab = 'default';
-            app.phase1 = true;
-            app.phase2 = false;
-            app.phase3 = false;
-            app.errorMsg = false;
-        };
-        app.olivaPhase = function () {
-            $scope.serviceTab = 'default';
-            $scope.olivaTab = 'active';
-            $scope.iteTab = 'default';
-            app.phase1 = false;
-            app.phase2 = true;
-            app.phase3 = false;
-            app.errorMsg = false;
-        };
-        app.itePhase = function () {
-            $scope.serviceTab = 'default';
-            $scope.olivaTab = 'default';
-            $scope.iteTab = 'active';
-            app.phase1 = false;
-            app.phase2 = false;
-            app.phase3 = true;
-            app.errorMsg = false;
-        };
+    //     app.servicePhase = function () {
+    //         $scope.serviceTab = 'active';
+    //         $scope.olivaTab = 'default';
+    //         $scope.iteTab = 'default';
+    //         app.phase1 = true;
+    //         app.phase2 = false;
+    //         app.phase3 = false;
+    //         app.errorMsg = false;
+    //     };
+    //     app.olivaPhase = function () {
+    //         $scope.serviceTab = 'default';
+    //         $scope.olivaTab = 'active';
+    //         $scope.iteTab = 'default';
+    //         app.phase1 = false;
+    //         app.phase2 = true;
+    //         app.phase3 = false;
+    //         app.errorMsg = false;
+    //     };
+    //     app.itePhase = function () {
+    //         $scope.serviceTab = 'default';
+    //         $scope.olivaTab = 'default';
+    //         $scope.iteTab = 'active';
+    //         app.phase1 = false;
+    //         app.phase2 = false;
+    //         app.phase3 = true;
+    //         app.errorMsg = false;
+    //     };
 
-        //              2.Logistic ----------------------------------------------
+    //     //              2.Logistic ----------------------------------------------
 
-        Pacient.getPacient($routeParams.id).then(function (data) {
-            if (data.data.success) {
-                $scope.Pacient_Cabinet = data.data.pacient.cabinet;
-                $scope.Pacient_Nume = data.data.pacient.nume;
-                $scope.Pacient_Data_Inregistrare = data.data.pacient.data_inregistrare;
-                $scope.Pacient_Telefon = data.data.pacient.telefon;
-                $scope.Pacient_Adresa = data.data.pacient.adresa;
-                $scope.Pacient_Varsta = data.data.pacient.varsta;
-                $scope.Pacient_Sex = data.data.pacient.sex;
+    //     Pacient.getPacient($routeParams.id).then(function (data) {
+    //         if (data.data.success) {
+    //             $scope.Pacient_Cabinet = data.data.pacient.cabinet;
+    //             $scope.Pacient_Nume = data.data.pacient.nume;
+    //             $scope.Pacient_Data_Inregistrare = data.data.pacient.data_inregistrare;
+    //             $scope.Pacient_Telefon = data.data.pacient.telefon;
+    //             $scope.Pacient_Adresa = data.data.pacient.adresa;
+    //             $scope.Pacient_Varsta = data.data.pacient.varsta;
+    //             $scope.Pacient_Sex = data.data.pacient.sex;
 
-            }
+    //         }
 
-        });
-    })
+    //     });
+    // })
 
 
     //              Pacient Edit Controller ----------------------------------------------

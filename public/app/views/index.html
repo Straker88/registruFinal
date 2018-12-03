@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <script src="assets/js/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+  <script src="assets/js/momentjs-business.js"></script>
+
+
+  <script src="assets/js/angular.js"></script>
+  <script src="assets/js/angular-route.js"></script>
+  <script src="assets/js/directive.pagination.js"></script>
+
+
+  <script src="app/app.js"></script>
+  <script src="app/routes.js"></script>
+
+  <script src="app/controllers/pacientCtrl.js"></script>
+  <script src="app/controllers/serviceCtrl.js"></script>
+  <script src="app/controllers/olivaCtrl.js"></script>
+  <script src="app/controllers/iteCtrl.js"></script>
+  <script src="app/controllers/userCtrl.js"></script>
+  <script src="app/controllers/mainCtrl.js"></script>
+  <script src="app/controllers/managementCtrl.js"></script>
+
+  <script src="app/services/userServices.js"></script>
+  <script src="app/services/authServices.js"></script>
+
+  <title>Registru Service</title>
+
+</head>
+
+<body ng-app="registruApp" ng-controller="mainCtrl as main" ng-cloak>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li id="login">
+            <a ng-show="!main.isLoggedIn" href="/login">Login</a>
+          </li>
+          <div ng-show="main.logistic" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Registre Generale
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/registruLogistic_service">Registru Service</a>
+              </li>
+
+              <li>
+                <a href="/registruLogistic_olive">Registru Olive</a>
+              </li>
+              <li>
+                <a href="/registruLogistic_ite">Registru ITE</a>
+              </li>
+            </ul>
+          </div>
+
+          <li>
+            <a ng-show="main.service || main.authorized" href="/registruService">Registru Service</a>
+          </li>
+
+          <li>
+            <a ng-show="main.plastie || main.authorized" href="/registruOlive">Registru Olive</a>
+          </li>
+
+          <li>
+            <a ng-show="main.asamblare || main.authorized" href="/registruIte">Registru ITE</a>
+          </li>
+
+
+          <li>
+            <a ng-show="main.service || main.authorized" href="/profil_service/{{main.username}}">Inregistrarile Mele</a>
+          </li>
+          <li>
+            <a ng-show="main.service || main.authorized" href="/piese">Piese</a>
+          </li>
+          <div ng-show="main.isLoggedIn && !main.logistic && !main.service && !main.plastie && !main.asamblare" class="dropdown"
+            style="float: left;margin: 8px 15px 0 0;">
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Registre Generale
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li>
+
+                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruServiceCabinet/{{main.username}}">Service</a>
+              </li>
+              <li>
+                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruOliveCabinet/{{main.username}}">Olive</a>
+              </li>
+              <li>
+                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruIteCabinet/{{main.username}}">ITE</a>
+              </li>
+            </ul>
+          </div>
+          <div ng-show="main.isLoggedIn" class="dropdown" style="float: left;margin-top: 8px;">
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Pacienti
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/profil/{{main.username}}">Pacienti</a>
+              </li>
+              <li id="registerPac">
+                <a href="/registerPac">Inregistrare Pacient</a>
+              </li>
+            </ul>
+          </div>
+
+
+          <li id="register">
+            <a ng-show="main.authorized" href="/register">Inregistrare</a>
+          </li>
+          <li>
+            <a ng-show="main.authorized" href="/management">Utilizatori</a>
+          </li>
+          <li>
+            <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Logout</a>
+          </li>
+          <li>
+            <span ng-show="main.isLoggedIn" style="text-align: right; padding: 15px 0 15px 0; display: block; cursor: not-allowed;">Utilizator
+              : {{main.username}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container theme-showcase" role="main">
+
+    <div class="jumbotron no-print" style="height: 140px;">
+      <img style="float:right;" src="/assets/img/clarfon_transparent.png">
+
+      <h1 style="text-align: center;color: #5cb85c">Registru Service Clarfon</h1>
+      <br>
+
+      <h2 ng-show="main.isLoggedIn" style="color: #1789ab;text-align: right;">Utilizator : {{main.username}}</h2>
+    </div>
+
+    <div ng-view></div>
+
+  </div>
+  <!--bootstrap 3.3.7-->
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/daterangepicker.min.css">
+</body>
+
+</html>

@@ -89,6 +89,11 @@
         <div class="accesorii">
 
             <form style="margin-top:-18px;" class="optiuni_oliva" novalidate>
+                <label>Nr. Comanda Oliva:</label>
+                <input readonly class="form-control" name="nr_comanda_oliva" ng-model="nr_comanda_oliva" required>
+            </form>
+
+            <form style="margin-top:-18px;" class="optiuni_oliva" novalidate>
                 <label>Ureche Protezata:</label>
                 <input readonly class="form-control" name="ureche_protezata" ng-model="Ureche_Protezata" required>
             </form>
@@ -331,6 +336,19 @@
         </div>
     </form>
 
+    <form style="margin-top:30px;" id="submit2" ng-submit="editOliva.updateObservatii_oliva_Logistic(Observatii_oliva_Logistic, editOliva.observatii_oliva_logisticForm.observatii_oliva_logistic.$valid)"
+        class="col-md-12" name="editOliva.observatii_oliva_logisticForm" novalidate>
+        <label>Observatii Logistic:</label>
+        <textarea ng-disabled="!main.logistic" id="submit-holder2" style="resize: none;" class="form-control" type="text"
+            name="observatii_oliva_logistic" ng-model="Observatii_oliva_Logistic" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editOliva.errorMsgObservatii_oliva_Logistic">
+            <div class="alert alert-danger">{{ editOliva.errorMsgObservatii_oliva_Logistic }}</div>
+        </div>
+
+    </form>
+
+
 </div>
 
 <br class="hidden-print">
@@ -402,6 +420,20 @@
             <div class="alert alert-danger">{{ editOliva.errorMsgPlastie_Plecat }}</div>
         </div>
     </form>
+
+    <form style="margin-top:30px;" id="submit3" ng-submit="editOliva.updateObservatii_Plastie(newObservatii_Plastie, editOliva.observatii_plastieForm.observatii_plastie.$valid)"
+        class="col-md-12" name="editOliva.observatii_plastieForm" novalidate>
+        <label>Observatii Plastie:</label>
+        <textarea ng-disabled="!main.plastie" id="submit-holder3" style="resize: none;" class="form-control" type="text"
+            name="observatii_plastie" ng-model="newObservatii_Plastie" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editOliva.errorMsgObservatii_Plastie">
+            <div class="alert alert-danger">{{ editOliva.errorMsgObservatii_Plastie }}</div>
+        </div>
+
+    </form>
+
+
 </div>
 
 

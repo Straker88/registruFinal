@@ -56,6 +56,7 @@ var ServiceSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
+    observatii_service_logistic: { type: String },
 
 
 }).plugin(AutoIncrement, { inc_field: 'nr_comanda_service' });

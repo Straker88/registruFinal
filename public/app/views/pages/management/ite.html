@@ -90,6 +90,10 @@
         <div class="accesorii">
 
             <form style="margin-top:-18px;" class="optiuni_oliva" novalidate>
+                <label>Nr. Comanda ITE:</label>
+                <input readonly class="form-control" name="nr_comanda_ite" ng-model="nr_comanda_ite" required>
+            </form>
+            <form style="margin-top:-18px;" class="optiuni_oliva" novalidate>
                 <label>Ureche Protezata:</label>
                 <input readonly class="form-control" name="ureche_protezata" ng-model="Ureche_Protezata" required>
             </form>
@@ -173,8 +177,7 @@
         <label>Completare Cabinet: <em>Aici se pot adauga detalii sau informatii noi, dupa ce fisa a fost inregistrata.
             </em></label>
         <textarea ng-disabled="main.username !== Cabinet" id="submit-holder1" style="resize: none;" class="form-control"
-            type="text" name="completare_cabinet" ng-model="newCompletare_Cabinet" placeholder="-" required
-            autocomplete="off"></textarea>
+            type="text" name="completare_cabinet" ng-model="newCompletare_Cabinet" required autocomplete="off"></textarea>
 
         <div class="row show-hide-message" ng-show="editIte.errorMsgCompletare_Cabinet">
             <div class="alert alert-danger">{{ editIte.errorMsgCompletare_Cabinet }}</div>
@@ -331,6 +334,17 @@
             <div class="alert alert-danger">{{ editIte.errorMsgLog_Trimis }}</div>
         </div>
     </form>
+    <form style="margin-top:30px;" id="submit2" ng-submit="editIte.updateObservatii_ite_Logistic(Observatii_ite_Logistic, editIte.observatii_ite_logisticForm.observatii_ite_logistic.$valid)"
+        class="col-md-12" name="editIte.observatii_ite_logisticForm" novalidate>
+        <label>Observatii Logistic:</label>
+        <textarea ng-disabled="!main.logistic" id="submit-holder2" style="resize: none;" class="form-control" type="text"
+            name="observatii_ite_logistic" ng-model="Observatii_ite_Logistic" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgObservatii_ite_Logistic">
+            <div class="alert alert-danger">{{ editIte.errorMsgObservatii_ite_Logistic }}</div>
+        </div>
+
+    </form>
 
 </div>
 
@@ -403,6 +417,21 @@
             <div class="alert alert-danger">{{ editIte.errorMsgAsamblare_Plecat }}</div>
         </div>
     </form>
+
+    <form style="margin-top:30px;" id="submit3" ng-submit="editIte.updateObservatii_Asamblare(newObservatii_Asamblare, editIte.observatii_asamblareForm.observatii_asamblare.$valid)"
+        class="col-md-12" name="editIte.observatii_asamblareForm" novalidate>
+        <label>Observatii Asamblare:</label>
+        <textarea ng-disabled="!main.asamblare" id="submit-holder3" style="resize: none;" class="form-control" type="text"
+            name="observatii_asamblare" ng-model="newObservatii_Asamblare" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgObservatii_Asamblare">
+            <div class="alert alert-danger">{{ editIte.errorMsgObservatii_Asamblare }}</div>
+        </div>
+
+    </form>
+
+
+
 </div>
 
 

@@ -106,7 +106,7 @@ angular.module('serviceControllers', ['userServices'])
                 $scope.newOliva = data.data.service.oliva;
                 $scope.newObservatii_Cabinet = data.data.service.observatii_cabinet;
                 $scope.newObservatii_Pacient = data.data.service.observatii_pacient;
-
+                $scope.Nr_Comanda_Service = data.data.service.nr_comanda_service;
                 $scope.newIesit_Cabinet = data.data.service.iesit_cabinet;
                 $scope.newIntrat_Cabinet = data.data.service.intrat_cabinet;
                 $scope.newPredat_Pacient = data.data.service.predat_pacient;
@@ -120,6 +120,7 @@ angular.module('serviceControllers', ['userServices'])
                 $scope.newLog_Plecat = data.data.service.log_plecat;
                 $scope.newLog_Preluat = data.data.service.log_preluat;
                 $scope.newLog_Trimis = data.data.service.log_trimis;
+                $scope.Observatii_service_Logistic = data.data.service.observatii_service_logistic;
 
 
 
@@ -441,6 +442,39 @@ angular.module('serviceControllers', ['userServices'])
                 app.disabled = false;
 
             }
+        };
+
+        app.updateObservatii_service_Logistic = function (Observatii_service_Logistic, valid) {
+            app.errorMsgObservatii_service_Logistic = false;
+            app.disabled = false;
+
+            if (valid) {
+                var serviceObject = {};
+                serviceObject._id = app.currentService;
+                serviceObject.observatii_service_logistic = $scope.Observatii_service_Logistic;
+
+                Service.editService(serviceObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_service_Logistic = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_service_logisticForm.observatii_service_logistic.$setPristine();
+                            app.observatii_service_logisticForm.observatii_service_logistic.$setUntouched();
+                            app.successMsgObservatii_service_Logistic = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_service_Logistic = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_service_Logistic = eroare;
+                app.disabled = true;
+            }
+
         };
 
 

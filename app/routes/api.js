@@ -99,6 +99,7 @@ module.exports = function (router) {
                         service.log_plecat = '-';
                         service.log_preluat = '-';
                         service.log_trimis = '-';
+                        service.observatii_service_logistic = '-';
 
 
                         service.serv_sosit = '-';
@@ -217,6 +218,8 @@ module.exports = function (router) {
                         oliva.log_plecat = '-';
                         oliva.log_preluat = '-';
                         oliva.log_trimis = '-';
+                        oliva.observatii_oliva_logistic = '-';
+
 
                         oliva.plastie_sosit = '-';
                         oliva.plastie_plecat = '-';
@@ -307,11 +310,12 @@ module.exports = function (router) {
                         ite.log_plecat = '-';
                         ite.log_preluat = '-';
                         ite.log_trimis = '-';
+                        ite.observatii_ite_logistic = '-';
 
                         ite.asamblare_sosit = '-';
                         ite.asamblare_plecat = '-';
                         ite.finalizat_ite = '-';
-                        ite.observatii_plastie = req.body.observatii_plastie;;
+                        ite.observatii_plastie = '-';
 
 
                         if (req.body.model_aparat == null || req.body.model_aparat == '') {
@@ -883,6 +887,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_service_logistic) var Observatii_service_Logistic = req.body.observatii_service_logistic;
 
             //      Service
             //-----------------------------------------------------------------------------------
@@ -1091,6 +1096,25 @@ module.exports = function (router) {
                                 }
                             });
                         }
+                    }
+                });
+            }
+
+            if (Observatii_service_Logistic) {
+                Service.findOne({ _id: editService }, function (err, service) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        service.observatii_service_logistic = Observatii_service_Logistic;
+                        service.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
                     }
                 });
             }
@@ -1387,6 +1411,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_oliva_logistic) var Observatii_oliva_Logistic = req.body.observatii_oliva_logistic;
 
             //      Plastie
             //-----------------------------------------------------------------------------------
@@ -1590,6 +1615,25 @@ module.exports = function (router) {
                 });
             }
 
+            if (Observatii_oliva_Logistic) {
+                Oliva.findOne({ _id: editOliva }, function (err, oliva) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        oliva.observatii_oliva_logistic = Observatii_oliva_Logistic;
+                        oliva.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
+                    }
+                });
+            }
+
 
             // //      3.Plastie ----------------------------------------------
 
@@ -1710,6 +1754,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_ite_logistic) var Observatii_ite_Logistic = req.body.observatii_ite_logistic;
 
             //      Plastie
             //-----------------------------------------------------------------------------------
@@ -1904,10 +1949,29 @@ module.exports = function (router) {
                                 if (err) {
                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                 } else {
-                                    res.json({ success: true, message: 'Cod Componente a fost modificat' });
+                                    res.json({ success: true, message: 'Data adaugata cu succes' });
                                 }
                             });
                         }
+                    }
+                });
+            }
+
+            if (Observatii_ite_Logistic) {
+                Ite.findOne({ _id: editIte }, function (err, ite) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        ite.observatii_ite_logistic = Observatii_ite_Logistic;
+                        ite.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
                     }
                 });
             }
@@ -1931,7 +1995,7 @@ module.exports = function (router) {
                                 if (err) {
                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                 } else {
-                                    res.json({ success: true, message: 'Piese Inlocuite a fost modificat' });
+                                    res.json({ success: true, message: 'Data adaugata cu succes' });
                                 }
                             });
                         }

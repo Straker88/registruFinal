@@ -100,6 +100,7 @@ angular.module('olivaControllers', ['userServices'])
                 $scope.Material_Oliva = data.data.oliva.material_oliva;
                 $scope.Tip_Oliva = data.data.oliva.tip_oliva;
                 $scope.newCompletare_Cabinet = data.data.oliva.completare_cabinet;
+                $scope.nr_comanda_oliva = data.data.oliva.nr_comanda_oliva;
 
 
                 $scope.newIesit_Cabinet = data.data.oliva.iesit_cabinet;
@@ -117,6 +118,7 @@ angular.module('olivaControllers', ['userServices'])
                 $scope.newLog_Plecat = data.data.oliva.log_plecat;
                 $scope.newLog_Preluat = data.data.oliva.log_preluat;
                 $scope.newLog_Trimis = data.data.oliva.log_trimis;
+                $scope.Observatii_oliva_Logistic = data.data.oliva.observatii_oliva_logistic;
 
 
 
@@ -432,6 +434,40 @@ angular.module('olivaControllers', ['userServices'])
             }
         };
 
+        app.updateObservatii_oliva_Logistic = function (Observatii_oliva_Logistic, valid) {
+            app.errorMsgObservatii_oliva_Logistic = false;
+            app.disabled = false;
+
+            if (valid) {
+                var olivaObject = {};
+                olivaObject._id = app.currentOliva;
+                olivaObject.observatii_oliva_logistic = $scope.Observatii_oliva_Logistic;
+
+                Oliva.editOliva(olivaObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_oliva_Logistic = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_oliva_logisticForm.observatii_oliva_logistic.$setPristine();
+                            app.observatii_oliva_logisticForm.observatii_oliva_logistic.$setUntouched();
+                            app.successMsgObservatii_oliva_Logistic = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_oliva_Logistic = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_oliva_Logistic = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+
         // Plastie 
         //----------------------------------------------------------------------------------------------
 
@@ -543,6 +579,40 @@ angular.module('olivaControllers', ['userServices'])
 
             }
         };
+
+        app.updateObservatii_Plastie = function (newObservatii_Plastie, valid) {
+            app.errorMsgObservatii_Plastie = false;
+            app.disabled = false;
+
+            if (valid) {
+                var olivaObject = {};
+                olivaObject._id = app.currentOliva;
+                olivaObject.observatii_plastie = $scope.newObservatii_Plastie;
+
+                Oliva.editOliva(olivaObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_Plastie = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_plastieForm.observatii_plastie.$setPristine();
+                            app.observatii_plastieForm.observatii_plastie.$setUntouched();
+                            app.successMsgObservatii_Plastie = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_Plastie = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_Plastie = eroare;
+                app.disabled = true;
+            }
+
+        };
+
 
     });
 

@@ -38,7 +38,7 @@ var IteSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
-
+    observatii_ite_logistic: { type: String },
 
 
     // //     Laborator Asamblare ----------------------------------------------

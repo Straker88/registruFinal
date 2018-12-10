@@ -108,12 +108,14 @@ angular.module('iteControllers', ['userServices'])
                 $scope.Observatii_ite = data.data.ite.observatii_ite;
                 currentCabinet = data.data.ite.cabinet;
                 app.currentIte = data.data.ite._id;
+                $scope.nr_comanda_ite = data.data.ite.nr_comanda_ite;
 
                 //              2.Logistic ----------------------------------------------
                 $scope.newLog_Sosit = data.data.ite.log_sosit;
                 $scope.newLog_Plecat = data.data.ite.log_plecat;
                 $scope.newLog_Preluat = data.data.ite.log_preluat;
                 $scope.newLog_Trimis = data.data.ite.log_trimis;
+                $scope.Observatii_ite_Logistic = data.data.ite.observatii_ite_logistic;
 
 
 
@@ -429,6 +431,41 @@ angular.module('iteControllers', ['userServices'])
             }
         };
 
+        app.updateObservatii_ite_Logistic = function (Observatii_ite_Logistic, valid) {
+            app.errorMsgObservatii_ite_Logistic = false;
+            app.disabled = false;
+
+            if (valid) {
+                var iteObject = {};
+                iteObject._id = app.currentIte;
+                iteObject.observatii_ite_logistic = $scope.Observatii_ite_Logistic;
+
+                Ite.editIte(iteObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_ite_Logistic = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_ite_logisticForm.observatii_ite_logistic.$setPristine();
+                            app.observatii_ite_logisticForm.observatii_ite_logistic.$setUntouched();
+                            app.successMsgObservatii_ite_Logistic = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_ite_Logistic = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_ite_Logistic = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+
+
         // Asamblare 
         //----------------------------------------------------------------------------------------------
 
@@ -539,6 +576,39 @@ angular.module('iteControllers', ['userServices'])
                 app.disabled = false;
 
             }
+        };
+
+        app.updateObservatii_Asamblare = function (newObservatii_Asamblare, valid) {
+            app.errorMsgObservatii_Asamblare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var iteObject = {};
+                iteObject._id = app.currentIte;
+                iteObject.observatii_asamblare = $scope.newObservatii_Asamblare;
+
+                Ite.editIte(iteObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_Asamblare = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_asamblareForm.observatii_asamblare.$setPristine();
+                            app.observatii_asamblareForm.observatii_asamblare.$setUntouched();
+                            app.successMsgObservatii_Asamblare = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_Asamblare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_Asamblare = eroare;
+                app.disabled = true;
+            }
+
         };
 
 

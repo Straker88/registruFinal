@@ -60,7 +60,8 @@
 
 
     <div class="visible-print-block">
-        <div style="clear:both;margin-top:-20px;float:right;max-width: 12%;margin-right: 109px;">
+
+        <div style="clear:both;margin-top:-21px;float:right;max-width: 12%;margin-right: 109px;">
             <span class="">Cabinet:</span>
             <span class="" style="color:#337ab7;">
                 <input style="border: none;" ng-model="newCabinet" readonly>
@@ -72,16 +73,23 @@
                 <input style="border: none;" ng-model="newData_Inregistrare" readonly>
             </span>
         </div>
+
         <div>
             <span style="max-width: 15%;" class="">Denumire aparat(e):</span>
             <span class="" style="color:#337ab7;">
-                <input style="border: none;" ng-model="newDenumire_Aparat" readonly>
+                <input style="border: none;width: 50%;" ng-model="newDenumire_Aparat" readonly>
             </span>
         </div>
         <div>
             <span style="max-width: 15%;" class="">Serie aparat(e):</span>
             <span class="" style="color:#337ab7;">
-                <input style="border: none;" ng-model="newSerie_Aparat" readonly>
+                <input style="border: none;width: 50%;" ng-model="newSerie_Aparat" readonly>
+            </span>
+        </div>
+        <div style="float:right;width: 12%;margin-right: 220px; margin-top: -65px;">
+            <span style="max-width: 15%;" class="">Nr. Comanda:</span>
+            <span class="" style="color:#337ab7;">
+                <input style="border: none;" ng-model="Nr_Comanda_Service" readonly>
             </span>
         </div>
 
@@ -402,6 +410,18 @@
         <div class="row show-hide-message" ng-show="editService.errorMsgLog_Trimis">
             <div class="alert alert-danger">{{ editService.errorMsgLog_Trimis }}</div>
         </div>
+    </form>
+
+    <form style="margin-top:30px;" id="submit2" ng-submit="editService.updateObservatii_service_Logistic(Observatii_service_Logistic, editService.observatii_service_logisticForm.observatii_service_logistic.$valid)"
+        class="col-md-12" name="editService.observatii_service_logisticForm" novalidate>
+        <label>Observatii Logistic:</label>
+        <textarea ng-disabled="!main.logistic" id="submit-holder12" style="resize: none;" class="form-control" type="text"
+            name="observatii_service_logistic" ng-model="Observatii_service_Logistic" required autocomplete="off"></textarea>
+
+        <div class="row show-hide-message" ng-show="editService.errorMsgObservatii_service_Logistic">
+            <div class="alert alert-danger">{{ editService.errorMsgObservatii_service_Logistic }}</div>
+        </div>
+
     </form>
 
 </div>

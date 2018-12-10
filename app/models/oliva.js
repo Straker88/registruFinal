@@ -39,7 +39,7 @@ var OlivaSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
-
+    observatii_oliva_logistic: { type: String },
 
 
     // //     Laborator Plastie ----------------------------------------------

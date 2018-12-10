@@ -213,7 +213,6 @@ module.exports = function (router) {
                         oliva.intrat_cabinet = '-';
                         oliva.completare_cabinet = '-';
 
-
                         oliva.log_sosit = '-';
                         oliva.log_plecat = '-';
                         oliva.log_preluat = '-';

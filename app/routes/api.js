@@ -224,7 +224,7 @@ module.exports = function (router) {
                         oliva.plastie_sosit = '-';
                         oliva.plastie_plecat = '-';
                         oliva.finalizat_oliva = '-';
-                        oliva.observatii_plastie = req.body.observatii_plastie;;
+                        oliva.observatii_plastie = '-';
 
 
                         if (req.body.model_aparat == null || req.body.model_aparat == '') {

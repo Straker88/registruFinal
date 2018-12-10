@@ -102,7 +102,6 @@ angular.module('userServices', [])
 
         olivaFactory.create = function (regData) {
             return $http.post('/api/oliva/', regData);
-
         };
 
         olivaFactory.getOliva = function (id) {

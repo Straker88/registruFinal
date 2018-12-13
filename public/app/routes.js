@@ -12,12 +12,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/about.html'
             })
 
-            .when('/adiregister', {
+            .when('/ix88register', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
                 controllerAs: 'register',
-                // authenticated: true,
-                // permission: ['admin']
 
             })
 
@@ -36,7 +34,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'profilCabinetCtrl',
                 controllerAs: 'profilCab',
                 authenticated: true,
-                // permission: ['admin', 'moderator', 'user']
             })
 
             .when('/registruServiceCabinet/:username', {
@@ -178,11 +175,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
             .when('/profilPacient/:id', {
                 templateUrl: 'app/views/pages/management/profilPacient.html',
                 authenticated: true,
-                // controller: 'editProfilPacientCtrl',
-                // controllerAs: 'editPacient',
-
-                // permission: ['admin', 'moderator', 'user']
-
             })
 
 
@@ -191,7 +183,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'regPacientCtrl',
                 controllerAs: 'registerPac',
                 authenticated: true,
-                // permission: ['admin', 'moderator', 'user', 'service']
 
             })
 

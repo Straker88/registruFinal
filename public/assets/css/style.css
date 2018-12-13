@@ -430,8 +430,8 @@ margin: 0 auto;
 }
 .FilterinputSearch input {
   min-height: 30px;
-  padding-left: 13px;
-  box-shadow: inset 9px 1px 1px rgba(0, 0, 0, .075);
+  /* padding-left: 13px;
+  box-shadow: inset 9px 1px 1px rgba(0, 0, 0, .075); */
   transition: box-shadow ease-in-out .15s;
   border-radius: 4px;
   max-width: 120px;
@@ -550,9 +550,9 @@ th.FilterinputSearch{
 
 .inputDateRegistruServ{
   border:none;
-  width: 135px;
+  width: 132px;
   margin-top: 1px; 
-  margin-left: 3px; 
+  /* margin-left: 3px;  */
   font-size: 12px;
   text-align: center;
   border-radius: 4px;
@@ -560,6 +560,7 @@ th.FilterinputSearch{
   line-height: 22px;
   color: #fff;
   padding: 10px 0px;
+  letter-spacing: -0.5px;
 }
 
 .inputDateRegistruServCabinet{
@@ -580,7 +581,7 @@ th.FilterinputSearch{
   border:none;
   width: 135px;
   margin-top: 0;
-   margin-left: 3px; 
+   /* margin-left: 3px;  */
    font-size: 12px;
    text-align: center;
    border-radius: 4px;
@@ -615,3 +616,7 @@ padding-right: 37px;
  {
    width:60px;
  }
+.sorting_disabled {
+  color:#08c;
+  cursor: not-allowed;
+}

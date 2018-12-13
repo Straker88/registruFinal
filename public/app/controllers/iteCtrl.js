@@ -12,38 +12,61 @@ angular.module('iteControllers', ['userServices'])
 
 
             if (valid) {
+                Pacient.getPacient($routeParams.id)
+                    .then(function (data) {
+                        $scope.Pacient_Adresa = data.data.pacient.adresa;
+                        $scope.Pacient_Telefon = data.data.pacient.telefon;
+                        $scope.Pacient_Varsta = data.data.pacient.varsta;
+                        var pacient = data.data.pacient.nume;
+                        var pacient_id = data.data.pacient._id;
+                        var telefon_pacient = data.data.pacient.telefon;
+                        Ite.create(
+                            app.regData,
+                            app.regData.ite_inregistrat_pacient = pacient,
+                            app.regData.ite_pacient_id = pacient_id,
+                            app.regData.telefon = telefon_pacient)
+                            .then(function (data) {
 
-                Pacient.getPacient($routeParams.id).then(function (data) {
-                    var pacient = data.data.pacient.nume;
-                    var pacient_id = data.data.pacient._id;
-                    var telefon_pacient = data.data.pacient.telefon;
-                    Ite.create(app.regData, app.regData.ite_inregistrat_pacient = pacient, app.regData.ite_pacient_id = pacient_id, app.regData.telefon = telefon_pacient).then(function (data) {
+                                if (data.data.success) {
+                                    $scope.comanda_ite = data.data.comanda_ite.nr_comanda_ite + 1;
+                                    if (data.config.data.ureche_protezata == "Bilateral") {
 
-                        if (data.data.success) {
-                            $scope.comanda_ite = data.data.comanda_ite + 1;
-                            app.disabled = true;
-                            app.successMsg = data.data.message
+                                        if (data.data.comanda_ite.serie_ite.includes("-")) {
+                                            $scope.serie_ite = (parseInt(data.data.comanda_ite.serie_ite) + 2 + "-" + (parseInt(data.data.comanda_ite.serie_ite) + 3));
+                                        } else {
+                                            $scope.serie_ite = (parseInt(data.data.comanda_ite.serie_ite) + 1 + "-" + (parseInt(data.data.comanda_ite.serie_ite) + 2));
+                                        }
+                                    } else {
+                                        if (data.data.comanda_ite.serie_ite.includes("-")) {
+                                            $scope.serie_ite = parseInt(data.data.comanda_ite.serie_ite) + 2;
+                                        } else {
+                                            $scope.serie_ite = parseInt(data.data.comanda_ite.serie_ite) + 1;
 
-                            $timeout(function () {
-                                window.print();
+                                        }
+                                    }
+                                    app.disabled = true;
+                                    app.successMsg = data.data.message
 
-                            }, 300)
+                                    $timeout(function () {
+                                        window.print();
 
-                            $timeout(function () {
-                                $route.reload();
+                                    }, 300)
 
-                            }, 1500)
+                                    $timeout(function () {
+                                        $route.reload();
 
-                        } else {
-                            app.loading = false;
-                            app.errorMsg = data.data.message;
-                            $timeout(function () {
-                                app.errorMsg = false;
-                            }, 3000)
-                        }
-                    });
+                                    }, 1500)
 
-                })
+                                } else {
+                                    app.loading = false;
+                                    app.errorMsg = data.data.message;
+                                    $timeout(function () {
+                                        app.errorMsg = false;
+                                    }, 3000)
+                                }
+                            });
+
+                    })
             } else {
                 app.loading = false;
                 app.errorMsg = 'Completeaza corect Formularul';
@@ -99,6 +122,7 @@ angular.module('iteControllers', ['userServices'])
                 $scope.Culoare_Carcasa = data.data.ite.culoare_carcasa;
                 $scope.Vent_ite = data.data.ite.vent_ite;
                 $scope.Material_ite = data.data.ite.material_ite;
+                $scope.Serie_ite = data.data.ite.serie_ite;
                 $scope.Tip_ite = data.data.ite.tip_ite;
                 $scope.ite_Taxa_Urgenta = data.data.ite.ite_taxa_urgenta;
                 $scope.newCompletare_Cabinet = data.data.ite.completare_cabinet;

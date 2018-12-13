@@ -373,13 +373,11 @@ angular.module('managementController', [])
                 Pacient.editPacient(pacientObject).then(function (data) {
                     if (data.data.success) {
                         app.successMsgTelefon = data.data.message;
-
                         $timeout(function () {
                             app.telefonForm.telefon.$setPristine();
                             app.telefonForm.telefon.$setUntouched();
                             app.successMsgTelefon = false;
                             app.disabled = false;
-                            $route.reload();
                         }, 2000);
 
                     } else {
@@ -403,17 +401,16 @@ angular.module('managementController', [])
                 pacientObject.varsta = $scope.Pacient_Varsta;
 
                 Pacient.editPacient(pacientObject).then(function (data) {
-
                     if (data.data.success) {
                         app.successMsgVarsta = data.data.message;
-
                         $timeout(function () {
+
                             app.varstaForm.varsta.$setPristine();
                             app.varstaForm.varsta.$setUntouched();
                             app.successMsgVarsta = false;
                             app.disabled = false;
-                            $route.reload();
                         }, 2000);
+
 
                     } else {
                         app.errorMsgVarsta = data.data.message;
@@ -436,17 +433,16 @@ angular.module('managementController', [])
                 pacientObject.adresa = $scope.Pacient_Adresa;
 
                 Pacient.editPacient(pacientObject).then(function (data) {
-
                     if (data.data.success) {
                         app.successMsgAdresa = data.data.message;
                         $timeout(function () {
+
                             app.adresaForm.adresa.$setPristine();
                             app.adresaForm.adresa.$setUntouched();
                             app.successMsgAdresa = false;
                             app.disabled = false;
-                            // $route.reload();
-
                         }, 2000);
+
 
                     } else {
                         app.errorMsgAdresa = data.data.message;
@@ -534,63 +530,4 @@ angular.module('managementController', [])
 
 
     })
-
-    // .controller('profilPacientCtrl', function ($scope, $routeParams, Pacient) {
-
-    //     var app = this;
-    //     app.accessDenied = true;
-    //     app.errorMsg = false;
-    //     app.editProfilPacientAccess = false;
-    //     app.deleteProfilPacientAccess = false;
-
-    //     $scope.serviceTab = 'active';
-    //     app.phase1 = true;
-
-    //     app.servicePhase = function () {
-    //         $scope.serviceTab = 'active';
-    //         $scope.olivaTab = 'default';
-    //         $scope.iteTab = 'default';
-    //         app.phase1 = true;
-    //         app.phase2 = false;
-    //         app.phase3 = false;
-    //         app.errorMsg = false;
-    //     };
-    //     app.olivaPhase = function () {
-    //         $scope.serviceTab = 'default';
-    //         $scope.olivaTab = 'active';
-    //         $scope.iteTab = 'default';
-    //         app.phase1 = false;
-    //         app.phase2 = true;
-    //         app.phase3 = false;
-    //         app.errorMsg = false;
-    //     };
-    //     app.itePhase = function () {
-    //         $scope.serviceTab = 'default';
-    //         $scope.olivaTab = 'default';
-    //         $scope.iteTab = 'active';
-    //         app.phase1 = false;
-    //         app.phase2 = false;
-    //         app.phase3 = true;
-    //         app.errorMsg = false;
-    //     };
-
-    //     //              2.Logistic ----------------------------------------------
-
-    //     Pacient.getPacient($routeParams.id).then(function (data) {
-    //         if (data.data.success) {
-    //             $scope.Pacient_Cabinet = data.data.pacient.cabinet;
-    //             $scope.Pacient_Nume = data.data.pacient.nume;
-    //             $scope.Pacient_Data_Inregistrare = data.data.pacient.data_inregistrare;
-    //             $scope.Pacient_Telefon = data.data.pacient.telefon;
-    //             $scope.Pacient_Adresa = data.data.pacient.adresa;
-    //             $scope.Pacient_Varsta = data.data.pacient.varsta;
-    //             $scope.Pacient_Sex = data.data.pacient.sex;
-
-    //         }
-
-    //     });
-    // })
-
-
-    //              Pacient Edit Controller ----------------------------------------------
 

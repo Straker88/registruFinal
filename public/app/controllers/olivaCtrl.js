@@ -14,9 +14,12 @@ angular.module('olivaControllers', ['userServices'])
                 Pacient.getPacient($routeParams.id)
                     .then(function (data) {
                         $scope.Pacient_Adresa = data.data.pacient.adresa;
+                        $scope.Pacient_Telefon = data.data.pacient.telefon;
+                        $scope.Pacient_Varsta = data.data.pacient.varsta;
                         var pacient = data.data.pacient.nume;
                         var pacient_id = data.data.pacient._id;
                         var telefon_pacient = data.data.pacient.telefon;
+
                         Oliva.create(
                             app.regData,
                             app.regData.oliva_inregistrat_pacient = pacient,
@@ -25,7 +28,23 @@ angular.module('olivaControllers', ['userServices'])
                             .then(function (data) {
 
                                 if (data.data.success) {
-                                    $scope.comanda_oliva = data.data.comanda_oliva + 1;
+                                    $scope.comanda_oliva = data.data.comanda_oliva.nr_comanda_oliva + 1;
+                                    if (data.config.data.ureche_protezata == "Bilateral") {
+
+                                        if (data.data.comanda_oliva.serie_oliva.includes("-")) {
+                                            $scope.serie_oliva = (parseInt(data.data.comanda_oliva.serie_oliva) + 2 + "-" + (parseInt(data.data.comanda_oliva.serie_oliva) + 3));
+                                        } else {
+                                            $scope.serie_oliva = (parseInt(data.data.comanda_oliva.serie_oliva) + 1 + "-" + (parseInt(data.data.comanda_oliva.serie_oliva) + 2));
+                                        }
+                                    } else {
+                                        if (data.data.comanda_oliva.serie_oliva.includes("-")) {
+                                            $scope.serie_oliva = parseInt(data.data.comanda_oliva.serie_oliva) + 2;
+                                        } else {
+                                            $scope.serie_oliva = parseInt(data.data.comanda_oliva.serie_oliva) + 1;
+
+                                        }
+                                    }
+
                                     app.disabled = true;
                                     app.successMsg = data.data.message
 
@@ -36,7 +55,6 @@ angular.module('olivaControllers', ['userServices'])
                                     $timeout(function () {
                                         $route.reload();
                                     }, 1500)
-
 
                                 } else {
                                     app.loading = false;
@@ -99,6 +117,7 @@ angular.module('olivaControllers', ['userServices'])
                 $scope.Vent_Oliva = data.data.oliva.vent_oliva;
                 $scope.Material_Oliva = data.data.oliva.material_oliva;
                 $scope.Tip_Oliva = data.data.oliva.tip_oliva;
+                $scope.Serie_Oliva = data.data.oliva.serie_oliva;
                 $scope.newCompletare_Cabinet = data.data.oliva.completare_cabinet;
                 $scope.nr_comanda_oliva = data.data.oliva.nr_comanda_oliva;
 

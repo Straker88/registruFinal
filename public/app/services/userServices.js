@@ -95,6 +95,28 @@ angular.module('userServices', [])
         return serviceFactory;
     })
 
+    // Recarcasare Factory
+
+    .factory('Recarcasare', function ($http) {
+        recarcasareFactory = {};
+
+        recarcasareFactory.create = function (regData) {
+            return $http.post('/api/recarcasare/', regData);
+
+        };
+
+        // recarcasareFactory.getService = function (id) {
+        //     return $http.get('/api/service/' + id);
+
+        // };
+
+        // recarcasareFactory.editService = function (id) {
+        //     return $http.put('/api/editService', id);
+        // };
+
+        return recarcasareFactory;
+    })
+
     // Oliva Factory
 
     .factory('Oliva', function ($http) {
@@ -115,6 +137,9 @@ angular.module('userServices', [])
 
         return olivaFactory;
     })
+
+    // ITE Factory
+
 
     .factory('Ite', function ($http) {
         iteFactory = {};

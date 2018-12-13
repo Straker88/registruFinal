@@ -20,6 +20,7 @@ $(document).ready(function () {
         "pagination": true,
         columns: [
             { data: "nr_comanda_oliva" },
+            { data: "serie_oliva" },
             { data: "cabinet" },
             { data: "data_inregistrare" },
             { data: "log_sosit" },
@@ -35,20 +36,25 @@ $(document).ready(function () {
             {
                 "targets": 1,
                 "orderable": true,
-                type: 'date-eu', targets: ([2]),
+                type: 'date-eu', targets: ([3]),
             },
             {
-                "targets": [10],
+                "targets": [11],
                 "visible": false,
             },
             {
-                "aTargets": [9],
+                "targets": [1],
+                "orderable": false,
+            },
+
+            {
+                "aTargets": [10],
                 "width": "60px",
                 "mRender": function (data, type, row) {
                     return '<a class="btn btn-primary btn-sm" href=/oliva/' + row._id + '>' + 'Detalii' + '</a>';
                 }
             }],
-        "order": [[2, 'desc']],
+        "order": [[3, 'desc']],
         "oLanguage": {
             "sSearch": "Cautare generala",
             "sLengthMenu": "Afiseaza _MENU_ inregistrari",
@@ -123,7 +129,7 @@ $(document).ready(function () {
         $.fn.dataTableExt.afnFiltering.push(
             function (oSettings, aData, iDataIndex) {
                 if (startdate != undefined) {
-                    var coldate = aData[2].split("/");
+                    var coldate = aData[3].split("/");
                     var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                     var date = moment(d.toISOString());
                     date = date.format("YYYY-MM-DD");
@@ -159,7 +165,7 @@ $(document).ready(function () {
 
     var table = $('#tabel').DataTable();
 
-    table.columns([0, 1, 3, 4, 5, 6, 7, 8]).eq(0).each(function (colIdx) {
+    table.columns([0, 1, 2, 4, 5, 6, 7, 8, 9]).eq(0).each(function (colIdx) {
         $('input', $('.filters th')[colIdx]).on('keyup change', function () {
             table
                 .column(colIdx)

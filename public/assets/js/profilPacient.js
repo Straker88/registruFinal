@@ -126,7 +126,7 @@ $(document).ready(function () {
         $.fn.dataTableExt.afnFiltering.push(
             function (oSettings, aData, iDataIndex) {
                 if (startdate != undefined) {
-                    var coldate = aData[2].split("/");
+                    var coldate = aData[1].split("/");
                     var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                     var date = moment(d.toISOString());
                     date = date.format("YYYY-MM-DD");

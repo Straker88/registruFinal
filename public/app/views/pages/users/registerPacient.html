@@ -16,64 +16,51 @@
 
 <form name="regPacForm" ng-submit="registerPac.regPacient(regData, regPacForm.$valid);">
 
-  <!-- <div class="row">
-    <div class="col-sm-12">
-
-      <div style="width:15%;display: table; float:left;margin-right:10px;text-align: center;" class="regPacForm">
-        <label for="Data Inregistrare">Data Inregistrare: </label>
-        <input readonly ng-init="data_inregistrare" type="text" style="text-align: center;" class="form-control" name="data_inregistrare"
-          ng-model="data_inregistrare">
-      </div>
-
-    </div>
-  </div>
-  </div> -->
-
-
-  <!-- </div> -->
   <div class="row">
     <div class="col-sm-12">
-
-      <div style="width:30%;float: left;margin-right: 10px;">
-        <label for="Nume">Nume Pacient: <span style="color:#f00;">*</span> </label>
-        <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="registerPac.regData.nume"
-          autocomplete="off">
-      </div>
-
-      <div style="width:30%;" class="regPacForm">
-        <label for="Telefon">Telefon: <span style="color:#f00;">*</span> </label>
-        <input type="text" class="form-control" maxlength="26" name="telefon" placeholder="-" ng-model="registerPac.regData.telefon"
-          autocomplete="off">
-      </div>
-
-      <div style="width:7%;float: left;margin-right: 20px;margin-top: -1px;">
-        <label for="Varsta">Varsta: </label>
-        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          type="number" maxlength="3" class="form-control" name="varsta" placeholder="-" ng-model="registerPac.regData.varsta"
-          autocomplete="off">
-      </div>
-
-      <div style="margin-right: 10px;float: left; margin-top: 1px;">
-        <p style="margin-bottom: 5px;color:#337ab7;font-weight: 600;font-size: 13px;">Sex:</p>
-        <div class="optiuni" novalidate>
-          <select ng-model="registerPac.regData.sex" ng-class="registerPac.regData.sex" style="height:34px;" name="sex">
-            <option value="" selected disabled hidden>Alege</option>
-            <option value="M">M</option>
-            <option value="F">F</option>
-          </select>
+      <div style="border: 1px solid #eee;">
+        <div style="width:30%;float: left;margin-right: 10px;">
+          <label for="Nume">Nume Pacient: <span style="color:#f00;">*</span> </label>
+          <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="registerPac.regData.nume"
+            autocomplete="off">
         </div>
-      </div>
 
-      <div style="width:100%;margin-right: 10px; margin-bottom: 10px;float: left;">
-        <label for="Adresa">Adresa: </label>
-        <input maxlength="70" type="text" class="form-control" name="adresa" placeholder="-" ng-model="registerPac.regData.adresa"
-          autocomplete="off">
+        <div style="width:30%;" class="regPacForm">
+          <label for="Telefon">Telefon: <span style="color:#f00;">*</span> </label>
+          <input type="text" class="form-control" maxlength="26" name="telefon" placeholder="-" ng-model="registerPac.regData.telefon"
+            autocomplete="off">
+        </div>
+
+        <div style="width:7%;float: left;margin-right: 20px;margin-top: -1px;">
+          <label for="Varsta">Varsta: </label>
+          <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type="number" maxlength="3" class="form-control" name="varsta" placeholder="-" ng-model="registerPac.regData.varsta"
+            autocomplete="off">
+        </div>
+
+        <div style="margin-right: 10px;float: left; margin-top: 1px;">
+          <p style="margin-bottom: 5px;color:#337ab7;font-weight: 600;font-size: 13px;">Sex:</p>
+          <div class="optiuni" novalidate>
+            <select ng-model="registerPac.regData.sex" ng-class="registerPac.regData.sex" style="height:34px;" name="sex">
+              <option value="" selected disabled hidden>Alege</option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="width:100%;margin-right: 10px; margin-bottom: 10px;float: left;">
+          <label for="Adresa">Adresa: </label>
+          <input maxlength="70" type="text" class="form-control" name="adresa" placeholder="-" ng-model="registerPac.regData.adresa"
+            autocomplete="off">
+        </div>
+
       </div>
-      <div style="float:left;color:#f00;margin-top:30px;box-shadow: 1px 1px 10px #eee;padding: 10px;width: 100%;text-align: center;">
+      <div style="float:left;color:#f00;margin-top:30px;box-shadow: 1px 1px 10px #eee;padding: 10px;width: 100%;text-align: center;border: 1px solid #eee;">
         <p style="margin:10px 0 0 0;">! <b>Toate campurile</b> sunt <b>obligatorii</b> pentru a inregistra o comanda
           Oliva sau ITE.</p>
         <p>! Campurile <b>Nume Pacient</b> si <b>Telefon</b> sunt <b>obligatorii</b> pentru a inregistra o Fisa de
-          Service.</p>
+          Service sau Fisa Recarcasare.</p>
 
       </div>
       <p style="float:left;color:#5cb85c;margin-top:30px;box-shadow: 1px 1px 10px #eee;padding: 10px;width:

@@ -12,10 +12,16 @@ angular.module('pacientControllers', ['userServices'])
 
             if (valid) {
                 Pacient.create(app.regData).then(function (data) {
+                    console.log(data.data.pacient);
                     if (data.data.success) {
+                        var id_pac = data.data.pacient;
                         app.loading = false;
                         app.successMsg = data.data.message
-                        app.disabled = true;
+                        $timeout(function () {
+
+                            $location.path('/profilPacient/' + id_pac);
+                            app.disabled = true;
+                        }, 3000)
 
                     } else {
                         app.loading = false;

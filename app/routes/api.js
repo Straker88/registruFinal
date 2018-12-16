@@ -44,7 +44,7 @@ module.exports = function (router) {
                                 res.json({ succes: false, message: err });
                             } else {
 
-                                res.json({ success: true, message: 'Pacient adaugat cu succes.' });
+                                res.json({ success: true, message: 'Pacient adaugat cu succes. Se redirectioneaza catre profilul pacientului...', pacient: pacient._id });
                             }
 
                         });
@@ -846,18 +846,21 @@ module.exports = function (router) {
                 if (err) throw err;
                 Ite.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }, function (err, ite) {
                     if (err) throw err;
-
-                    Service.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }).select('nr_comanda_service data_inregistrare denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat predat_pacient').exec(function (err, service) {
+                    Recarcasare.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }, function (err, recarcasare) {
                         if (err) throw err;
-                        if (!service || !oliva) {
-                            res.json({ success: false, message: 'Nu s-au gasit service-uri sau olive' });
-                        }
-                        else {
 
-                            res.json({ success: true, service: service, oliva: oliva, ite: ite });
-                        }
+                        Service.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }).select('nr_comanda_service data_inregistrare denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat predat_pacient').exec(function (err, service) {
+                            if (err) throw err;
+                            if (!service || !oliva) {
+                                res.json({ success: false, message: 'Nu s-au gasit service-uri sau olive' });
+                            }
+                            else {
+
+                                res.json({ success: true, service: service, oliva: oliva, ite: ite, recarcasare: recarcasare });
+                            }
+                        });
+
                     });
-
                 });
             });
         });

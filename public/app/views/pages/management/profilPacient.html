@@ -334,8 +334,9 @@
         </li>
 
         <li ng-show="main.user || main.service || main.logistic">
-            <button id="service_buton" class="btn btn-info btn-md" onclick="show('registru_service');" style="margin-right:10px;"
-                ng-href="#">
+            <button id="service_buton" class="btn btn-info btn-md" onclick="show('registru_service');
+            ;"
+                style="margin-right:10px;" ng-href="#">
                 Service-uri Pacient
             </button>
         </li>
@@ -371,7 +372,7 @@
         <li ng-show="main.user || main.asamblare || main.logistic">
             <button type="button" id="oliva_buton" class="btn btn-info btn-md" onclick="show('registru_recarcasare');"
                 style="margin-right:10px;" ng-href="#">
-                Recarcasare Pacient
+                Recarcasari Pacient
             </button>
         </li>
 
@@ -396,7 +397,7 @@
     <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
 
         <table id="tabel" class="display" style="width:100%" ng-cloak>
-            <thead id="head2">
+            <thead id="head">
                 <tr>
                     <th style="width: 60px;">Nr.</th>
                     <th>Inregistrat</th>
@@ -418,7 +419,7 @@
                     <th class="daterange">
                         <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
-                            <p><input class="inputDateRegistruServCabinet btn btn-primary btn-sm" style="margin-left: 12px;"
+                            <p><input class="inputDateRegistruServCabinet btn btn-primary btn-sm adi" style="margin-left: 12px;"
                                     name="reportrange" id="reportrange" readonly></p>
                         </div>
                     </th>
@@ -449,7 +450,7 @@
                 </tr>
             </thead>
 
-            <tbody ng-cloak>
+            <tbody id="body1" ng-cloak>
             </tbody>
 
             <tfoot>
@@ -475,13 +476,13 @@
 <!---------------------------------------Registru Recarcasare --------------------------------------------------->
 <div class="d-hide" id="registru_recarcasare">
     <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
-        Recarcasare Pacient
+        Recarcasari Pacient
     </h1>
 
     <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
 
-        <table id="tabel" class="display" style="width:100%" ng-cloak>
-            <thead id="head2">
+        <table id="tabel_recarcasari" class="display" style="width:100%" ng-cloak>
+            <thead id="head">
                 <tr>
                     <th style="width: 60px;">Nr.</th>
                     <th>Inregistrat</th>
@@ -504,27 +505,27 @@
                         <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
                             <p><input class="inputDateRegistruServCabinet btn btn-primary btn-sm" style="margin-left: 12px;"
-                                    name="reportrange" id="reportrange" readonly></p>
+                                    name="reportrange3" id="reportrange3" readonly></p>
                         </div>
                     </th>
                     <th class="FilterinputSearch">Denumire Aparat</th>
                     <th class="FilterinputSearch">Defectiune Reclamata</th>
                     <th style="padding-top: 24px;">
                         <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 145px;text-align: center;"
-                            type="text" placeholder="Luna" id="pickyDate" />
+                            type="text" placeholder="Luna" id="pickyDatei" />
                     </th>
                     <th style="padding-top: 24px;">
                         <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 145px;text-align: center;"
-                            type="text" placeholder="Luna" id="pickyDate1" />
+                            type="text" placeholder="Luna" id="pickyDatej" />
                     </th>
 
                     <th style="padding-top: 24px;">
                         <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 145px;text-align: center;"
-                            type="text" placeholder="Luna" id="pickyDate2" />
+                            type="text" placeholder="Luna" id="pickyDatek" />
                     </th>
                     <th style="padding-top: 24px;">
                         <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 145px;text-align: center;"
-                            type="text" placeholder="Luna" id="pickyDate3" />
+                            type="text" placeholder="Luna" id="pickyDatel" />
                     </th>
 
                     <th></th>
@@ -569,11 +570,11 @@
     <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
 
         <table id="tabel_olive" class="display" style="width:100%" ng-cloak>
-            <thead id="head2">
+            <thead id="head">
                 <tr>
                     <th style="width: 60px;">Nr.</th>
-                    <th style="width: 60px;">Serie</th>
                     <th>Inregistrat</th>
+                    <th style="width: 60px;">Serie</th>
                     <th>Material Oliva</th>
                     <th>Tip Oliva</th>
                     <th>Intrat Plastie</th>
@@ -585,19 +586,18 @@
                 </tr>
             </thead>
 
-            <thead class="filters1">
+            <thead class="filters">
 
                 <tr>
                     <th class="FilterinputSearch FilterinputSearchNr">Nr.</th>
-                    <th class="FilterinputSearch FilterinputSearchNr">Serie</th>
-
                     <th class="daterange">
                         <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
                             <p><input class="inputDateRegistruServCabinet btn btn-primary btn-sm" style="margin-left: 12px;"
-                                    name="reportrange" id="reportrange1" readonly></p>
+                                    name="reportrange1" id="reportrange1" readonly></p>
                         </div>
                     </th>
+                    <th class="FilterinputSearch FilterinputSearchNr">Serie</th>
                     <th class="FilterinputSearch">Denumire Aparat</th>
                     <th class="FilterinputSearch">Defectiune Reclamata</th>
                     <th style="padding-top: 24px;">
@@ -632,8 +632,8 @@
             <tfoot>
                 <tr>
                     <th>Nr.</th>
-                    <th>Serie</th>
                     <th>Inregistrat</th>
+                    <th>Serie</th>
                     <th>Material Oliva</th>
                     <th>Tip Oliva</th>
                     <th>Intrat Plastie</th>
@@ -661,11 +661,11 @@
     <div style="font-size:12px; line-height:2.3em;margin-bottom: 100px;">
 
         <table id="tabel_ite" class="display" style="width:100%" ng-cloak>
-            <thead id="head2">
+            <thead id="head">
                 <tr>
                     <th style="width: 60px;">Nr.</th>
-                    <th style="width: 60px;">Serie</th>
                     <th>Inregistrat</th>
+                    <th style="width: 60px;">Serie</th>
                     <th>Model Aparat</th>
                     <th>Carcasa</th>
                     <th>Intrat Asamblare</th>
@@ -677,17 +677,17 @@
                 </tr>
             </thead>
 
-            <thead class="filters2">
+            <thead class="filters">
                 <tr>
                     <th class="FilterinputSearch FilterinputSearchNr">Nr.</th>
-                    <th class="FilterinputSearch FilterinputSearchNr">Serie</th>
                     <th class="daterange">
                         <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
                             <p><input class="inputDateRegistruServCabinet btn btn-primary btn-sm" style="margin-left: 12px;"
-                                    name="reportrange" id="reportrange2" readonly></p>
+                                    name="reportrange2" id="reportrange2" readonly></p>
                         </div>
                     </th>
+                    <th class="FilterinputSearch FilterinputSearchNr">Serie</th>
                     <th class="FilterinputSearch">Denumire Aparat</th>
                     <th class="FilterinputSearch">Defectiune Reclamata</th>
                     <th style="padding-top: 24px;">
@@ -722,8 +722,8 @@
             <tfoot>
                 <tr>
                     <th>Nr.</th>
-                    <th>Serie</th>
                     <th>Inregistrat</th>
+                    <th>Serie</th>
                     <th>Material Oliva</th>
                     <th>Tip Oliva</th>
                     <th>Intrat Plastie</th>

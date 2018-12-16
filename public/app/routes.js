@@ -43,6 +43,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true,
                 permission: ['admin', 'moderator', 'user']
             })
+            .when('/registruRecarcasariCabinet/:username', {
+                templateUrl: 'app/views/pages/management/registru_recarcasari_cabinet.html',
+                controller: 'registruRecarcasariCabinetCtrl',
+                controllerAs: 'registruRecarcsariCab',
+                authenticated: true,
+                permission: ['admin', 'moderator', 'user']
+            })
 
             .when('/registruOliveCabinet/:username', {
                 templateUrl: 'app/views/pages/management/registru_olive_cabinet.html',
@@ -101,6 +108,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true,
                 permission: ['admin', 'moderator', 'service']
             })
+            .when('/registruRecarcasari', {
+                templateUrl: 'app/views/pages/management/registruRecarcasari.html',
+                controller: 'registruRecarcasariCtrl',
+                controllerAs: 'registruServ',
+                authenticated: true,
+                permission: ['admin', 'moderator', 'asamblare']
+            })
 
             .when('/registruOlive', {
                 templateUrl: 'app/views/pages/management/registruOlive.html',
@@ -123,6 +137,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/management/registruLogistic_service.html',
                 controller: 'registruLogisticServiceCtrl',
                 controllerAs: 'registruLogServ',
+                authenticated: true,
+                permission: ['admin', 'moderator', 'logistic']
+            })
+            .when('/registruLogistic_recarcasari', {
+                templateUrl: 'app/views/pages/management/registruLogistic_recarcasari.html',
+                controller: 'registruLogisticRecarcasariCtrl',
+                controllerAs: 'registruLogRecarcasari',
                 authenticated: true,
                 permission: ['admin', 'moderator', 'logistic']
             })
@@ -155,6 +176,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/management/service.html',
                 controller: 'editServiceCtrl',
                 controllerAs: 'editService',
+                authenticated: true,
+            })
+
+            .when('/recarcasare/:id', {
+                templateUrl: 'app/views/pages/management/recarcasare.html',
+                controller: 'editRecarcasareCtrl',
+                controllerAs: 'editRecarcasare',
                 authenticated: true,
             })
 

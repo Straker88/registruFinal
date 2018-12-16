@@ -59,7 +59,9 @@
               <li>
                 <a href="/registruLogistic_service">Registru Service</a>
               </li>
-
+              <li>
+                <a href="/registruLogistic_recarcasari">Registru Recarcasari</a>
+              </li>
               <li>
                 <a href="/registruLogistic_olive">Registru Olive</a>
               </li>
@@ -80,6 +82,9 @@
           <li>
             <a ng-show="main.asamblare || main.authorized" href="/registruIte">Registru ITE</a>
           </li>
+          <li>
+            <a ng-show="main.asamblare || main.authorized" href="/registruRecarcasari">Registru Recarcasari</a>
+          </li>
 
 
           <li>
@@ -96,6 +101,9 @@
               <li>
 
                 <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruServiceCabinet/{{main.username}}">Service</a>
+              </li>
+              <li>
+                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
               </li>
               <li>
                 <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruOliveCabinet/{{main.username}}">Olive</a>

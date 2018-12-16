@@ -133,6 +133,14 @@ module.exports = function (router) {
                             res.json({ success: false, message: 'Completeaza Constatare Cabinet' });
                         }
 
+                        else if (req.body.u_stanga == null || req.body.u_stanga == '') {
+                            res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
+                        }
+
+                        else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
+                            res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
+                        }
+
                         else if (req.body.garantie == null || req.body.garantie == '') {
                             res.json({ success: false, message: 'Alege optiune Garantie' });
                         }
@@ -153,13 +161,6 @@ module.exports = function (router) {
                             res.json({ success: false, message: 'Alege optiune Oliva' });
                         }
 
-                        else if (req.body.u_stanga == null || req.body.u_stanga == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
-                        }
-
-                        else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
-                        }
                         else {
 
                             service.save(function (err) {
@@ -234,7 +235,7 @@ module.exports = function (router) {
                         recarcasare.observatii_asamblare = req.body.observatii_asamblare;
                         recarcasare.constatare_asamblare = '-';
                         recarcasare.operatiuni_efectuate = '-';
-                        recarcasare.cost_reparatie = '-';
+                        recarcasare.cost_recarcasare = '-';
                         recarcasare.observatii_asamblare = '-';
                         recarcasare.garantie_asamblare = '-';
 
@@ -253,7 +254,13 @@ module.exports = function (router) {
                         else if (req.body.constatare_cabinet == null || req.body.constatare_cabinet == '') {
                             res.json({ success: false, message: 'Completeaza Constatare Cabinet' });
                         }
+                        else if (req.body.u_stanga == null || req.body.u_stanga == '') {
+                            res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
+                        }
 
+                        else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
+                            res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
+                        }
                         else if (req.body.garantie == null || req.body.garantie == '') {
                             res.json({ success: false, message: 'Alege optiune Garantie' });
                         }
@@ -270,13 +277,6 @@ module.exports = function (router) {
                             res.json({ success: false, message: 'Alege optiune Mulaj' });
                         }
 
-                        else if (req.body.u_stanga == null || req.body.u_stanga == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
-                        }
-
-                        else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
-                        }
                         else {
 
                             recarcasare.save(function (err) {
@@ -718,9 +718,28 @@ module.exports = function (router) {
                 Service.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet serv_sosit serv_plecat predat_pacient').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
-                        res.json({ success: false, message: 'Nu s-au gasit pacienti' });
+                        res.json({ success: false, message: 'Nu s-au gasit service-uri' });
                     } else {
                         res.json({ success: true, service: service });
+                    }
+
+                });
+            }
+        });
+    });
+
+    router.get('/registruRecarcasariCabinet/:username', function (req, res) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+            if (err) throw err;
+            if (!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                Recarcasare.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_recarcasare data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, recarcasare) {
+                    if (err) throw err;
+                    if (!recarcasare) {
+                        res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
+                    } else {
+                        res.json({ success: true, recarcasare: recarcasare });
                     }
 
                 });
@@ -756,7 +775,7 @@ module.exports = function (router) {
                 Ite.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_ite serie_ite data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, ite) {
                     if (err) throw err;
                     if (!ite) {
-                        res.json({ success: false, message: 'Nu s-au gasit olive' });
+                        res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
                     } else {
                         res.json({ success: true, ite: ite });
                     }
@@ -806,6 +825,18 @@ module.exports = function (router) {
                 res.json({ success: false, message: 'Nu s-au gasit service-uri' });
             } else {
                 res.json({ success: true, service: service });
+            }
+
+        });
+    });
+
+    router.get('/registruLogistic_recarcasari', function (req, res) {
+        Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis recarcasare_inregistrat_pacient denumire_aparat').exec(function (err, recarcasare) {
+            if (err) throw err;
+            if (!recarcasare) {
+                res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
+            } else {
+                res.json({ success: true, recarcasare: recarcasare });
             }
 
         });
@@ -878,7 +909,7 @@ module.exports = function (router) {
         });
     });
 
-    router.get('/registruRecarcasare', function (req, res) {
+    router.get('/registruRecarcasari', function (req, res) {
         Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata asamblare_sosit finalizat_recarcasare asamblare_plecat').exec(function (err, recarcasare) {
             if (err) throw err;
             if (!recarcasare) {
@@ -913,7 +944,6 @@ module.exports = function (router) {
     });
 
 
-    // Get Pacient for Update ----------------------------------------------   
     router.get('/editPacient/:id', function (req, res) {
         var editPacient = req.params.id;
         Pacient.findOne({ _id: editPacient }, function (err, pacient) {
@@ -926,6 +956,7 @@ module.exports = function (router) {
             }
         });
     });
+
     router.get('/service/:id', function (req, res) {
         var idService = req.params.id;
         Service.findOne({ _id: idService }, function (err, service) {
@@ -935,6 +966,19 @@ module.exports = function (router) {
 
             } else {
                 res.json({ success: true, service: service });
+
+            }
+        });
+    });
+    router.get('/recarcasare/:id', function (req, res) {
+        var idRecarcasare = req.params.id;
+        Recarcasare.findOne({ _id: idRecarcasare }, function (err, recarcasare) {
+            if (err) throw err;
+            if (!recarcasare) {
+                res.json({ success: false, message: 'No recarcasare found' });
+
+            } else {
+                res.json({ success: true, recarcasare: recarcasare });
 
             }
         });
@@ -1588,15 +1632,16 @@ module.exports = function (router) {
             //      Asamblare
             //-----------------------------------------------------------------------------------
 
-            if (req.body.recarcasare_sosit) var newAsamblare_Sosit = new moment().format('DD/MM/YYYY');
-            if (req.body.recarcasare_plecat) var newAsamblare_Plecat = new moment().format('DD/MM/YYYY');
-            if (req.body.observatii_recarcasare) var newObservatii_Asamblare = req.body.observatii_recarcasare;
-            if (req.body.constatare_recarcasare) var newConstatare_Asamblare = req.body.constatare_recarcasare;
+            if (req.body.asamblare_sosit) var newAsamblare_Sosit = new moment().format('DD/MM/YYYY');
+            if (req.body.asamblare_plecat) var newAsamblare_Plecat = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_asamblare) var newObservatii_Asamblare = req.body.observatii_asamblare;
+            if (req.body.constatare_asamblare) var newConstatare_Asamblare = req.body.constatare_asamblare;
             if (req.body.operatiuni_efectuate) var newOperatiuni_Efectuate = req.body.operatiuni_efectuate;
             if (req.body.piese_inlocuite) var newPiese_Inlocuite = req.body.piese_inlocuite;
             if (req.body.cod_componente) var newCod_Componente = req.body.cod_componente;
             if (req.body.cost_recarcasare) var newCost_Recarcasare = req.body.cost_recarcasare;
             if (req.body.executant_recarcasare) var newExecutant_Recarcasare = req.body.executant_recarcasare;
+            if (req.body.executant_reparatie) var newExecutant_Reparatie = req.body.executant_reparatie;
             if (req.body.taxa_constatare) var newTaxa_Constatare = req.body.taxa_constatare;
             if (req.body.taxa_urgenta) var newTaxa_Urgenta = req.body.taxa_urgenta;
             if (req.body.garantie_asamblare) var newGarantie_Asamblare = req.body.garantie_asamblare;
@@ -1605,7 +1650,7 @@ module.exports = function (router) {
 
             //      1.Cabinet ----------------------------------------------
             if (newIesit_Cabinet) {
-                Recarcasare.findOne({ _id: editRecarcasare }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
                     if (recarcasare.cabinet !== mainUser.username) {
                         res.json({ success: false, message: 'Nu esti utilizatorul care a inregistrat aceasta recarcasare.' });
@@ -1653,7 +1698,7 @@ module.exports = function (router) {
             }
 
             if (newPredat_Pacient) {
-                Recarcasare.findOne({ _id: editRecarcasaree }, function (err, recarcasare) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
                     if (recarcasare.cabinet !== mainUser.username) {
                         res.json({ success: false, message: 'Nu esti utilizatorul care a inregistrat aceasta recarcasare.' });
@@ -1897,7 +1942,7 @@ module.exports = function (router) {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        recarcasare.constatare_recarcasare = newConstatare_Recarcasare;
+                        recarcasare.constatare_asamblare = newConstatare_Asamblare;
                         recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
@@ -1910,14 +1955,14 @@ module.exports = function (router) {
             }
 
             if (newOperatiuni_Efectuate) {
-                Service.findOne({ _id: editService }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.operatiuni_efectuate = newOperatiuni_Efectuate;
-                        service.save(function (err) {
+                        recarcasare.operatiuni_efectuate = newOperatiuni_Efectuate;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -1929,14 +1974,14 @@ module.exports = function (router) {
             }
 
             if (newPiese_Inlocuite) {
-                Service.findOne({ _id: editService }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.piese_inlocuite = newPiese_Inlocuite;
-                        service.save(function (err) {
+                        recarcasare.piese_inlocuite = newPiese_Inlocuite;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -1948,14 +1993,14 @@ module.exports = function (router) {
             }
 
             if (newCod_Componente) {
-                Service.findOne({ _id: editService }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.cod_componente = newCod_Componente;
-                        service.save(function (err) {
+                        recarcasare.cod_componente = newCod_Componente;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -1966,15 +2011,34 @@ module.exports = function (router) {
                 });
             }
 
-            if (newCost_Reparatie) {
-                Service.findOne({ _id: editService }, function (err, service) {
+            if (newCost_Recarcasare) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.cost_reparatie = newCost_Reparatie;
-                        service.save(function (err) {
+                        recarcasare.cost_recarcasare = newCost_Recarcasare;
+                        recarcasare.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
+                    }
+                });
+            }
+
+            if (newExecutant_Recarcasare) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
+                    }
+                    else {
+                        recarcasare.executant_recarcasare = newExecutant_Recarcasare;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -1986,14 +2050,14 @@ module.exports = function (router) {
             }
 
             if (newExecutant_Reparatie) {
-                Service.findOne({ _id: editService }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.executant_reparatie = newExecutant_Reparatie;
-                        service.save(function (err) {
+                        recarcasare.executant_reparatie = newExecutant_Reparatie;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -2004,15 +2068,15 @@ module.exports = function (router) {
                 });
             }
 
-            if (newObservatii_Service) {
-                Service.findOne({ _id: editService }, function (err, service) {
+            if (newObservatii_Asamblare) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.observatii_service = newObservatii_Service;
-                        service.save(function (err) {
+                        recarcasare.observatii_asamblare = newObservatii_Asamblare;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -2024,14 +2088,14 @@ module.exports = function (router) {
             }
 
             if (newTaxa_Constatare) {
-                Service.findOne({ _id: editService }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.taxa_constatare = newTaxa_Constatare;
-                        service.save(function (err) {
+                        recarcasare.taxa_constatare = newTaxa_Constatare;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -2042,15 +2106,15 @@ module.exports = function (router) {
                 });
             }
 
-            if (newGarantie_Serv) {
-                Service.findOne({ _id: editService }, function (err, service) {
+            if (newGarantie_Asamblare) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.garantie_serv = newGarantie_Serv;
-                        service.save(function (err) {
+                        recarcasare.garantie_asamblare = newGarantie_Asamblare;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {
@@ -2062,14 +2126,14 @@ module.exports = function (router) {
             }
 
             if (newTaxa_Urgenta) {
-                Service.findOne({ _id: editService }, function (err, service) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
                     }
                     else {
-                        service.taxa_urgenta = newTaxa_Urgenta;
-                        service.save(function (err) {
+                        recarcasare.taxa_urgenta = newTaxa_Urgenta;
+                        recarcasare.save(function (err) {
                             if (err) {
                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                             } else {

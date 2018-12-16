@@ -1,34 +1,36 @@
-//--------------------- Registru Logistic
 var token = window.localStorage.getItem('token');
-
+var url = window.location.pathname;
+var user = url.substr(url.lastIndexOf('/') + 1);
 
 $(document).ready(function () {
     var oTable = $('#tabel').dataTable({
+        "serverSide": false,
         "ajax": {
-            "url": "api/registruLogistic_olive/",
+            "url": "api/registruRecarcasariCabinet/" + user,
             headers: {
                 'x-access-token': token
+
             },
             "dataType": "json",
             "contentType": "application/json; charset=utf-8",
             "type": "GET",
-            "dataSrc": "oliva",
+            "dataSrc": "recarcasare",
         },
         "stateSave": false,
+        "deferRender": true,
         "pageLength": 25,
         "searching": true,
-        "pagination": true,
+        "autoWidth": false,
         columns: [
-            { data: "nr_comanda_oliva" },
-            { data: "serie_oliva" },
-            { data: "cabinet" },
+            { data: "nr_comanda_recarcasare" },
             { data: "data_inregistrare" },
-            { data: "log_sosit" },
-            { data: "log_plecat" },
-            { data: "log_preluat" },
-            { data: "log_trimis" },
-            { data: "oliva_inregistrat_pacient" },
-            { data: "material_oliva" },
+            { data: "recarcasare_inregistrat_pacient" },
+            { data: "denumire_aparat" },
+            { data: "defectiune_reclamata" },
+            { data: "iesit_cabinet" },
+            { data: "asamblare_sosit" },
+            { data: "asamblare_plecat" },
+            { data: "predat_pacient" },
             { data: "" },
             { data: "_id" }
         ],
@@ -36,33 +38,26 @@ $(document).ready(function () {
             {
                 "targets": 1,
                 "orderable": true,
-                type: 'date-eu', targets: ([3]),
+                type: 'date-eu', targets: ([1]),
             },
             {
-                "targets": [11],
+                "targets": [10],
                 "visible": false,
             },
             {
-                "targets": [1],
-                "orderable": false,
-            },
-
-            {
-                "aTargets": [10],
+                "aTargets": [9],
                 "width": "60px",
                 "mRender": function (data, type, row) {
-                    return '<a class="btn btn-primary btn-sm" href=/oliva/' + row._id + '>' + 'Detalii' + '</a>';
+                    return '<a class="btn btn-primary btn-sm" href=/recarcasare/' + row._id + '>' + 'Detalii' + '</a>';
                 }
             }],
-        "order": [[3, 'desc']],
+        "order": [[1, 'desc']],
         "oLanguage": {
             "sSearch": "Cautare generala",
             "sLengthMenu": "Afiseaza _MENU_ inregistrari",
         }
+
     });
-    setInterval(function () {
-        table.ajax.reload(null, false);
-    }, 300000);
 
     var startdate;
     var enddate;
@@ -132,7 +127,7 @@ $(document).ready(function () {
         $.fn.dataTableExt.afnFiltering.push(
             function (oSettings, aData, iDataIndex) {
                 if (startdate != undefined) {
-                    var coldate = aData[3].split("/");
+                    var coldate = aData[1].split("/");
                     var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                     var date = moment(d.toISOString());
                     date = date.format("YYYY-MM-DD");
@@ -168,7 +163,7 @@ $(document).ready(function () {
 
     var table = $('#tabel').DataTable();
 
-    table.columns([0, 1, 2, 4, 5, 6, 7, 8, 9]).eq(0).each(function (colIdx) {
+    table.columns([0, 2, 3, 4, 5, 6, 7, 8]).eq(0).each(function (colIdx) {
         $('input', $('.filters th')[colIdx]).on('keyup change', function () {
             table
                 .column(colIdx)
@@ -176,29 +171,28 @@ $(document).ready(function () {
                 .draw();
         });
     });
+});
 
-    var endYear = new Date(new Date().getFullYear(), 11, 31);
+var endYear = new Date(new Date().getFullYear(), 11, 31);
 
-    $('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
-        clearBtn: true,
-        todayHighlight: true,
-        toggleActive: true,
-        endDate: endYear,
-        language: 'ro',
-        format: "mm/yyyy",
-        startView: "months",
-        minViewMode: "months",
-        maxViewMode: "years",
-    });
+$('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
+    clearBtn: true,
+    todayHighlight: true,
+    toggleActive: true,
+    endDate: endYear,
+    language: 'ro',
+    format: "mm/yyyy",
+    startView: "months",
+    minViewMode: "months",
+    maxViewMode: "years",
+});
 
-    $("#fromdate").datepicker({
-        minViewMode: 1,
+$("#fromdate").datepicker({
+    minViewMode: 1,
 
-    }).on('changeDate', function (ev) {
-        $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
-    });
-
+}).on('changeDate', function (ev) {
+    $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
 });
 
 
-//--------------------- Registru Logistic
+//--------------------- Registru Service General

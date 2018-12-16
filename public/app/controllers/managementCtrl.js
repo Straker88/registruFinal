@@ -314,8 +314,15 @@ angular.module('managementController', [])
 
 
 
-
     .controller('registruLogisticServiceCtrl', function () {
+        var app = this;
+        app.accessDenied = true;
+        app.errorMsg = false;
+        app.editPacientAccess = false;
+        app.deletePacientAccess = false;
+    })
+
+    .controller('registruLogisticRecarcasariCtrl', function () {
         var app = this;
         app.accessDenied = true;
         app.errorMsg = false;

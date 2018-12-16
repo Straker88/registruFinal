@@ -105,14 +105,14 @@ angular.module('userServices', [])
 
         };
 
-        // recarcasareFactory.getService = function (id) {
-        //     return $http.get('/api/service/' + id);
+        recarcasareFactory.getRecarcasare = function (id) {
+            return $http.get('/api/recarcasare/' + id);
 
-        // };
+        };
 
-        // recarcasareFactory.editService = function (id) {
-        //     return $http.put('/api/editService', id);
-        // };
+        recarcasareFactory.editRecarcasare = function (id) {
+            return $http.put('/api/editRecarcasare', id);
+        };
 
         return recarcasareFactory;
     })

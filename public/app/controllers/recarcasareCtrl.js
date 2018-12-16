@@ -53,7 +53,7 @@ angular.module('recarcasareControllers', ['userServices'])
 
     })
 
-    .controller('registruRecarcasareCabinetCtrl', function ($scope) {
+    .controller('registruRecarcasariCabinetCtrl', function ($scope) {
         var app = this;
         app.errorMsg = false;
         app.editPacientAccess = false;
@@ -63,7 +63,7 @@ angular.module('recarcasareControllers', ['userServices'])
 
     })
 
-    .controller('registruRecarcasareCtrl', function ($scope) {
+    .controller('registruRecarcasariCtrl', function ($scope) {
         var app = this;
         app.errorMsg = false;
         app.editPacientAccess = false;
@@ -72,856 +72,888 @@ angular.module('recarcasareControllers', ['userServices'])
     })
 
 
-    // .controller('editRecarcasareCtrl', function ($scope, $routeParams, Recarcasare, $timeout) {
-    //     var app = this;
-    //     var eroare = 'Campul trebuie sa contina cel putin 1 carcater.';
-
-    //     $scope.Back = function () {
-    //         window.history.back();
-    //     };
-
-    //     Recarcasare.getRecarcasare($routeParams.id).then(function (data) {
-    //         if (data.data.success) {
-
-
-    //             //              1.Cabinet ----------------------------------------------
-    //             $scope.newData_Inregistrare = data.data.service.data_inregistrare;
-    //             $scope.newData_Estimativa = data.data.service.data_estimativa;
-    //             $scope.newNume = data.data.service.service_inregistrat_pacient;
-    //             $scope.newTelefon = data.data.service.telefon;
-    //             $scope.newDenumire_Aparat = data.data.service.denumire_aparat;
-    //             $scope.newSerie_Aparat = data.data.service.serie_aparat;
-    //             $scope.newDefectiune_Reclamata = data.data.service.defectiune_reclamata;
-    //             $scope.newConstatare_Cabinet = data.data.service.constatare_cabinet;
-    //             $scope.newCompletare_Cabinet = data.data.service.completare_cabinet;
-    //             $scope.newU_Stanga = data.data.service.u_stanga;
-    //             $scope.newU_Dreapta = data.data.service.u_dreapta;
-    //             $scope.newGarantie = data.data.service.garantie;
-    //             $scope.newCutie = data.data.service.cutie;
-    //             $scope.newBaterie = data.data.service.baterie;
-    //             $scope.newMulaj = data.data.service.mulaj;
-    //             $scope.newOliva = data.data.service.oliva;
-    //             $scope.newObservatii_Cabinet = data.data.service.observatii_cabinet;
-    //             $scope.newObservatii_Pacient = data.data.service.observatii_pacient;
-    //             $scope.Nr_Comanda_Service = data.data.service.nr_comanda_service;
-    //             $scope.newIesit_Cabinet = data.data.service.iesit_cabinet;
-    //             $scope.newIntrat_Cabinet = data.data.service.intrat_cabinet;
-    //             $scope.newPredat_Pacient = data.data.service.predat_pacient;
-    //             $scope.newCabinet = data.data.service.cabinet;
-    //             $scope.newTaxa_Urgenta_Cabinet = data.data.service.taxa_urgenta_cabinet;
-    //             currentCabinet = data.data.service.cabinet;
-    //             app.currentService = data.data.service._id;
-
-    //             //              2.Logistic ----------------------------------------------
-    //             $scope.newLog_Sosit = data.data.service.log_sosit;
-    //             $scope.newLog_Plecat = data.data.service.log_plecat;
-    //             $scope.newLog_Preluat = data.data.service.log_preluat;
-    //             $scope.newLog_Trimis = data.data.service.log_trimis;
-    //             $scope.Observatii_service_Logistic = data.data.service.observatii_service_logistic;
-
-
-
-    //             //              3.Service ----------------------------------------------
-    //             $scope.newObservatii_Service = data.data.service.observatii_service;
-    //             $scope.newServ_Sosit = data.data.service.serv_sosit;
-    //             $scope.newServ_Plecat = data.data.service.serv_plecat;
-    //             $scope.newFinalizat_Reparatie = data.data.service.finalizat_reparatie;
-    //             $scope.newConstatare_Service = data.data.service.constatare_service;
-    //             $scope.newOperatiuni_Efectuate = data.data.service.operatiuni_efectuate;
-    //             $scope.newPiese_Inlocuite = data.data.service.piese_inlocuite;
-    //             $scope.newCod_Componente = data.data.service.cod_componente;
-    //             $scope.newCost_Reparatie = data.data.service.cost_reparatie;
-    //             $scope.newExecutant_Reparatie = data.data.service.executant_reparatie;
-    //             $scope.newTaxa_Constatare = data.data.service.taxa_constatare;
-    //             $scope.newTaxa_Urgenta = data.data.service.taxa_urgenta;
-    //             $scope.newGarantie_Serv = data.data.service.garantie_serv;
-
-    //         } else {
-    //             app.errorMsg = data.data.message;
-    //         }
-    //     });
-
-
-    //     // Cabinet 
-    //     //----------------------------------------------------------------------------------------------
-
-    //     app.updateIesit_Cabinet = function (newIesit_Cabinet, valid) {
-    //         app.errorMsgIesit_Cabinet = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.iesit_cabinet = $scope.newIesit_Cabinet;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgIesit_Cabinet = data.data.message;
-    //                     $timeout(function () {
-    //                         app.iesit_cabinetForm.iesit_cabinet.$setPristine();
-    //                         app.iesit_cabinetForm.iesit_cabinet.$setUntouched();
-    //                         app.successMsgIesit_Cabinet = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgIesit_Cabinet = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgIesit_Cabinet = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgIesit_Cabinet = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateIntrat_Cabinet = function (newIntrat_Cabinet, valid) {
-    //         app.errorMsgIntrat_Cabinet = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.intrat_cabinet = $scope.newIntrat_Cabinet;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgIntrat_Cabinet = data.data.message;
-    //                     $timeout(function () {
-    //                         app.intrat_cabinetForm.intrat_cabinet.$setPristine();
-    //                         app.intrat_cabinetForm.intrat_cabinet.$setUntouched();
-    //                         app.successMsgIntrat_Cabinet = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgIntrat_Cabinet = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgIntrat_Cabinet = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgIesit_Cabinet = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updatePredat_Pacient = function (newPredat_Pacient, valid) {
-    //         app.errorMsgPredat_Pacient = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.predat_pacient = $scope.newPredat_Pacient;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgPredat_Pacient = data.data.message;
-    //                     $timeout(function () {
-    //                         app.predat_pacientForm.predat_pacient.$setPristine();
-    //                         app.predat_pacientForm.predat_pacient.$setUntouched();
-    //                         app.successMsgPredat_Pacient = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgPredat_Pacient = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgPredat_Pacient = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgIesit_Cabinet = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateCompletare_Cabinet = function (newCompletare_Cabinet, valid) {
-    //         app.errorMsgCompletare_Cabinet = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.completare_cabinet = $scope.newCompletare_Cabinet;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgCompletare_Cabinet = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.completare_cabinetForm.completare_cabinet.$setPristine();
-    //                         app.completare_cabinetForm.completare_cabinet.$setUntouched();
-    //                         app.successMsgCompletare_Cabinet = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgCompletare_Cabinet = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgCompletare_Cabinet = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     // Logistic 
-    //     //----------------------------------------------------------------------------------------------
-
-    //     app.updateLog_Sosit = function (newLog_Sosit, valid) {
-    //         app.errorMsgLog_Sosit = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.log_sosit = $scope.newLog_Sosit;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgLog_Sosit = data.data.message;
-    //                     $timeout(function () {
-    //                         app.log_sositForm.log_sosit.$setPristine();
-    //                         app.log_sositForm.log_sosit.$setUntouched();
-    //                         app.successMsgLog_Sosit = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgLog_Sosit = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgLog_Sosit = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgLog_Sosit = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateLog_Plecat = function (newLog_Plecat, valid) {
-    //         app.errorMsgLog_Plecat = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.log_plecat = $scope.newLog_Plecat;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgLog_Plecat = data.data.message;
-    //                     $timeout(function () {
-    //                         app.log_plecatForm.log_plecat.$setPristine();
-    //                         app.log_plecatForm.log_plecat.$setUntouched();
-    //                         app.successMsgLog_Plecat = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgLog_Plecat = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgLog_Plecat = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgLog_Plecat = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-
-    //     app.updateLog_Preluat = function (newLog_Preluat, valid) {
-    //         app.errorMsgLog_Preluat = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.log_preluat = $scope.newLog_Preluat;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgLog_Preluat = data.data.message;
-    //                     $timeout(function () {
-    //                         app.log_preluatForm.log_preluat.$setPristine();
-    //                         app.log_preluatForm.log_preluat.$setUntouched();
-    //                         app.successMsgLog_Preluat = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgLog_Preluat = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgLog_Preluat = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgLog_Preluat = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateLog_Trimis = function (newLog_Trimis, valid) {
-    //         app.errorMsgLog_Trimis = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.log_trimis = $scope.newLog_Trimis;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgLog_Trimis = data.data.message;
-    //                     $timeout(function () {
-    //                         app.log_trimisForm.log_trimis.$setPristine();
-    //                         app.log_trimisForm.log_trimis.$setUntouched();
-    //                         app.successMsgLog_Trimis = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgLog_Trimis = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgLog_Trimis = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgLog_Trimis = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateObservatii_service_Logistic = function (Observatii_service_Logistic, valid) {
-    //         app.errorMsgObservatii_service_Logistic = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.observatii_service_logistic = $scope.Observatii_service_Logistic;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgObservatii_service_Logistic = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.observatii_service_logisticForm.observatii_service_logistic.$setPristine();
-    //                         app.observatii_service_logisticForm.observatii_service_logistic.$setUntouched();
-    //                         app.successMsgObservatii_service_Logistic = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgObservatii_service_Logistic = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgObservatii_service_Logistic = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-
-    //     // Service 
-    //     //----------------------------------------------------------------------------------------------
-
-    //     app.updateServ_Sosit = function (newServ_Sosit, valid) {
-    //         app.errorMsgServ_Sosit = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.serv_sosit = $scope.newServ_Sosit;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgServ_Sosit = data.data.message;
-    //                     $timeout(function () {
-    //                         app.serv_sositForm.serv_sosit.$setPristine();
-    //                         app.serv_sositForm.serv_sosit.$setUntouched();
-    //                         app.successMsgServ_Sosit = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgServ_Sosit = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgServ_Sosit = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgServ_Sosit = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateFinalizat_Reparatie = function (newFinalizat_Reparatie, valid) {
-    //         app.errorMsgFinalizat_Reparatie = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.finalizat_reparatie = $scope.newFinalizat_Reparatie;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgFinalizat_Reparatie = data.data.message;
-    //                     $timeout(function () {
-    //                         app.finalizat_reparatieForm.finalizat_reparatie.$setPristine();
-    //                         app.finalizat_reparatieForm.finalizat_reparatie.$setUntouched();
-    //                         app.successMsgFinalizat_Reparatie = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgFinalizat_Reparatie = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgFinalizat_Reparatie = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgFinalizat_Reparatie = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateServ_Plecat = function (newServ_Plecat, valid) {
-    //         app.errorMsgServ_Plecat = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.serv_plecat = $scope.newServ_Plecat;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgServ_Plecat = data.data.message;
-    //                     $timeout(function () {
-    //                         app.serv_plecatForm.serv_plecat.$setPristine();
-    //                         app.serv_plecatForm.serv_plecat.$setUntouched();
-    //                         app.successMsgServ_Plecat = false;
-    //                         app.disabled = false;
-    //                     }, 1500);
-
-    //                 } else {
-    //                     app.errorMsgServ_Plecat = data.data.message;
-    //                     app.disabled = true;
-    //                     $timeout(function () {
-    //                         app.errorMsgServ_Plecat = false;
-    //                         app.disabled = false;
-    //                     }, 3000);
-
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgServ_Plecat = 'Acest camp trebuie completat';
-    //             app.disabled = false;
-
-    //         }
-    //     };
-
-    //     app.updateConstatare_Service = function (newConstatare_Service, valid) {
-    //         app.errorMsgConstatare_Service = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.constatare_service = $scope.newConstatare_Service;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgConstatare_Service = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.constatare_serviceForm.constatare_service.$setPristine();
-    //                         app.constatare_serviceForm.constatare_service.$setUntouched();
-    //                         app.successMsgConstatare_Service = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgConstatare_Service = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgConstatare_Service = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateOperatiuni_Efectuate = function (newOperatiuni_Efectuate, valid) {
-    //         app.errorMsgOperatiuni_Efectuate = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.operatiuni_efectuate = $scope.newOperatiuni_Efectuate;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgOperatiuni_Efectuate = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.operatiuni_efectuateForm.operatiuni_efectuate.$setPristine();
-    //                         app.operatiuni_efectuateForm.operatiuni_efectuate.$setUntouched();
-    //                         app.successMsgOperatiuni_Efectuate = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgOperatiuni_Efectuate = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgOperatiuni_Efectuate = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-
-    //     app.updatePiese_Inlocuite = function (newPiese_Inlocuite, valid) {
-    //         app.errorMsgPiese_Inlocuite = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.piese_inlocuite = $scope.newPiese_Inlocuite;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgPiese_Inlocuite = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.piese_inlocuiteForm.piese_inlocuite.$setPristine();
-    //                         app.piese_inlocuiteForm.piese_inlocuite.$setUntouched();
-    //                         app.successMsgPiese_Inlocuite = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgPiese_Inlocuite = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgPiese_Inlocuite = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateCod_Componente = function (newCod_Componente, valid) {
-    //         app.errorMsgCod_Componente = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.cod_componente = $scope.newCod_Componente;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgCod_Componente = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.cod_componenteForm.cod_componente.$setPristine();
-    //                         app.cod_componenteForm.cod_componente.$setUntouched();
-    //                         app.successMsgCod_Componente = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgCod_Componente = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgCod_Componente = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateCost_Reparatie = function (newCost_Reparatie, valid) {
-    //         app.errorMsgCost_Reparatie = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.cost_reparatie = $scope.newCost_Reparatie;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgCost_Reparatie = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.cost_reparatieForm.cost_reparatie.$setPristine();
-    //                         app.cost_reparatieForm.cost_reparatie.$setUntouched();
-    //                         app.successMsgCost_Reparatie = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgCost_Reparatie = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgCost_Reparatie = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateExecutant_Reparatie = function (newExecutant_Reparatie, valid) {
-    //         app.errorMsgExecutant_Reparatie = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.executant_reparatie = $scope.newExecutant_Reparatie;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgExecutant_Reparatie = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.executant_reparatieForm.executant_reparatie.$setPristine();
-    //                         app.executant_reparatieForm.executant_reparatie.$setUntouched();
-    //                         app.successMsgExecutant_Reparatie = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgExecutant_Reparatie = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgExecutant_Reparatie = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateObservatii_Service = function (newObservatii_Service, valid) {
-    //         app.errorMsgObservatii_Service = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.observatii_service = $scope.newObservatii_Service;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgTaxa_Urgenta = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.observatii_serviceForm.observatii_service.$setPristine();
-    //                         app.observatii_serviceForm.observatii_service.$setUntouched();
-    //                         app.successMsgTaxa_Urgenta = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgObservatii_Service = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgObservatii_Service = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateGarantie_Serv = function (newGarantie_Serv, valid) {
-    //         app.errorMsgGarantie_Serv = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.garantie_serv = $scope.newGarantie_Serv;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgTaxa_Urgenta = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.garantie_servForm.garantie_serv.$setPristine();
-    //                         app.garantie_servForm.garantie_serv.$setUntouched();
-    //                         app.successMsgTaxa_Urgenta = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgGarantie_Serv = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgGarantie_Serv = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateTaxa_Urgenta = function (newTaxa_Urgenta, valid) {
-    //         app.errorMsgTaxa_Urgenta = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.taxa_urgenta = $scope.newTaxa_Urgenta;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgTaxa_Urgenta = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.taxa_urgentaForm.taxa_urgenta.$setPristine();
-    //                         app.taxa_urgentaForm.taxa_urgenta.$setUntouched();
-    //                         app.successMsgTaxa_Urgenta = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgTaxa_Urgenta = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgTaxa_Urgenta = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-    //     app.updateTaxa_Constatare = function (newTaxa_Constatare, valid) {
-    //         app.errorMsgTaxa_Constatare = false;
-    //         app.disabled = false;
-
-    //         if (valid) {
-    //             var serviceObject = {};
-    //             serviceObject._id = app.currentService;
-    //             serviceObject.taxa_constatare = $scope.newTaxa_Constatare;
-
-    //             Service.editService(serviceObject).then(function (data) {
-
-    //                 if (data.data.success) {
-    //                     app.successMsgTaxa_Constatare = data.data.message;
-
-    //                     $timeout(function () {
-    //                         app.taxa_constatareForm.taxa_constatare.$setPristine();
-    //                         app.taxa_constatareForm.taxa_constatare.$setUntouched();
-    //                         app.successMsgTaxa_Constatare = false;
-    //                         app.disabled = false;
-    //                     }, 700);
-
-    //                 } else {
-    //                     app.errorMsgTaxa_Constatare = data.data.message;
-    //                     app.disabled = false;
-    //                 }
-    //             });
-    //         } else {
-    //             app.errorMsgTaxa_Constatare = eroare;
-    //             app.disabled = true;
-    //         }
-
-    //     };
-
-
-    // });
+    .controller('editRecarcasareCtrl', function ($scope, $routeParams, Recarcasare, $timeout) {
+        var app = this;
+        var eroare = 'Campul trebuie sa contina cel putin 1 carcater.';
+
+        $scope.Back = function () {
+            window.history.back();
+        };
+
+        Recarcasare.getRecarcasare($routeParams.id).then(function (data) {
+            if (data.data.success) {
+
+
+                //              1.Cabinet ----------------------------------------------
+                $scope.newData_Inregistrare = data.data.recarcasare.data_inregistrare;
+                $scope.newData_Estimativa = data.data.recarcasare.data_estimativa;
+                $scope.newNume = data.data.recarcasare.recarcasare_inregistrat_pacient;
+                $scope.newTelefon = data.data.recarcasare.telefon;
+                $scope.newDenumire_Aparat = data.data.recarcasare.denumire_aparat;
+                $scope.newSerie_Aparat = data.data.recarcasare.serie_aparat;
+                $scope.newDefectiune_Reclamata = data.data.recarcasare.defectiune_reclamata;
+                $scope.newConstatare_Cabinet = data.data.recarcasare.constatare_cabinet;
+                $scope.newCompletare_Cabinet = data.data.recarcasare.completare_cabinet;
+                $scope.newU_Stanga = data.data.recarcasare.u_stanga;
+                $scope.newU_Dreapta = data.data.recarcasare.u_dreapta;
+                $scope.newGarantie = data.data.recarcasare.garantie;
+                $scope.newCutie = data.data.recarcasare.cutie;
+                $scope.newBaterie = data.data.recarcasare.baterie;
+                $scope.newMulaj = data.data.recarcasare.mulaj;
+                $scope.newObservatii_Cabinet = data.data.recarcasare.observatii_cabinet;
+                $scope.newObservatii_Pacient = data.data.recarcasare.observatii_pacient;
+                $scope.Nr_Comanda_Recarcasare = data.data.recarcasare.nr_comanda_recarcasare;
+                $scope.newIesit_Cabinet = data.data.recarcasare.iesit_cabinet;
+                $scope.newIntrat_Cabinet = data.data.recarcasare.intrat_cabinet;
+                $scope.newPredat_Pacient = data.data.recarcasare.predat_pacient;
+                $scope.newCabinet = data.data.recarcasare.cabinet;
+                $scope.newTaxa_Urgenta_Cabinet = data.data.recarcasare.taxa_urgenta_cabinet;
+                currentCabinet = data.data.recarcasare.cabinet;
+                app.currentRecarcasare = data.data.recarcasare._id;
+
+                //              2.Logistic ----------------------------------------------
+                $scope.newLog_Sosit = data.data.recarcasare.log_sosit;
+                $scope.newLog_Plecat = data.data.recarcasare.log_plecat;
+                $scope.newLog_Preluat = data.data.recarcasare.log_preluat;
+                $scope.newLog_Trimis = data.data.recarcasare.log_trimis;
+                $scope.Observatii_recarcasare_Logistic = data.data.recarcasare.observatii_recarcasare_logistic;
+
+
+
+                //              3.Asamblare ----------------------------------------------
+                $scope.newObservatii_Asamblare = data.data.recarcasare.observatii_asamblare;
+                $scope.newAsamblare_Sosit = data.data.recarcasare.asamblare_sosit;
+                $scope.newAsamblare_Plecat = data.data.recarcasare.asamblare_plecat;
+                $scope.newFinalizat_Recarcasare = data.data.recarcasare.finalizat_recarcasare;
+                $scope.newConstatare_Asamblare = data.data.recarcasare.constatare_asamblare;
+                $scope.newOperatiuni_Efectuate = data.data.recarcasare.operatiuni_efectuate;
+                $scope.newPiese_Inlocuite = data.data.recarcasare.piese_inlocuite;
+                $scope.newCod_Componente = data.data.recarcasare.cod_componente;
+                $scope.newCost_Recarcasare = data.data.recarcasare.cost_recarcasare;
+                $scope.newExecutant_Recarcasare = data.data.recarcasare.executant_recarcasare;
+                $scope.newExecutant_Reparatie = data.data.recarcasare.executant_reparatie;
+                $scope.newTaxa_Constatare = data.data.recarcasare.taxa_constatare;
+                $scope.newTaxa_Urgenta = data.data.recarcasare.taxa_urgenta;
+                $scope.newGarantie_Asamblare = data.data.recarcasare.garantie_asamblare;
+
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        });
+
+
+        // Cabinet 
+        //----------------------------------------------------------------------------------------------
+
+        app.updateIesit_Cabinet = function (newIesit_Cabinet, valid) {
+            app.errorMsgIesit_Cabinet = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.iesit_cabinet = $scope.newIesit_Cabinet;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgIesit_Cabinet = data.data.message;
+                        $timeout(function () {
+                            app.iesit_cabinetForm.iesit_cabinet.$setPristine();
+                            app.iesit_cabinetForm.iesit_cabinet.$setUntouched();
+                            app.successMsgIesit_Cabinet = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgIesit_Cabinet = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgIesit_Cabinet = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgIesit_Cabinet = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateIntrat_Cabinet = function (newIntrat_Cabinet, valid) {
+            app.errorMsgIntrat_Cabinet = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.intrat_cabinet = $scope.newIntrat_Cabinet;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgIntrat_Cabinet = data.data.message;
+                        $timeout(function () {
+                            app.intrat_cabinetForm.intrat_cabinet.$setPristine();
+                            app.intrat_cabinetForm.intrat_cabinet.$setUntouched();
+                            app.successMsgIntrat_Cabinet = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgIntrat_Cabinet = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgIntrat_Cabinet = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgIesit_Cabinet = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updatePredat_Pacient = function (newPredat_Pacient, valid) {
+            app.errorMsgPredat_Pacient = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.predat_pacient = $scope.newPredat_Pacient;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgPredat_Pacient = data.data.message;
+                        $timeout(function () {
+                            app.predat_pacientForm.predat_pacient.$setPristine();
+                            app.predat_pacientForm.predat_pacient.$setUntouched();
+                            app.successMsgPredat_Pacient = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgPredat_Pacient = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgPredat_Pacient = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgIesit_Cabinet = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateCompletare_Cabinet = function (newCompletare_Cabinet, valid) {
+            app.errorMsgCompletare_Cabinet = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.completare_cabinet = $scope.newCompletare_Cabinet;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgCompletare_Cabinet = data.data.message;
+
+                        $timeout(function () {
+                            app.completare_cabinetForm.completare_cabinet.$setPristine();
+                            app.completare_cabinetForm.completare_cabinet.$setUntouched();
+                            app.successMsgCompletare_Cabinet = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgCompletare_Cabinet = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgCompletare_Cabinet = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        // Logistic 
+        //----------------------------------------------------------------------------------------------
+
+        app.updateLog_Sosit = function (newLog_Sosit, valid) {
+            app.errorMsgLog_Sosit = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.log_sosit = $scope.newLog_Sosit;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgLog_Sosit = data.data.message;
+                        $timeout(function () {
+                            app.log_sositForm.log_sosit.$setPristine();
+                            app.log_sositForm.log_sosit.$setUntouched();
+                            app.successMsgLog_Sosit = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgLog_Sosit = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgLog_Sosit = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgLog_Sosit = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateLog_Plecat = function (newLog_Plecat, valid) {
+            app.errorMsgLog_Plecat = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.log_plecat = $scope.newLog_Plecat;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgLog_Plecat = data.data.message;
+                        $timeout(function () {
+                            app.log_plecatForm.log_plecat.$setPristine();
+                            app.log_plecatForm.log_plecat.$setUntouched();
+                            app.successMsgLog_Plecat = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgLog_Plecat = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgLog_Plecat = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgLog_Plecat = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+
+        app.updateLog_Preluat = function (newLog_Preluat, valid) {
+            app.errorMsgLog_Preluat = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.log_preluat = $scope.newLog_Preluat;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgLog_Preluat = data.data.message;
+                        $timeout(function () {
+                            app.log_preluatForm.log_preluat.$setPristine();
+                            app.log_preluatForm.log_preluat.$setUntouched();
+                            app.successMsgLog_Preluat = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgLog_Preluat = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgLog_Preluat = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgLog_Preluat = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateLog_Trimis = function (newLog_Trimis, valid) {
+            app.errorMsgLog_Trimis = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.log_trimis = $scope.newLog_Trimis;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgLog_Trimis = data.data.message;
+                        $timeout(function () {
+                            app.log_trimisForm.log_trimis.$setPristine();
+                            app.log_trimisForm.log_trimis.$setUntouched();
+                            app.successMsgLog_Trimis = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgLog_Trimis = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgLog_Trimis = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgLog_Trimis = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateObservatii_recarcasare_Logistic = function (Observatii_recarcasare_Logistic, valid) {
+            app.errorMsgObservatii_recarcasare_Logistic = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.observatii_recarcasare_logistic = $scope.Observatii_recarcasare_Logistic;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_recarcasare_Logistic = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$setPristine();
+                            app.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$setUntouched();
+                            app.successMsgObservatii_recarcasare_Logistic = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_recarcasare_Logistic = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_recarcasare_Logistic = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+
+        // Asamblare.
+        //----------------------------------------------------------------------------------------------
+
+        app.updateAsamblare_Sosit = function (newAsamblare_Sosit, valid) {
+            app.errorMsgAsamblare_Sosit = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.asamblare_sosit = $scope.newAsamblare_Sosit;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgAsamblare_Sosit = data.data.message;
+                        $timeout(function () {
+                            app.asamblare_sositForm.asamblare_sosit.$setPristine();
+                            app.asamblare_sositForm.asamblare_sosit.$setUntouched();
+                            app.successMsgAsamblare_Sosit = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgAsamblare_Sosit = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgAsamblare_Sosit = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgAsamblare_Sosit = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateFinalizat_Recarcasare = function (newFinalizat_Recarcasare, valid) {
+            app.errorMsgFinalizat_Recarcasare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.finalizat_recarcasare = $scope.newFinalizat_Recarcasare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgFinalizat_Recarcasare = data.data.message;
+                        $timeout(function () {
+                            app.finalizat_recarcasareForm.finalizat_recarcasare.$setPristine();
+                            app.finalizat_recarcasareForm.finalizat_recarcasare.$setUntouched();
+                            app.successMsgFinalizat_Recarcasare = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgFinalizat_Recarcasare = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgFinalizat_Recarcasare = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgFinalizat_Recarcasare = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateAsamblare_Plecat = function (newAsamblare_Plecat, valid) {
+            app.errorMsgAsamblare_Plecat = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.asamblare_plecat = $scope.newAsamblare_Plecat;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgAsamblare_Plecat = data.data.message;
+                        $timeout(function () {
+                            app.asamblare_plecatForm.asamblare_plecat.$setPristine();
+                            app.asamblare_plecatForm.asamblare_plecat.$setUntouched();
+                            app.successMsgAsamblare_Plecat = false;
+                            app.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        app.errorMsgAsamblare_Plecat = data.data.message;
+                        app.disabled = true;
+                        $timeout(function () {
+                            app.errorMsgAsamblare_Plecat = false;
+                            app.disabled = false;
+                        }, 3000);
+
+                    }
+                });
+            } else {
+                app.errorMsgAsamblare_Plecat = 'Acest camp trebuie completat';
+                app.disabled = false;
+
+            }
+        };
+
+        app.updateConstatare_Asamblare = function (newConstatare_Asamblare, valid) {
+            app.errorMsgConstatare_Asamblare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.constatare_asamblare = $scope.newConstatare_Asamblare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgConstatare_Asamblare = data.data.message;
+
+                        $timeout(function () {
+                            app.constatare_asamblareForm.constatare_asamblare.$setPristine();
+                            app.constatare_asamblareForm.constatare_asamblare.$setUntouched();
+                            app.successMsgConstatare_Asamblare = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgConstatare_Asamblare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgConstatare_Asamblare = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateOperatiuni_Efectuate = function (newOperatiuni_Efectuate, valid) {
+            app.errorMsgOperatiuni_Efectuate = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.operatiuni_efectuate = $scope.newOperatiuni_Efectuate;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgOperatiuni_Efectuate = data.data.message;
+
+                        $timeout(function () {
+                            app.operatiuni_efectuateForm.operatiuni_efectuate.$setPristine();
+                            app.operatiuni_efectuateForm.operatiuni_efectuate.$setUntouched();
+                            app.successMsgOperatiuni_Efectuate = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgOperatiuni_Efectuate = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgOperatiuni_Efectuate = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+
+        app.updatePiese_Inlocuite = function (newPiese_Inlocuite, valid) {
+            app.errorMsgPiese_Inlocuite = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.piese_inlocuite = $scope.newPiese_Inlocuite;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgPiese_Inlocuite = data.data.message;
+
+                        $timeout(function () {
+                            app.piese_inlocuiteForm.piese_inlocuite.$setPristine();
+                            app.piese_inlocuiteForm.piese_inlocuite.$setUntouched();
+                            app.successMsgPiese_Inlocuite = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgPiese_Inlocuite = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgPiese_Inlocuite = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateCod_Componente = function (newCod_Componente, valid) {
+            app.errorMsgCod_Componente = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.cod_componente = $scope.newCod_Componente;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgCod_Componente = data.data.message;
+
+                        $timeout(function () {
+                            app.cod_componenteForm.cod_componente.$setPristine();
+                            app.cod_componenteForm.cod_componente.$setUntouched();
+                            app.successMsgCod_Componente = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgCod_Componente = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgCod_Componente = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateCost_Recarcasare = function (newCost_Recarcasare, valid) {
+            app.errorMsgCost_Recarcasare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.cost_recarcasare = $scope.newCost_Recarcasare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgCost_Recarcasare = data.data.message;
+
+                        $timeout(function () {
+                            app.cost_recarcasareForm.cost_recarcasare.$setPristine();
+                            app.cost_recarcasareForm.cost_recarcasare.$setUntouched();
+                            app.successMsgCost_Recarcasare = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgCost_Recarcasare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgCost_Recarcasare = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateExecutant_Recarcasare = function (newExecutant_Recarcasare, valid) {
+            app.errorMsgExecutant_Recarcasare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.executant_recarcasare = $scope.newExecutant_Recarcasare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgExecutant_Recarcasare = data.data.message;
+
+                        $timeout(function () {
+                            app.executant_recarcasareForm.executant_recarcasare.$setPristine();
+                            app.executant_recarcasareForm.executant_recarcasare.$setUntouched();
+                            app.successMsgExecutant_Recarcasare = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgExecutant_Recarcasare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgExecutant_Recarcasare = eroare;
+                app.disabled = true;
+            }
+
+        };
+        app.updateExecutant_Reparatie = function (newExecutant_Reparatie, valid) {
+            app.errorMsgExecutant_Reparatie = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.executant_reparatie = $scope.newExecutant_Reparatie;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgExecutant_Reparatie = data.data.message;
+
+                        $timeout(function () {
+                            app.executant_reparatieForm.executant_reparatie.$setPristine();
+                            app.executant_reparatieForm.executant_reparatie.$setUntouched();
+                            app.successMsgExecutant_Reparatie = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgExecutant_Reparatie = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgExecutant_Reparatie = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateObservatii_Asamblare = function (newObservatii_Asamblare, valid) {
+            app.errorMsgObservatii_Asamblare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.observatii_asamblare = $scope.newObservatii_Asamblare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgTaxa_Urgenta = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_asamblareForm.observatii_asamblare.$setPristine();
+                            app.observatii_asamblareForm.observatii_asamblare.$setUntouched();
+                            app.successMsgTaxa_Urgenta = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_Asamblare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_Asamblare = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateGarantie_Asamblare = function (newGarantie_Asamblare, valid) {
+            app.errorMsgGarantie_Asamblare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.garantie_asamblare = $scope.newGarantie_Asamblare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgTaxa_Urgenta = data.data.message;
+
+                        $timeout(function () {
+                            app.garantie_asamblareForm.garantie_asamblare.$setPristine();
+                            app.garantie_asamblareForm.garantie_asamblare.$setUntouched();
+                            app.successMsgTaxa_Urgenta = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgGarantie_Asamblare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgGarantie_Asamblare = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateTaxa_Urgenta = function (newTaxa_Urgenta, valid) {
+            app.errorMsgTaxa_Urgenta = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.taxa_urgenta = $scope.newTaxa_Urgenta;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgTaxa_Urgenta = data.data.message;
+
+                        $timeout(function () {
+                            app.taxa_urgentaForm.taxa_urgenta.$setPristine();
+                            app.taxa_urgentaForm.taxa_urgenta.$setUntouched();
+                            app.successMsgTaxa_Urgenta = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgTaxa_Urgenta = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgTaxa_Urgenta = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+        app.updateTaxa_Constatare = function (newTaxa_Constatare, valid) {
+            app.errorMsgTaxa_Constatare = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.taxa_constatare = $scope.newTaxa_Constatare;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgTaxa_Constatare = data.data.message;
+
+                        $timeout(function () {
+                            app.taxa_constatareForm.taxa_constatare.$setPristine();
+                            app.taxa_constatareForm.taxa_constatare.$setUntouched();
+                            app.successMsgTaxa_Constatare = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgTaxa_Constatare = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgTaxa_Constatare = eroare;
+                app.disabled = true;
+            }
+
+        };
+
+
+    });
 
 
 

@@ -409,7 +409,7 @@
         </div>
     </form>
 
-    <form style="margin-top:30px;" id="submit2" ng-submit="editRecarcasare.updateObservatii_recarcasare_Logistic(Observatii_recarcasare_Logistic, editRecarcasare.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$valid)"
+    <form style="margin-top:30px;" id="submit12" ng-submit="editRecarcasare.updateObservatii_recarcasare_Logistic(Observatii_recarcasare_Logistic, editRecarcasare.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$valid)"
         class="col-md-12" name="editRecarcasare.observatii_recarcasare_logisticForm" novalidate>
         <label>Observatii Logistic:</label>
         <textarea ng-disabled="!main.logistic" id="submit-holder12" style="resize: none;" class="form-control" type="text"
@@ -460,7 +460,7 @@
         <input style="pointer-events: none;" id="time-holder12" class="form-control" type="text" name="finalizat_recarcasare"
             ng-model="newFinalizat_Recarcasare" readonly>
 
-        <button ng-show="main.service" ng-disabled="editRecarcasare.disabled" class="btn btn-info btn-sm" type="submit"
+        <button ng-show="main.asamblare" ng-disabled="editRecarcasare.disabled" class="btn btn-info btn-sm" type="submit"
             name="finalizat_recarcasare" id="time12">Adauga</button>
 
         <div class="row show-hide-message" ng-show="editRecarcasare.successMsgFinalizat_Recarcasare">
@@ -535,7 +535,7 @@
         editRecarcasare.piese_inlocuiteForm.piese_inlocuite.$valid)"
             name="editRecarcasare.piese_inlocuiteForm" novalidate>
             <label>Piese Inlocuite:</label>
-            <textarea maxlength="170" ng-disabled="!main.service" style="resize:none;min-height: 95px;" id="submit-holder4"
+            <textarea maxlength="170" ng-disabled="!main.asamblare" style="resize:none;min-height: 95px;" id="submit-holder4"
                 class="form-control" type="text" name="piese_inlocuite" ng-model="newPiese_Inlocuite" placeholder="-"
                 required autocomplete="off"></textarea>
 
@@ -548,7 +548,7 @@
         editRecarcasare.cod_componenteForm.cod_componente.$valid)"
             name="editRecarcasare.cod_componenteForm" novalidate>
             <label>Cod componente:</label>
-            <textarea maxlength="168" ng-disabled="!main.service" style="resize:none;min-height: 95px;" id="submit-holder5"
+            <textarea maxlength="168" ng-disabled="!main.asamblare" style="resize:none;min-height: 95px;" id="submit-holder5"
                 class="form-control" type="text" name="cod_componente" ng-model="newCod_Componente" placeholder="-"
                 required autocomplete="off"></textarea>
 
@@ -568,16 +568,16 @@
         <form id="submit6" style="width:50%;float:left;display: table;" ng-submit="editRecarcasare.updateCost_Recarcasare(newCost_Recarcasare,
 editRecarcasare.cost_recarcasareForm.cost_recarcasare.$valid)"
             name="editRecarcasare.cost_recarcasareForm" novalidate>
-            <label>Cost recarcasare:</label>
-            <input maxlength="40" ng-disabled="!main.service" id="submit-holder6" class="form-control" type="text" name="cost_recarcasare"
-                ng-model="newCost_Recarcasare" placeholder="-" required autocomplete="off">
+            <label>Cost total recarcasare:</label>
+            <input maxlength="40" ng-disabled="!main.asamblare" id="submit-holder6" class="form-control" type="text"
+                name="cost_recarcasare" ng-model="newCost_Recarcasare" placeholder="-" required autocomplete="off">
 
             <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgCost_Recarcasare">
                 <div class="alert alert-danger">{{ editRecarcasare.errorMsgCost_Recarcasare }}</div>
             </div>
         </form>
 
-        <form id="submit7" style="width:49%;float: right;display: table;" ng-submit="editRecarcasare.updateExecutant_Recarcasare(newExecutant_Recarcasare,
+        <form id="submit7" style="width:24%;float: right;display: table;" ng-submit="editRecarcasare.updateExecutant_Recarcasare(newExecutant_Recarcasare,
 editRecarcasare.executant_recarcasareForm.executant_recarcasare.$valid)"
             name="editRecarcasare.executant_recarcasareForm" novalidate>
             <label>Executant Recarcasare:</label>
@@ -586,6 +586,17 @@ editRecarcasare.executant_recarcasareForm.executant_recarcasare.$valid)"
 
             <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgExecutant_Recarcasare">
                 <div class="alert alert-danger">{{ editRecarcasare.errorMsgExecutant_Recarcasare }}</div>
+            </div>
+        </form>
+        <form id="submit13" style="width:24%;float: right;display: table;" ng-submit="editRecarcasare.updateExecutant_Reparatie(newExecutant_Reparatie,
+editRecarcasare.executant_reparatieForm.executant_reparatie.$valid)"
+            name="editRecarcasare.executant_reparatieForm" novalidate>
+            <label>Executant Reparatie:</label>
+            <input maxlength="40" ng-disabled="!main.asamblare" id="submit-holder13" class="form-control" type="text"
+                name="executant_reparatie" ng-model="newExecutant_Reparatie" placeholder="-" required autocomplete="off">
+
+            <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgExecutant_Reparatie">
+                <div class="alert alert-danger">{{ editRecarcasare.errorMsgExecutant_Reparatie }}</div>
             </div>
         </form>
 
@@ -694,9 +705,9 @@ editRecarcasare.taxa_urgentaForm.taxa_urgenta.$valid)"
     </div>
 </div>
 
-<div ng-show="main.service">
+<div ng-show="main.asamblare">
     <button style="float: right;clear: both;" form="form1" ng-disabled="editRecarcasare.disabled" class="btn btn-info btn-sm hidden-print"
-        type="submit" ng-model="newFinalizat_Recarcasare" name="finalizat_recarcasare" id="service1">Printeaza</button>
+        type="submit" ng-model="newFinalizat_Recarcasare" name="finalizat_recarcasare" id="recarcasare1">Printeaza</button>
 
 </div>
 <br>

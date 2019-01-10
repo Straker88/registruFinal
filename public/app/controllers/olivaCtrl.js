@@ -3,8 +3,8 @@ angular.module('olivaControllers', ['userServices'])
     .controller('regOlivaCtrl', function ($route, $routeParams, $http, $location, $timeout, Oliva, Pacient, $scope) {
         var app = this;
 
-        $scope.data_inregistrare = new moment().format('DD-MM-YYYY');
-        $scope.data_estimativa = new moment().businessAdd(6)._d;
+        $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
+        $scope.data_estimativa = new moment().add(6, 'days').format('DD/MM/YYYY');
 
         $scope.$watch('registerOliva.regData.pret_final - registerOliva.regData.avans', function (value) {
             $scope.registerOliva.regData.rest_plata = value;

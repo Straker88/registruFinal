@@ -57,7 +57,7 @@ $(document).ready(function () {
                     return '<a class="btn btn-primary btn-sm" href=/oliva/' + row._id + '>' + 'Detalii' + '</a>';
                 }
             }],
-        "order": [[2, 'desc']],
+        "order": [[0, 'desc']],
         "oLanguage": {
             "sSearch": "Cautare generala",
             "sLengthMenu": "Afiseaza _MENU_ inregistrari",

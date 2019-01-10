@@ -29,7 +29,7 @@
     "jquery.auto-save-form": "^1.0.0",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.10",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "moment-business-days": "^1.0.6",
     "mongoose": "^5.1.5",
     "mongoose-datatable": "^1.0.6",

@@ -10,10 +10,8 @@
   <meta name="author" content="">
 
   <script src="assets/js/jquery-3.3.1.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
   <script src="assets/js/momentjs-business.js"></script>
 
@@ -38,7 +36,7 @@
   <script src="app/services/userServices.js"></script>
   <script src="app/services/authServices.js"></script>
 
-  <title>Registru Service</title>
+  <title>Registru Dep. Tehnic</title>
 
 </head>
 
@@ -86,15 +84,10 @@
             <a ng-show="main.asamblare || main.authorized" href="/registruRecarcasari">Registru Recarcasari</a>
           </li>
 
-
-          <li>
-            <a ng-show="main.service || main.authorized" href="/profil_service/{{main.username}}">Inregistrarile Mele</a>
-          </li>
           <li>
             <a ng-show="main.service || main.authorized" href="/piese">Piese</a>
           </li>
-          <div ng-show="main.isLoggedIn && !main.logistic && !main.service && !main.plastie && !main.asamblare" class="dropdown"
-            style="float: left;margin: 8px 15px 0 0;">
+          <div ng-show="main.isLoggedIn && main.user" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Registre Generale
               <span class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -113,7 +106,7 @@
               </li>
             </ul>
           </div>
-          <div ng-show="main.isLoggedIn" class="dropdown" style="float: left;margin-top: 8px;">
+          <div ng-show="main.isLoggedIn && main.user" class="dropdown" style="float: left;margin-top: 8px;">
             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Pacienti
               <span class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -146,7 +139,7 @@
     <div class="jumbotron no-print" style="height: 140px;">
       <img style="float:right;" src="/assets/img/clarfon_transparent.png">
 
-      <h1 style="text-align: center;color: #5cb85c">Registru Service Clarfon</h1>
+      <h1 style="text-align: center;color: #5cb85c">Registru Departament Tehnic</h1>
       <br>
 
       <h2 ng-show="main.isLoggedIn" style="color: #1789ab;text-align: right;">Utilizator : {{main.username}}</h2>

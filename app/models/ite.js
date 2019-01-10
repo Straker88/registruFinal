@@ -17,6 +17,8 @@ var IteSchema = new Schema({
     ureche_protezata: { type: String },
     carcasa_ite: { type: String },
     culoare_carcasa: { type: String },
+    buton_programe: { type: String },
+    potentiometru_volum: { type: String },
     vent_ite: { type: String },
     pret_lista: { type: String },
     pret_final: { type: String },
@@ -38,7 +40,6 @@ var IteSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
-    observatii_ite_logistic: { type: String },
 
 
     // //     Laborator Asamblare ----------------------------------------------

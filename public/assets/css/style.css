@@ -284,6 +284,11 @@ padding:5px 25px;
   float: left;
   margin-right: 10px;
 }
+.regIteForm {
+  margin-bottom: 10px;
+  float: left;
+  margin-right: 10px;
+}
 
 
 .editPacForm {
@@ -324,7 +329,14 @@ text-align: center;}
 
 .optiuni_oliva{
   float: left;
-  max-width: 100px;
+  max-width: 170px;
+  text-align: center;
+  margin-bottom: 5px;
+  margin-right: 8px;
+}
+.optiuni_ite{
+  float: left;
+  max-width: 170px;
   text-align: center;
   margin-bottom: 5px;
   margin-right: 8px;
@@ -337,7 +349,7 @@ text-align: center;}
 
 .form-control[readonly] {
   border: none;
-  background: #e0f1ff9e;
+  background: #e0f1ff63;
   box-shadow: none;
   padding-left: 10px;
   cursor: not-allowed;
@@ -635,4 +647,16 @@ padding-right: 37px;
 .sorting_disabled {
   color:#08c;
   cursor: not-allowed;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+table#tabel {
+  font-size: 12px;
 }

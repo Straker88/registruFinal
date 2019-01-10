@@ -12,7 +12,6 @@ angular.module('pacientControllers', ['userServices'])
 
             if (valid) {
                 Pacient.create(app.regData).then(function (data) {
-                    console.log(data.data.pacient);
                     if (data.data.success) {
                         var id_pac = data.data.pacient;
                         app.loading = false;

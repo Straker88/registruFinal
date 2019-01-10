@@ -409,18 +409,6 @@
         </div>
     </form>
 
-    <form style="margin-top:30px;" id="submit12" ng-submit="editRecarcasare.updateObservatii_recarcasare_Logistic(Observatii_recarcasare_Logistic, editRecarcasare.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$valid)"
-        class="col-md-12" name="editRecarcasare.observatii_recarcasare_logisticForm" novalidate>
-        <label>Observatii Logistic:</label>
-        <textarea ng-disabled="!main.logistic" id="submit-holder12" style="resize: none;" class="form-control" type="text"
-            name="observatii_recarcasare_logistic" ng-model="Observatii_recarcasare_Logistic" required autocomplete="off"></textarea>
-
-        <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgObservatii_recarcasare_Logistic">
-            <div class="alert alert-danger">{{ editRecarcasare.errorMsgObservatii_recarcasare_Logistic }}</div>
-        </div>
-
-    </form>
-
 </div>
 
 <br class="hidden-print">
@@ -652,7 +640,7 @@ editRecarcasare.taxa_urgentaForm.taxa_urgenta.$valid)"
         </form>
         <div ng-show="main.asamblare">
 
-            <form class="hidden-print" id="submit10" style="width:11%;float: left;display: table;" ng-submit="editRecarcasare.updateGarantie_Asamblare(newGarantie_Asamblare,
+            <form class="hidden-print" id="submit10" style="width:11%;display: table;" ng-submit="editRecarcasare.updateGarantie_Asamblare(newGarantie_Asamblare,
         editRecarcasare.garantie_asamblareForm.garantie_asamblare.$valid)"
                 name="editRecarcasare.garantie_asamblareForm" novalidate>
                 <label>F/G:</label>
@@ -664,6 +652,19 @@ editRecarcasare.taxa_urgentaForm.taxa_urgenta.$valid)"
                 </div>
             </form>
         </div>
+        <form class="hidden-print" style="margin-top:30px;" id="submit12" ng-submit="editRecarcasare.updateObservatii_recarcasare_Intern(Observatii_recarcasare_Intern, editRecarcasare.observatii_recarcasare_internForm.observatii_recarcasare_intern.$valid)"
+            class="col-md-12" name="editRecarcasare.observatii_recarcasare_internForm" novalidate>
+            <label>Adaugare Dep. Asamblare: <em>(vizibil doar intern, nu se printeaza)</em></label>
+            <textarea ng-disabled="!main.asamblare" id="submit-holder12" style="resize: none;" class="form-control"
+                type="text" name="observatii_recarcasare_intern" ng-model="Observatii_recarcasare_Intern" required
+                autocomplete="off"></textarea>
+
+            <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgObservatii_recarcasare_Intern">
+                <div class="alert alert-danger">{{ editRecarcasare.errorMsgObservatii_recarcasare_Intern }}</div>
+            </div>
+
+        </form>
+
         <form onsubmit="doPrint()" class="visible-print-block" id="form1" style="float:right;" name="editRecarcasare.finalizat_serviceForm"
             ng-submit="editRecarcasare.updateFinalizat_Service(newFinalizat_Recarcasare, editRecarcasare.finalizat_serviceForm.finalizat_recarcasare.$valid)"
             novalidate>

@@ -19,11 +19,10 @@ var OlivaSchema = new Schema({
     material_oliva: { type: String },
     tip_oliva: { type: String },
     vent_oliva: { type: String },
-    pret_lista: { type: String },
-    pret_final: { type: String },
-    avans: { type: String },
+    pret_final: { type: Number },
+    avans: { type: Number },
     data_avans: { type: String },
-    rest_plata: { type: String },
+    rest_plata: { type: Number },
     observatii_oliva: { type: String },
     serie_oliva: { type: String },
     pacient_id: { type: String },
@@ -39,8 +38,6 @@ var OlivaSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
-    observatii_oliva_logistic: { type: String },
-
 
     // //     Laborator Plastie ----------------------------------------------
 

@@ -39,53 +39,50 @@ module.exports = function (router) {
                         return age;
                     }
 
-                    if (pacient.cnp == null) {
-                        pacient.cnp = '';
-                    } else {
-
-                        if (pacient.cnp.toString()[0] == 1) {
-                            pacient.sex = 'M';
-                            var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
-
-                        else if (pacient.cnp.toString()[0] == 2) {
-                            pacient.sex = 'F';
-                            var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
-
-                        else if (pacient.cnp.toString()[0] == 5) {
-                            pacient.sex = 'M';
-                            var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
-
-                        else if (pacient.cnp.toString()[0] == 6) {
-                            pacient.sex = 'F';
-                            var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
+                    if (pacient.cnp.toString()[0] == 1) {
+                        pacient.sex = 'M';
+                        var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
                     }
+
+                    else if (pacient.cnp.toString()[0] == 2) {
+                        pacient.sex = 'F';
+                        var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+
+                    else if (pacient.cnp.toString()[0] == 5) {
+                        pacient.sex = 'M';
+                        var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+
+                    else if (pacient.cnp.toString()[0] == 6) {
+                        pacient.sex = 'F';
+                        var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+
                     if (req.body.nume == null || req.body.nume == '') {
                         res.json({ success: false, message: 'Completeaza Numele' });
                     }
+
                     else if (req.body.telefon == null || req.body.telefon == '') {
                         res.json({ success: false, message: 'Completeaza Telefon' });
                     }
@@ -156,6 +153,7 @@ module.exports = function (router) {
                         service.log_plecat = '-';
                         service.log_preluat = '-';
                         service.log_trimis = '-';
+                        service.observatii_service_logistic = '-';
 
 
                         service.serv_sosit = '-';
@@ -166,7 +164,6 @@ module.exports = function (router) {
                         service.cod_componente = '-';
                         service.garantie_serv = req.body.garantie_serv;
                         service.observatii_service = req.body.observatii_service;
-                        service.observatii_service_intern = '-';
                         service.constatare_service = '-';
                         service.operatiuni_efectuate = '-';
                         service.cost_reparatie = '-';
@@ -277,6 +274,8 @@ module.exports = function (router) {
                         recarcasare.log_plecat = '-';
                         recarcasare.log_preluat = '-';
                         recarcasare.log_trimis = '-';
+                        recarcasare.observatii_recarcasare_logistic = '-';
+
 
                         recarcasare.asamblare_sosit = '-';
                         recarcasare.asamblare_plecat = '-';
@@ -287,7 +286,6 @@ module.exports = function (router) {
                         recarcasare.cod_componente = '-';
                         recarcasare.garantie_asamblare = req.body.garantie_asamblare;
                         recarcasare.observatii_asamblare = req.body.observatii_asamblare;
-                        recarcasare.observatii_recarcasare_intern = '-';
                         recarcasare.constatare_asamblare = '-';
                         recarcasare.operatiuni_efectuate = '-';
                         recarcasare.cost_recarcasare = '-';
@@ -390,6 +388,7 @@ module.exports = function (router) {
                         oliva.log_plecat = '-';
                         oliva.log_preluat = '-';
                         oliva.log_trimis = '-';
+                        oliva.observatii_oliva_logistic = '-';
 
 
                         oliva.plastie_sosit = '-';
@@ -485,8 +484,6 @@ module.exports = function (router) {
                         ite.ureche_protezata = req.body.ureche_protezata;
                         ite.carcasa_ite = req.body.carcasa_ite;
                         ite.culoare_carcasa = req.body.culoare_carcasa;
-                        ite.buton_programe = req.body.buton_programe;
-                        ite.potentiometru_volum = req.body.potentiometru_volum;
                         ite.vent_ite = req.body.vent_ite;
                         ite.pret_lista = req.body.pret_lista;
                         ite.pret_final = req.body.pret_final;
@@ -538,23 +535,19 @@ module.exports = function (router) {
                         }
 
                         else if (req.body.ureche_protezata == null || req.body.ureche_protezata == '') {
-                            res.json({ success: false, message: 'Alege Ureche Protezata' });
+                            res.json({ success: false, message: 'Completeaza Ureche Protezata' });
                         }
 
                         else if (req.body.carcasa_ite == null || req.body.carcasa_ite == '') {
-                            res.json({ success: false, message: 'Alege Carcasa ITE' });
-                        }
-
-                        else if (req.body.buton_programe == null || req.body.buton_programe == '') {
-                            res.json({ success: false, message: 'Alege Optiune Buton Programe' });
-                        }
-
-                        else if (req.body.potentiometru_volum == null || req.body.potentiometru_volum == '') {
-                            res.json({ success: false, message: 'Alege Optiune Potentiometru Volum' });
+                            res.json({ success: false, message: 'Completeaza Carcasa ITE' });
                         }
 
                         else if (req.body.vent_ite == null || req.body.vent_ite == '') {
                             res.json({ success: false, message: 'Completeaza Vent' });
+                        }
+
+                        else if (req.body.pret_final == null || req.body.pret_final == '') {
+                            res.json({ success: false, message: 'Completeaza Pret Final' });
                         }
 
 
@@ -1022,7 +1015,7 @@ module.exports = function (router) {
 
     router.get('/editPacient/:id', function (req, res) {
         var editPacient = req.params.id;
-        Pacient.findOne({ _id: editPacient }).select('data_inregistrare cabinet nume telefon adresa cnp sex varsta').exec(function (err, pacient) {
+        Pacient.findOne({ _id: editPacient }, function (err, pacient) {
             if (err) throw err;
             if (!pacient) {
                 res.json({ success: false, message: 'No pacient found' });
@@ -1162,6 +1155,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_service_logistic) var Observatii_service_Logistic = req.body.observatii_service_logistic;
 
             //      Service
             //-----------------------------------------------------------------------------------
@@ -1169,7 +1163,6 @@ module.exports = function (router) {
             if (req.body.serv_sosit) var newServ_Sosit = new moment().format('DD/MM/YYYY');
             if (req.body.serv_plecat) var newServ_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.observatii_service) var newObservatii_Service = req.body.observatii_service;
-            if (req.body.observatii_service_intern) var Observatii_service_Intern = req.body.observatii_service_intern;
             if (req.body.constatare_service) var newConstatare_Service = req.body.constatare_service;
             if (req.body.operatiuni_efectuate) var newOperatiuni_Efectuate = req.body.operatiuni_efectuate;
             if (req.body.piese_inlocuite) var newPiese_Inlocuite = req.body.piese_inlocuite;
@@ -1371,6 +1364,25 @@ module.exports = function (router) {
                                 }
                             });
                         }
+                    }
+                });
+            }
+
+            if (Observatii_service_Logistic) {
+                Service.findOne({ _id: editService }, function (err, service) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        service.observatii_service_logistic = Observatii_service_Logistic;
+                        service.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
                     }
                 });
             }
@@ -1583,26 +1595,6 @@ module.exports = function (router) {
                 });
             }
 
-            if (Observatii_service_Intern) {
-                Service.findOne({ _id: editService }, function (err, service) {
-                    if (err) throw err;
-                    if (mainUser.permission !== 'service') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
-                    }
-                    else {
-                        service.observatii_service_intern = Observatii_service_Intern;
-                        service.save(function (err) {
-                            if (err) {
-                                res.json({ success: false, message: 'Nu s-a putut salva' });
-                            } else {
-                                res.json({ success: true, message: 'Completare adaugata cu succes' });
-                            }
-                        });
-                    }
-                });
-            }
-
-
             if (newTaxa_Constatare) {
                 Service.findOne({ _id: editService }, function (err, service) {
                     if (err) throw err;
@@ -1685,6 +1677,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_recarcasare_logistic) var Observatii_recarcasare_Logistic = req.body.observatii_recarcasare_logistic;
 
             //      Asamblare
             //-----------------------------------------------------------------------------------
@@ -1692,7 +1685,6 @@ module.exports = function (router) {
             if (req.body.asamblare_sosit) var newAsamblare_Sosit = new moment().format('DD/MM/YYYY');
             if (req.body.asamblare_plecat) var newAsamblare_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.observatii_asamblare) var newObservatii_Asamblare = req.body.observatii_asamblare;
-            if (req.body.observatii_recarcasare_intern) var Observatii_recarcasare_Intern = req.body.observatii_recarcasare_intern;
             if (req.body.constatare_asamblare) var newConstatare_Asamblare = req.body.constatare_asamblare;
             if (req.body.operatiuni_efectuate) var newOperatiuni_Efectuate = req.body.operatiuni_efectuate;
             if (req.body.piese_inlocuite) var newPiese_Inlocuite = req.body.piese_inlocuite;
@@ -1898,6 +1890,26 @@ module.exports = function (router) {
                     }
                 });
             }
+
+            if (Observatii_recarcasare_Logistic) {
+                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        recarcasare.observatii_recarcasare_logistic = Observatii_recarcasare_Logistic;
+                        recarcasare.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
+                    }
+                });
+            }
+
 
             // //      3.Asamblare ----------------------------------------------
 
@@ -2125,25 +2137,6 @@ module.exports = function (router) {
                 });
             }
 
-            if (Observatii_recarcasare_Intern) {
-                Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
-                    if (err) throw err;
-                    if (mainUser.permission !== 'asamblare') {
-                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
-                    }
-                    else {
-                        recarcasare.observatii_recarcasare_intern = Observatii_recarcasare_Intern;
-                        recarcasare.save(function (err) {
-                            if (err) {
-                                res.json({ success: false, message: 'Nu s-a putut salva' });
-                            } else {
-                                res.json({ success: true, message: 'Completare adaugata cu succes' });
-                            }
-                        });
-                    }
-                });
-            }
-
             if (newTaxa_Constatare) {
                 Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
@@ -2228,6 +2221,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_oliva_logistic) var Observatii_oliva_Logistic = req.body.observatii_oliva_logistic;
 
             //      Plastie
             //-----------------------------------------------------------------------------------
@@ -2431,6 +2425,25 @@ module.exports = function (router) {
                 });
             }
 
+            if (Observatii_oliva_Logistic) {
+                Oliva.findOne({ _id: editOliva }, function (err, oliva) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        oliva.observatii_oliva_logistic = Observatii_oliva_Logistic;
+                        oliva.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
+                    }
+                });
+            }
+
 
             // //      3.Plastie ----------------------------------------------
 
@@ -2551,6 +2564,7 @@ module.exports = function (router) {
             if (req.body.log_plecat) var newLog_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.log_preluat) var newLog_Preluat = new moment().format('DD/MM/YYYY');
             if (req.body.log_trimis) var newLog_Trimis = new moment().format('DD/MM/YYYY');
+            if (req.body.observatii_ite_logistic) var Observatii_ite_Logistic = req.body.observatii_ite_logistic;
 
             //      Plastie
             //-----------------------------------------------------------------------------------
@@ -2749,6 +2763,25 @@ module.exports = function (router) {
                                 }
                             });
                         }
+                    }
+                });
+            }
+
+            if (Observatii_ite_Logistic) {
+                Ite.findOne({ _id: editIte }, function (err, ite) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'logistic') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
+                    }
+                    else {
+                        ite.observatii_ite_logistic = Observatii_ite_Logistic;
+                        ite.save(function (err) {
+                            if (err) {
+                                res.json({ success: false, message: 'Nu s-a putut salva' });
+                            } else {
+                                res.json({ success: true, message: 'Completare adaugata cu succes' });
+                            }
+                        });
                     }
                 });
             }

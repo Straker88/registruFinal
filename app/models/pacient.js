@@ -12,7 +12,8 @@ const PacientSchema = new Schema({
     adresa: { type: String },
     sex: { type: String },
     updated_at: { type: String },
-    // sosit_cabinet: { type: String },
+    cnp: { type: String },
+    data_nastere: { type: String }
 
 });
 

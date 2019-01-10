@@ -116,12 +116,12 @@ angular.module('recarcasareControllers', ['userServices'])
                 $scope.newLog_Plecat = data.data.recarcasare.log_plecat;
                 $scope.newLog_Preluat = data.data.recarcasare.log_preluat;
                 $scope.newLog_Trimis = data.data.recarcasare.log_trimis;
-                $scope.Observatii_recarcasare_Logistic = data.data.recarcasare.observatii_recarcasare_logistic;
 
 
 
                 //              3.Asamblare ----------------------------------------------
                 $scope.newObservatii_Asamblare = data.data.recarcasare.observatii_asamblare;
+                $scope.Observatii_recarcasare_Intern = data.data.recarcasare.observatii_recarcasare_intern;
                 $scope.newAsamblare_Sosit = data.data.recarcasare.asamblare_sosit;
                 $scope.newAsamblare_Plecat = data.data.recarcasare.asamblare_plecat;
                 $scope.newFinalizat_Recarcasare = data.data.recarcasare.finalizat_recarcasare;
@@ -441,38 +441,6 @@ angular.module('recarcasareControllers', ['userServices'])
             }
         };
 
-        app.updateObservatii_recarcasare_Logistic = function (Observatii_recarcasare_Logistic, valid) {
-            app.errorMsgObservatii_recarcasare_Logistic = false;
-            app.disabled = false;
-
-            if (valid) {
-                var recarcasareObject = {};
-                recarcasareObject._id = app.currentRecarcasare;
-                recarcasareObject.observatii_recarcasare_logistic = $scope.Observatii_recarcasare_Logistic;
-
-                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
-
-                    if (data.data.success) {
-                        app.successMsgObservatii_recarcasare_Logistic = data.data.message;
-
-                        $timeout(function () {
-                            app.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$setPristine();
-                            app.observatii_recarcasare_logisticForm.observatii_recarcasare_logistic.$setUntouched();
-                            app.successMsgObservatii_recarcasare_Logistic = false;
-                            app.disabled = false;
-                        }, 700);
-
-                    } else {
-                        app.errorMsgObservatii_recarcasare_Logistic = data.data.message;
-                        app.disabled = false;
-                    }
-                });
-            } else {
-                app.errorMsgObservatii_recarcasare_Logistic = eroare;
-                app.disabled = true;
-            }
-
-        };
 
 
         // Asamblare.
@@ -852,6 +820,40 @@ angular.module('recarcasareControllers', ['userServices'])
             }
 
         };
+
+        app.updateObservatii_recarcasare_Intern = function (Observatii_recarcasare_Intern, valid) {
+            app.errorMsgObservatii_recarcasare_Intern = false;
+            app.disabled = false;
+
+            if (valid) {
+                var recarcasareObject = {};
+                recarcasareObject._id = app.currentRecarcasare;
+                recarcasareObject.observatii_recarcasare_intern = $scope.Observatii_recarcasare_Intern;
+
+                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_recarcasare_Intern = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_recarcasare_internForm.observatii_recarcasare_intern.$setPristine();
+                            app.observatii_recarcasare_internForm.observatii_recarcasare_intern.$setUntouched();
+                            app.successMsgObservatii_recarcasare_Intern = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_recarcasare_Intern = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_recarcasare_Intern = eroare;
+                app.disabled = true;
+            }
+
+        };
+
 
         app.updateGarantie_Asamblare = function (newGarantie_Asamblare, valid) {
             app.errorMsgGarantie_Asamblare = false;

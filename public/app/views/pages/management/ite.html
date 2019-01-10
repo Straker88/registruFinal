@@ -89,15 +89,15 @@
 
         <div class="accesorii">
 
-            <form style="margin-top:-18px;" class="optiuni_oliva" novalidate>
+            <form class="optiuni_ite" novalidate>
                 <label>Nr. Comanda ITE:</label>
                 <input readonly class="form-control" name="nr_comanda_ite" ng-model="nr_comanda_ite" required>
             </form>
-            <form style="margin-top:-18px;" class="optiuni_oliva" novalidate>
+            <form class="optiuni_ite" novalidate>
                 <label>Ureche Protezata:</label>
                 <input readonly class="form-control" name="ureche_protezata" ng-model="Ureche_Protezata" required>
             </form>
-            <form class="optiuni_oliva" novalidate>
+            <form class="optiuni_ite" novalidate>
                 <label>Vent:</label>
                 <input readonly class="form-control" name="Vent_ite" ng-model="Vent_ite" required>
             </form>
@@ -143,17 +143,25 @@
         </form>
         <div class="accesorii">
 
-            <form class="optiuni_oliva" novalidate>
+            <form class="optiuni_ite" style="max-width:120px;" novalidate>
                 <label>Serie ITE:</label>
                 <input readonly class="form-control" name="Serie_ite" ng-model="Serie_ite" required>
             </form>
-            <form class="optiuni_oliva" novalidate>
-                <label>Carcasa ITE:</label>
+            <form class="optiuni_ite" style="max-width:70px;" novalidate>
+                <label>Carcasa:</label>
                 <input readonly class="form-control" name="Carcasa_ite" ng-model="Carcasa_ite" required>
             </form>
-            <form class="optiuni_oliva" novalidate>
+            <form class="optiuni_ite" style="max-width:90px;" novalidate>
                 <label>Culoare:</label>
                 <input readonly class="form-control" name="Culoare_Carcasa" ng-model="Culoare_Carcasa" required>
+            </form>
+            <form class="optiuni_ite" style="max-width:90px;" novalidate>
+                <label>Btn. Programe</label>
+                <input readonly class="form-control" name="Buton_Programe" ng-model="Buton_Programe" required>
+            </form>
+            <form class="optiuni_ite" style="max-width:90px;" novalidate>
+                <label>Pot. Volum</label>
+                <input readonly class="form-control" name="Potentiometru_Volum" ng-model="Potentiometru_Volum" required>
             </form>
 
         </div>
@@ -338,18 +346,6 @@
             <div class="alert alert-danger">{{ editIte.errorMsgLog_Trimis }}</div>
         </div>
     </form>
-    <form style="margin-top:30px;" id="submit2" ng-submit="editIte.updateObservatii_ite_Logistic(Observatii_ite_Logistic, editIte.observatii_ite_logisticForm.observatii_ite_logistic.$valid)"
-        class="col-md-12" name="editIte.observatii_ite_logisticForm" novalidate>
-        <label>Observatii Logistic:</label>
-        <textarea ng-disabled="!main.logistic" id="submit-holder2" style="resize: none;" class="form-control" type="text"
-            name="observatii_ite_logistic" ng-model="Observatii_ite_Logistic" required autocomplete="off"></textarea>
-
-        <div class="row show-hide-message" ng-show="editIte.errorMsgObservatii_ite_Logistic">
-            <div class="alert alert-danger">{{ editIte.errorMsgObservatii_ite_Logistic }}</div>
-        </div>
-
-    </form>
-
 </div>
 
 <br class="hidden-print">

@@ -5,11 +5,15 @@ angular.module('iteControllers', ['userServices'])
 
         $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
         $scope.data_estimativa = new moment().add(6, 'days').format('DD/MM/YYYY');
+
+        $scope.$watch('registerIte.regData.pret_final - registerIte.regData.avans', function (value) {
+            $scope.registerIte.regData.rest_plata = value;
+        });
+
         this.regIte = function (regData, valid) {
             app.loading = true;
             app.errorMsg = false;
             app.disabled = false;
-
 
             if (valid) {
                 Pacient.getPacient($routeParams.id)
@@ -120,6 +124,8 @@ angular.module('iteControllers', ['userServices'])
                 $scope.Ureche_Protezata = data.data.ite.ureche_protezata;
                 $scope.Carcasa_ite = data.data.ite.carcasa_ite;
                 $scope.Culoare_Carcasa = data.data.ite.culoare_carcasa;
+                $scope.Buton_Programe = data.data.ite.buton_programe;
+                $scope.Potentiometru_Volum = data.data.ite.potentiometru_volum;
                 $scope.Vent_ite = data.data.ite.vent_ite;
                 $scope.Material_ite = data.data.ite.material_ite;
                 $scope.Serie_ite = data.data.ite.serie_ite;
@@ -139,7 +145,6 @@ angular.module('iteControllers', ['userServices'])
                 $scope.newLog_Plecat = data.data.ite.log_plecat;
                 $scope.newLog_Preluat = data.data.ite.log_preluat;
                 $scope.newLog_Trimis = data.data.ite.log_trimis;
-                $scope.Observatii_ite_Logistic = data.data.ite.observatii_ite_logistic;
 
 
 
@@ -453,39 +458,6 @@ angular.module('iteControllers', ['userServices'])
                 app.disabled = false;
 
             }
-        };
-
-        app.updateObservatii_ite_Logistic = function (Observatii_ite_Logistic, valid) {
-            app.errorMsgObservatii_ite_Logistic = false;
-            app.disabled = false;
-
-            if (valid) {
-                var iteObject = {};
-                iteObject._id = app.currentIte;
-                iteObject.observatii_ite_logistic = $scope.Observatii_ite_Logistic;
-
-                Ite.editIte(iteObject).then(function (data) {
-
-                    if (data.data.success) {
-                        app.successMsgObservatii_ite_Logistic = data.data.message;
-
-                        $timeout(function () {
-                            app.observatii_ite_logisticForm.observatii_ite_logistic.$setPristine();
-                            app.observatii_ite_logisticForm.observatii_ite_logistic.$setUntouched();
-                            app.successMsgObservatii_ite_Logistic = false;
-                            app.disabled = false;
-                        }, 700);
-
-                    } else {
-                        app.errorMsgObservatii_ite_Logistic = data.data.message;
-                        app.disabled = false;
-                    }
-                });
-            } else {
-                app.errorMsgObservatii_ite_Logistic = eroare;
-                app.disabled = true;
-            }
-
         };
 
 

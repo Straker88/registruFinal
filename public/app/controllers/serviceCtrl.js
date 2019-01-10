@@ -120,12 +120,10 @@ angular.module('serviceControllers', ['userServices'])
                 $scope.newLog_Plecat = data.data.service.log_plecat;
                 $scope.newLog_Preluat = data.data.service.log_preluat;
                 $scope.newLog_Trimis = data.data.service.log_trimis;
-                $scope.Observatii_service_Logistic = data.data.service.observatii_service_logistic;
-
-
 
                 //              3.Service ----------------------------------------------
                 $scope.newObservatii_Service = data.data.service.observatii_service;
+                $scope.Observatii_service_Intern = data.data.service.observatii_service_intern;
                 $scope.newServ_Sosit = data.data.service.serv_sosit;
                 $scope.newServ_Plecat = data.data.service.serv_plecat;
                 $scope.newFinalizat_Reparatie = data.data.service.finalizat_reparatie;
@@ -443,40 +441,6 @@ angular.module('serviceControllers', ['userServices'])
 
             }
         };
-
-        app.updateObservatii_service_Logistic = function (Observatii_service_Logistic, valid) {
-            app.errorMsgObservatii_service_Logistic = false;
-            app.disabled = false;
-
-            if (valid) {
-                var serviceObject = {};
-                serviceObject._id = app.currentService;
-                serviceObject.observatii_service_logistic = $scope.Observatii_service_Logistic;
-
-                Service.editService(serviceObject).then(function (data) {
-
-                    if (data.data.success) {
-                        app.successMsgObservatii_service_Logistic = data.data.message;
-
-                        $timeout(function () {
-                            app.observatii_service_logisticForm.observatii_service_logistic.$setPristine();
-                            app.observatii_service_logisticForm.observatii_service_logistic.$setUntouched();
-                            app.successMsgObservatii_service_Logistic = false;
-                            app.disabled = false;
-                        }, 700);
-
-                    } else {
-                        app.errorMsgObservatii_service_Logistic = data.data.message;
-                        app.disabled = false;
-                    }
-                });
-            } else {
-                app.errorMsgObservatii_service_Logistic = eroare;
-                app.disabled = true;
-            }
-
-        };
-
 
         // Service 
         //----------------------------------------------------------------------------------------------
@@ -823,6 +787,40 @@ angular.module('serviceControllers', ['userServices'])
             }
 
         };
+
+        app.updateObservatii_service_Intern = function (Observatii_service_Intern, valid) {
+            app.errorMsgObservatii_service_Intern = false;
+            app.disabled = false;
+
+            if (valid) {
+                var serviceObject = {};
+                serviceObject._id = app.currentService;
+                serviceObject.observatii_service_intern = $scope.Observatii_service_Intern;
+
+                Service.editService(serviceObject).then(function (data) {
+
+                    if (data.data.success) {
+                        app.successMsgObservatii_service_Intern = data.data.message;
+
+                        $timeout(function () {
+                            app.observatii_service_internForm.observatii_service_intern.$setPristine();
+                            app.observatii_service_internForm.observatii_service_intern.$setUntouched();
+                            app.successMsgObservatii_service_Intern = false;
+                            app.disabled = false;
+                        }, 700);
+
+                    } else {
+                        app.errorMsgObservatii_service_Intern = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsgObservatii_service_Intern = eroare;
+                app.disabled = true;
+            }
+
+        };
+
 
         app.updateGarantie_Serv = function (newGarantie_Serv, valid) {
             app.errorMsgGarantie_Serv = false;

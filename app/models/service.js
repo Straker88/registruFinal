@@ -48,6 +48,7 @@ var ServiceSchema = new Schema({
     taxa_urgenta: { type: String, default: 'nu' },
     garantie_serv: { type: String },
     observatii_service: { type: String },
+    observatii_service_intern: { type: String },
     finalizat_reparatie: { type: String },
 
     // //     Logistic ----------------------------------------------
@@ -56,7 +57,6 @@ var ServiceSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
-    observatii_service_logistic: { type: String },
 
 
 }).plugin(AutoIncrement, { inc_field: 'nr_comanda_service' });

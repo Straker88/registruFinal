@@ -412,18 +412,6 @@
         </div>
     </form>
 
-    <form style="margin-top:30px;" id="submit12" ng-submit="editService.updateObservatii_service_Logistic(Observatii_service_Logistic, editService.observatii_service_logisticForm.observatii_service_logistic.$valid)"
-        class="col-md-12" name="editService.observatii_service_logisticForm" novalidate>
-        <label>Observatii Logistic:</label>
-        <textarea ng-disabled="!main.logistic" id="submit-holder12" style="resize: none;" class="form-control" type="text"
-            name="observatii_service_logistic" ng-model="Observatii_service_Logistic" required autocomplete="off"></textarea>
-
-        <div class="row show-hide-message" ng-show="editService.errorMsgObservatii_service_Logistic">
-            <div class="alert alert-danger">{{ editService.errorMsgObservatii_service_Logistic }}</div>
-        </div>
-
-    </form>
-
 </div>
 
 <br class="hidden-print">
@@ -644,7 +632,7 @@ editService.taxa_urgentaForm.taxa_urgenta.$valid)"
         </form>
         <div ng-show="main.service">
 
-            <form class="hidden-print" id="submit10" style="width:11%;float: left;display: table;" ng-submit="editService.updateGarantie_Serv(newGarantie_Serv,
+            <form class="hidden-print" id="submit10" style="width:11%;display: table;" ng-submit="editService.updateGarantie_Serv(newGarantie_Serv,
         editService.garantie_servForm.garantie_serv.$valid)"
                 name="editService.garantie_servForm" novalidate>
                 <label>F/G:</label>
@@ -656,8 +644,20 @@ editService.taxa_urgentaForm.taxa_urgenta.$valid)"
                 </div>
             </form>
         </div>
-        <form onsubmit="doPrint()" class="visible-print-block" id="form1" style="float:right;" name="editService.finalizat_serviceForm"
-            ng-submit="editService.updateFinalizat_Service(newFinalizat_Service, editService.finalizat_serviceForm.finalizat_service.$valid)"
+        <form class="no-print" style="margin-top:30px;padding-left: 0px;" id="submit12" ng-submit="editService.updateObservatii_service_Intern(Observatii_service_Intern, editService.observatii_service_internForm.observatii_service_intern.$valid)"
+            class="col-md-12" name="editService.observatii_service_internForm" novalidate>
+            <label>Adaugare Dep. Service: (vizibil doar intern, nu se printeaza)</label>
+            <textarea ng-disabled="!main.service" id="submit-holder12" style="resize: none;" class="form-control" type="text"
+                name="observatii_service_intern" ng-model="Observatii_service_Intern" required autocomplete="off"></textarea>
+
+            <div class="row show-hide-message" ng-show="editService.errorMsgObservatii_service_Intern">
+                <div class="alert alert-danger">{{ editService.errorMsgObservatii_service_Intern }}</div>
+            </div>
+
+        </form>
+
+        <form ng-show="main.service" onsubmit="doPrint()" class="visible-print-block" id="form1" style="float:right;"
+            name="editService.finalizat_serviceForm" ng-submit="editService.updateFinalizat_Service(newFinalizat_Service, editService.finalizat_serviceForm.finalizat_service.$valid)"
             novalidate>
             <label for="Finalizat Service">Data si semnatura inginer </label>
             <input id="service-holder1" type="text" class="form-control" name="finalizat_service" ng-model="newFinalizat_Service">.........................................

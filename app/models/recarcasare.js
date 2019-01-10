@@ -49,6 +49,7 @@ var RecarcasareSchema = new Schema({
     taxa_urgenta: { type: String, default: 'nu' },
     garantie_asamblare: { type: String },
     observatii_asamblare: { type: String },
+    observatii_recarcasare_intern: { type: String },
     finalizat_recarcasare: { type: String },
 
     // //     Logistic ----------------------------------------------
@@ -57,7 +58,6 @@ var RecarcasareSchema = new Schema({
     log_plecat: { type: String },
     log_preluat: { type: String },
     log_trimis: { type: String },
-    observatii_recarcasare_logistic: { type: String },
 
 
 }).plugin(AutoIncrement, { inc_field: 'nr_comanda_recarcasare' });

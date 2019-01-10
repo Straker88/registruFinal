@@ -38,7 +38,7 @@
         }
     })
 
-    var needFirstPoint = true;
+    // var needFirstPoint = true;
     // var lineTo = [{}];
 
     // function drawNextLine(ctx, x, y) {
@@ -137,7 +137,8 @@
     // });
 
 
-    var lineTo = [{}];
+    // var lineTo = [{}];
+    // var lineTo1 = [{}];
 
     $(document).ready(function () {
         var canvas = $("#myCanvas").get(0);
@@ -145,6 +146,7 @@
             return;
         }
         var ctx = canvas.getContext("2d");
+        var ctx1 = canvas.getContext("2d");
 
         var drawGrid = function (w, h, id) {
             ctx.canvas.width = w;
@@ -164,37 +166,120 @@
 
         drawGrid(450, 280, "myCanvas");
 
+        var drawGrid1 = function (w, h, id) {
+            ctx1.canvas.width = w;
+            ctx1.canvas.height = h;
+            ctx1.lineWidth = 0.1;
+
+            for (x = 15; x <= w; x += 60) {
+                ctx1.moveTo(x, 0);
+                ctx1.lineTo(x, h);
+                for (y = 20; y <= h; y += 20) {
+                    ctx1.moveTo(0, y);
+                    ctx1.lineTo(w, y);
+                }
+            }
+            ctx1.stroke();
+        };
+
+        drawGrid1(450, 280, "myCanvas");
+
 
 
         ctx.lineWidth = 1;
+        ctx1.lineWidth = 2;
 
 
 
         var drawChart = function (x, y) {
             ctx.beginPath();
-            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.arc(x, y, 9, 0, Math.PI * 2);
             ctx.strokeStyle = "red";
             ctx.stroke();
         };
 
-        $("#myCanvas").on("click", function (e) {
-            var offset = $(this).offset();
-            var x = e.pageX - offset.left;
-            var y = e.pageY - offset.top;
+        var drawChart1 = function (x, y) {
+            ctx1.beginPath();
+            ctx1.arc(x, y, 6, 0, Math.PI * 1.3);
+            ctx1.strokeStyle = "blue";
+            ctx1.stroke();
+        };
 
-            drawChart(x, y);
+        // document.getElementById('move').addEventListener('click', function adi() {
 
-            if (lineTo.length > 0) {
-                var last = lineTo[lineTo.length - 1];
-                ctx.beginPath();
-                ctx.moveTo(last.x, last.y);
-                ctx.lineTo(x, y);
-                ctx.strokeStyle = "blue";
-                ctx.stroke();
-            }
+        // target = document.getElementById('move');
+        // dreapta = document.getElementById('myCanvas');
+        // // window.removeEventListener("move", adi)
+        // // $("#myCanvas").on("click",
+        // var adi;
+        // var adi1;
+        // dreapta.addEventListener('click',
+        //     function adi(e) {
+        //         var offset = $(this).offset();
+        //         var x = e.pageX - offset.left;
+        //         var y = e.pageY - offset.top;
 
-            lineTo.push({ x: x, y: y });
-        });
+        //         drawChart(x, y);
+
+        //         if (lineTo.length > 0) {
+        //             var last = lineTo[lineTo.length - 1];
+        //             ctx.beginPath();
+        //             ctx.moveTo(last.x, last.y);
+        //             ctx.lineTo(x, y);
+        //             ctx.strokeStyle = "red";
+        //             ctx.stroke();
+
+        //         }
+
+        //         // if (lineTo1.length > 0) {
+        //         //     lineTo.push(0);
+        //         // }
+
+        //         lineTo.push({ x: x, y: y });
+
+        //         // dreapta.removeEventListener('click', adi);
+        //         console.log(lineTo.length)
+        //     });
+
+        // // });
+
+        // // document.getElementById('move1').addEventListener('click', function () {
+        // target1 = document.getElementById('move1');
+        // stanga = document.getElementById('myCanvas');
+
+        // // $("#myCanvas").on("click", function (e) {
+        // // document.getElementById("move").disabled = true;
+        // document.getElementById('move1').onclick = function () {
+        //     stanga.addEventListener('click',
+
+
+
+
+        //         function adi1(e) {
+        //             dreapta.removeEventListener('click', adi);
+
+        //             var offset = $(this).offset();
+
+        //             var x = e.pageX - offset.left;
+        //             var y = e.pageY - offset.top;
+        //             drawChart1(x, y);
+
+
+        //             if (lineTo.length > 0) {
+
+        //                 var last1 = lineTo1[lineTo1.length - 1];
+        //                 ctx1.beginPath();
+        //                 ctx1.moveTo(last1.x, last1.y);
+        //                 ctx1.lineTo(x, y);
+        //                 ctx1.strokeStyle = "blue";
+        //                 ctx1.stroke();
+        //             }
+        //             lineTo1.push({ x: x, y: y });
+
+        //         });
+
+
+        // }
     });
 
     $(document).ready(function () {
@@ -739,32 +824,21 @@
         <input type="text" class="form-control" maxlength="26" name="nume" placeholder="-" ng-model="Pacient_Nume"
             autocomplete="off" readonly>
     </div>
-    <div style="max-width: 3%;">
-        <label for="Sex">Sex: </label>
-        <input type="text" class="form-control" maxlength="1" name="sex" placeholder="-" ng-model="Pacient_Sex"
+    <div style="max-width: 10%;float: left;text-align: center;margin: 10px 10px 0 0;">
+        <label for="Cnp">CNP: </label>
+        <input type="text" class="form-control" name="cnp" placeholder="-" ng-model="Pacient_Cnp" autocomplete="off"
+            readonly>
+    </div>
+    <div style="max-width: 5%;float: left;text-align: center;margin: 10px 10px;">
+        <label for="Varsta">Varsta: </label>
+        <input style="text-align: center" type="text" class="form-control" name="varsta" placeholder="-" ng-model="Pacient_Varsta"
             autocomplete="off" readonly>
     </div>
-
-    <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Varsta(Pacient_Varsta,
-    editPacient.varstaForm.varsta.$valid)"
-        name="editPacient.varstaForm" novalidate>
-        <label>Varsta:</label>
-        <input maxlength="3" class="form-control" type="text" name="varsta" ng-model="Pacient_Varsta" placeholder="-"
-            required autocomplete="off">
-
-        <div id="regPacAlert" class="row show-hide-message" ng-show="editPacient.successMsgVarsta">
-            <div class="alert alert-success">{{ editPacient.successMsgVarsta }}</div>
-        </div>
-
-
-        <div id="regPacAlert" class="row show-hide-message" ng-show="editPacient.errorMsgVarsta">
-            <div class="alert alert-danger">{{ editPacient.errorMsgVarsta }}</div>
-        </div>
-        <button style="margin:10px 0 10px 0;" class="btn btn-info btn-sm no-print" type="submit">Salveaza varsta noua</button>
-
-
-    </form>
-
+    <div style="max-width: 5%;float: left;text-align: center;margin: 10px 10px;">
+        <label for="Sex">Sex: </label>
+        <input style="text-align: center" type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
+            autocomplete="off" readonly>
+    </div>
 
     <form style="width:50%;display:table;clear:left;" ng-submit="editPacient.updatePacient_Telefon(Pacient_Telefon,
         editPacient.telefonForm.telefon.$valid)"
@@ -1338,7 +1412,7 @@
                     <div class="alertGreen alert-success">{{ registerOliva.successMsg }}</div>
                 </div>
 
-                <div class="row visible-print-block">
+                <div class="row visible-print-block" style="margin-bottom:40px;">
                     <div class="col-sm-12">
 
                         <div ng-controller="editProfilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
@@ -1360,7 +1434,7 @@
                             <input readonly type="text" class="form-control" maxlength="3" name="varsta" placeholder="-"
                                 ng-model="Pacient_Varsta" autocomplete="off">
                         </div>
-                        <div ng-controller="editProfilPacientCtrl" style="width:5%;float: left;margin-right: 12px;"
+                        <div ng-controller="editProfilPacientCtrl" style="width:5%;float: left;margin-right: 12px;text-align: center;"
                             class="">
                             <label for="Sex">Sex: </label>
                             <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
@@ -1372,7 +1446,7 @@
                                 placeholder="-" ng-model="comanda_oliva" autocomplete="off">
                         </div>
 
-                        <div ng-controller="regOlivaCtrl" style="width:100%; margin-bottom: 10px;float: left;" class="">
+                        <div ng-controller="regOlivaCtrl" style="width:100%; margin-top: 10px;float: left;" class="">
                             <label for="Adresa">Adresa: </label>
                             <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
                                 autocomplete="off">
@@ -1481,6 +1555,7 @@
                             <select ng-model="registerOliva.regData.tip_oliva" style="height:34px;" name="tip_oliva">
                                 <option value="" selected disabled hidden>Alege</option>
                                 <option value="Elastica">Canal</option>
+                                <option value="Inel">Inel</option>
                                 <option value="Skelleton">Skelleton</option>
                                 <option value="Full-concha">Full-concha</option>
                                 <option value="Semi-concha">Semi-concha</option>
@@ -1498,57 +1573,15 @@
 
                 </div>
 
-                <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
+                <!-- <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
                     <button class="btn btn-info btn-sm no-print" type="button" id=move1>Stanga</button>
                     <button class="btn btn-danger btn-sm no-print" type="button" id=move>Dreapta</button>
-                    <button type="button" id=move1 class="no-print">Sterge</button>
-                </div>
+                    <button type="button" class="no-print">Sterge</button>
+                </div> -->
 
                 <br>
 
-                <div style="width:60%; float:left;" class="visible-print-block">
-
-                    <div style="width:18%;float:left;" class="">
-                        <div style="width:100%;">
-                            <label for="Nume">Predare: <br> (data/ora)</label>
-                            .................
-                        </div>
-
-                        <div style="width:100%;margin-top:16px;">
-                            <label for="Nume">Primire: <br> (data/ora)</label>
-
-                            .................
-
-                        </div>
-                    </div>
-
-                    <div style="width:18%;float:left;margin-top:16px;" class="">
-                        <div style="width:100%;">
-                            <label for="Nume">Audiolog:</label>
-                            ...................
-                        </div>
-
-                        <div style="width:100%;margin-top:32px;">
-                            <label for="Nume">Audiolog: </label>
-                            ...................
-
-                        </div>
-                    </div>
-
-                    <div style="width:18%;float:left;margin-top:16px;" class="">
-                        <div style="width:100%;">
-                            <label for="Nume">Tehnician: </label>
-                            ...................
-                        </div>
-
-                        <div style="width:100%;margin-top:32px;">
-                            <label for="Nume">Tehnician: </label>
-                            ...................
-
-                        </div>
-                    </div>
-                </div>
-                <div style="width:40%;float:right;clear:right;margin-bottom: 20px;">
+                <div style="width:40%;float:right;clear:right;margin-bottom: 60px;">
                     <div style="width:100%;">
                         <label for="Observatii_Oliva">Observatii: </label>
                         <textarea maxlength="140" style="resize:none;min-height: 115px;border: 1px solid #000;" type="text"
@@ -1568,6 +1601,7 @@
                         <option selected value="nu">Nu</option>
                     </select>
                 </div>
+
                 <div class="visible-print-block">
                     <div style="width:13%;float: right;text-align: center;">
                         <label for="Data_Estimativa">Data <br> Estimativa</label>
@@ -1584,22 +1618,18 @@
                         <input readonly type="text" style="text-align: center;" class="form-control" name="serie_oliva"
                             placeholder="-" ng-model="serie_oliva" autocomplete="off">
                     </div>
+                </div>
 
-                </div>
-                <div style="width:40%;display: table;margin-top:15px;">
-                    <label for="Pret_Lista">Pret de lista /buc</label>
-                    <input maxlength="43" type="text" class="form-control" name="pret_lista" placeholder="-" ng-model="registerOliva.regData.pret_lista"
-                        autocomplete="off">
-                </div>
+
                 <div style="width:40%;display: table;">
-                    <label for="Pret_Final">Pret final</label>
-                    <input maxlength="43" type="text" class="form-control" name="pret_final" placeholder="-" ng-model="registerOliva.regData.pret_final"
+                    <label for="Pret_Final">Pret (RON)</label>
+                    <input maxlength="43" type="number" class="form-control" name="pret_final" placeholder="-" ng-model="registerOliva.regData.pret_final"
                         autocomplete="off">
                 </div>
                 <div style="width: 52%;display: table;">
                     <div style="width:70%;display: table;float:left;">
-                        <label for="Nume">Achitat avans</label>
-                        <input maxlength="33" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.avans"
+                        <label for="Nume">Achitat avans (RON)</label>
+                        <input maxlength="33" type="number" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.avans"
                             autocomplete="off">
                     </div>
                     <div style="width:30%;display: table;text-align: center;">
@@ -1609,12 +1639,13 @@
                     </div>
                 </div>
                 <div style="display: table;">
-                    <label for="Nume">Rest de plata la eliberarea produsului</label>
-                    <input maxlength="26" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.rest_plata"
-                        autocomplete="off">
+                    <label for="Nume">Rest de plata la eliberarea produsului (RON)</label>
+                    <input disabled maxlength="26" type="number" class="form-control" name="nume" placeholder="-"
+                        ng-model="registerOliva.regData.rest_plata" autocomplete="off">
 
                 </div>
-                <hr class="visible-print-block" style="clear:both;">
+
+                <hr class="visible-print-block" style="clear:both;margin-top:175px;">
 
                 <div style="width:100%;float:left;display: table;clear: both;margin-bottom:15px;" class="visible-print-block">
                     <div style="width:40%;float:left;">
@@ -1638,7 +1669,7 @@
                         <p>Se va lua in considerare termenul de productie de minim 4 zile lucratoare de la data
                             intrarii in
                             laborator.
-                            <br> Termenul de garantie pentru olive este de 6 luni de la data primirii de catre pacient.</p>
+                            <br> Termenul de garantie pentru olive este de 3 luni de la data primirii de catre pacient.</p>
                     </div>
                 </div>
                 <hr class="visible-print-block" style="clear:both;">
@@ -1684,7 +1715,7 @@
                     <div class="alertGreen alert-success">{{ registerIte.successMsg }}</div>
                 </div>
 
-                <div class="row visible-print-block">
+                <div class="row visible-print-block" style="margin-bottom:40px;">
                     <div class="col-sm-12">
 
                         <div ng-controller="editProfilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
@@ -1718,7 +1749,8 @@
                                 placeholder="-" ng-model="comanda_ite" autocomplete="off">
                         </div>
 
-                        <div ng-controller="regIteCtrl" style="width:100%; margin-bottom: 10px;float: left;" class="">
+                        <div ng-controller="regIteCtrl" style="width:100%;margin-top:10px; margin-bottom: 10px;float: left;"
+                            class="">
                             <label for="Adresa">Adresa: </label>
                             <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
                                 autocomplete="off">
@@ -1816,11 +1848,13 @@
                             <select ng-model="registerIte.regData.carcasa_ite" style="height:34px;" name="carcasa_ite">
                                 <option value="" selected disabled hidden>Alege</option>
                                 <option value="ITC">ITC</option>
+                                <option value="Mini-Canal">Mini-Canal</option>
                                 <option value="CIC">CIC</option>
+                                <option value="IIC">IIC</option>
                             </select>
                         </div>
                     </div>
-                    <div style="width:25%;float:left;" class="regIteForm">
+                    <div style="width:39%;float:left;" class="regIteForm">
                         <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Culoare</p>
                         <div class="optiuni" novalidate>
                             <select ng-model="registerIte.regData.culoare_carcasa" style="height:34px;" name="culoare_carcasa">
@@ -1831,9 +1865,31 @@
                         </div>
                     </div>
 
-                    <div style="width:55%;display:table;clear:left;">
+                    <div style="width:30%;float: left; clear: left;" class="regIteForm">
+                        <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Buton Programe</p>
+                        <div class="optiuni" novalidate>
+                            <select ng-model="registerIte.regData.buton_programe" style="height:34px;" name="buton_programe">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="Da">Da</option>
+                                <option value="Nu">Nu</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="width:39%;float:left;" class="regIteForm">
+                        <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Potentiometru
+                            Volum</p>
+                        <div class="optiuni" novalidate>
+                            <select ng-model="registerIte.regData.potentiometru_volum" style="height:34px;" name="potentiometru_volum">
+                                <option value="" selected disabled hidden>Alege</option>
+                                <option value="Da">Da</option>
+                                <option value="Nu">Nu</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="width:65%;display:table;clear:left;">
                         <label for="Vent_Ite">Vent: (mm)</label>
-                        <input maxlength="10" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
+                        <input maxlength="20" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
                             autocomplete="off">
                     </div>
                     <hr class="visible-print-block">
@@ -1848,49 +1904,7 @@
 
                 <br>
 
-                <div style="width:60%; float:left;" class="visible-print-block">
-
-                    <div style="width:18%;float:left;" class="">
-                        <div style="width:100%;">
-                            <label for="Nume">Predare: <br> (data/ora)</label>
-                            .................
-                        </div>
-
-                        <div style="width:100%;margin-top:16px;">
-                            <label for="Nume">Primire: <br> (data/ora)</label>
-
-                            .................
-
-                        </div>
-                    </div>
-
-                    <div style="width:18%;float:left;margin-top:16px;" class="">
-                        <div style="width:100%;">
-                            <label for="Nume">Audiolog:</label>
-                            ...................
-                        </div>
-
-                        <div style="width:100%;margin-top:32px;">
-                            <label for="Nume">Audiolog: </label>
-                            ...................
-
-                        </div>
-                    </div>
-
-                    <div style="width:18%;float:left;margin-top:16px;" class="">
-                        <div style="width:100%;">
-                            <label for="Nume">Tehnician: </label>
-                            ...................
-                        </div>
-
-                        <div style="width:100%;margin-top:32px;">
-                            <label for="Nume">Tehnician: </label>
-                            ...................
-
-                        </div>
-                    </div>
-                </div>
-                <div style="width:40%;float:right;clear:right;margin-bottom: 20px;">
+                <div style="width:40%;float:right;clear:right;margin-bottom: 60px;">
                     <div style="width:100%;">
                         <label for="Observatii_Ite">Observatii: </label>
                         <textarea maxlength="140" style="resize:none;min-height: 115px;border: 1px solid #000;" type="text"
@@ -1927,19 +1941,15 @@
                             placeholder="-" ng-model="serie_ite" autocomplete="off">
                     </div>
                 </div>
-                <div style="width:40%;display: table;margin-top:15px;">
-                    <label for="Pret_Lista">Pret de lista /buc</label>
-                    <input maxlength="43" type="text" class="form-control" name="pret_lista" placeholder="-" ng-model="registerIte.regData.pret_lista"
-                        autocomplete="off">
-                </div>
                 <div style="width:40%;display: table;">
-                    <label for="Pret_Final">Pret final</label>
-                    <input maxlength="43" type="text" class="form-control" name="pret_final" placeholder="-" ng-model="registerIte.regData.pret_final"
+                    <label for="Pret_Final">Pret (RON)</label>
+                    <input maxlength="43" type="number" class="form-control" name="pret_final" placeholder="-" ng-model="registerIte.regData.pret_final"
                         autocomplete="off">
                 </div>
+
                 <div style="width: 52%;display: table;">
                     <div style="width:70%;display: table;float:left;">
-                        <label for="Nume">Achitat avans</label>
+                        <label for="Nume">Achitat avans (RON)</label>
                         <input maxlength="33" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.avans"
                             autocomplete="off">
                     </div>
@@ -1950,12 +1960,12 @@
                     </div>
                 </div>
                 <div style="display: table;">
-                    <label for="Nume">Rest de plata la eliberarea produsului</label>
-                    <input maxlength="26" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.rest_plata"
-                        autocomplete="off">
+                    <label for="Nume">Rest de plata la eliberarea produsului (RON)</label>
+                    <input disabled maxlength="26" type="text" class="form-control" name="nume" placeholder="-"
+                        ng-model="registerIte.regData.rest_plata" autocomplete="off">
 
                 </div>
-                <hr class="visible-print-block" style="clear:both;">
+                <hr class="visible-print-block" style="clear:both;margin-top:65px;">
 
                 <div style="width:100%;float:left;display: table;clear: both;margin-bottom:15px;" class="visible-print-block">
                     <div style="width:40%;float:left;">
@@ -1978,7 +1988,7 @@
                     <div class="col-sm-12">
                         <p>Se va lua in considerare termenul de productie de minim 4 zile lucratoare de la data
                             intrarii in
-                            laborator.<br> Termenul de garantie pentru olive este de 6 luni de la data primirii de
+                            laborator.<br> Termenul de garantie pentru carcasa este de 6 luni de la data primirii de
                             catre pacient.
                         </p>
                     </div>

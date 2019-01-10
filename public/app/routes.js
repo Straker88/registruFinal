@@ -68,13 +68,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
             })
 
 
-            .when('/profil_service/:username', {
-                templateUrl: 'app/views/pages/management/profil_service.html',
-                controller: 'profilServiceCtrl',
-                controllerAs: 'profilServ',
-                authenticated: true,
-                permission: ['admin', 'moderator', 'service']
-            })
+            // .when('/profil_service/:username', {
+            //     templateUrl: 'app/views/pages/management/profil_service.html',
+            //     controller: 'profilServiceCtrl',
+            //     controllerAs: 'profilServ',
+            //     authenticated: true,
+            //     permission: ['admin', 'moderator', 'service']
+            // })
 
             .when('/management', {
                 templateUrl: 'app/views/pages/management/management.html',
@@ -211,6 +211,8 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'regPacientCtrl',
                 controllerAs: 'registerPac',
                 authenticated: true,
+                permission: ['user']
+
 
             })
 

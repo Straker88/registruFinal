@@ -28,7 +28,6 @@ angular.module('userServices', [])
         };
 
         userFactory.editUser = function (id) {
-            console.log(id)
             return $http.put('/api/edit', id);
         };
 

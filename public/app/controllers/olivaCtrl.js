@@ -3,8 +3,13 @@ angular.module('olivaControllers', ['userServices'])
     .controller('regOlivaCtrl', function ($route, $routeParams, $http, $location, $timeout, Oliva, Pacient, $scope) {
         var app = this;
 
-        $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
-        $scope.data_estimativa = new moment().add(6, 'days').format('DD/MM/YYYY');
+        $scope.data_inregistrare = new moment().format('DD-MM-YYYY');
+        $scope.data_estimativa = new moment().businessAdd(6)._d;
+
+        $scope.$watch('registerOliva.regData.pret_final - registerOliva.regData.avans', function (value) {
+            $scope.registerOliva.regData.rest_plata = value;
+        });
+
         this.regOliva = function (regData, valid) {
             app.loading = true;
             app.errorMsg = false;
@@ -137,7 +142,6 @@ angular.module('olivaControllers', ['userServices'])
                 $scope.newLog_Plecat = data.data.oliva.log_plecat;
                 $scope.newLog_Preluat = data.data.oliva.log_preluat;
                 $scope.newLog_Trimis = data.data.oliva.log_trimis;
-                $scope.Observatii_oliva_Logistic = data.data.oliva.observatii_oliva_logistic;
 
 
 
@@ -452,40 +456,6 @@ angular.module('olivaControllers', ['userServices'])
 
             }
         };
-
-        app.updateObservatii_oliva_Logistic = function (Observatii_oliva_Logistic, valid) {
-            app.errorMsgObservatii_oliva_Logistic = false;
-            app.disabled = false;
-
-            if (valid) {
-                var olivaObject = {};
-                olivaObject._id = app.currentOliva;
-                olivaObject.observatii_oliva_logistic = $scope.Observatii_oliva_Logistic;
-
-                Oliva.editOliva(olivaObject).then(function (data) {
-
-                    if (data.data.success) {
-                        app.successMsgObservatii_oliva_Logistic = data.data.message;
-
-                        $timeout(function () {
-                            app.observatii_oliva_logisticForm.observatii_oliva_logistic.$setPristine();
-                            app.observatii_oliva_logisticForm.observatii_oliva_logistic.$setUntouched();
-                            app.successMsgObservatii_oliva_Logistic = false;
-                            app.disabled = false;
-                        }, 700);
-
-                    } else {
-                        app.errorMsgObservatii_oliva_Logistic = data.data.message;
-                        app.disabled = false;
-                    }
-                });
-            } else {
-                app.errorMsgObservatii_oliva_Logistic = eroare;
-                app.disabled = true;
-            }
-
-        };
-
 
         // Plastie 
         //----------------------------------------------------------------------------------------------

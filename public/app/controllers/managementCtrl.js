@@ -359,6 +359,7 @@ angular.module('managementController', [])
                 $scope.Pacient_Adresa = data.data.pacient.adresa;
                 $scope.Pacient_Varsta = data.data.pacient.varsta;
                 $scope.Pacient_Sex = data.data.pacient.sex;
+                $scope.Pacient_Cnp = data.data.pacient.cnp;
                 app.currentPacient = data.data.pacient._id;
 
 

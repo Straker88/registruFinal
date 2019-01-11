@@ -586,11 +586,11 @@ module.exports = function (router) {
 
         user.username = req.body.username;
         user.password = req.body.password;
-        user.email = req.body.email;
+        // user.email = req.body.email;
         user.name = req.body.name;
-        user.temporarytoken = jwt.sign({ username: user.username, email: user.email }, secret);
+        user.temporarytoken = jwt.sign({ username: user.username }, secret);
 
-        if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.email == null || req.body.email == '' || req.body.name == null || req.body.name == '') {
+        if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.name == null || req.body.name == '') {
             res.json({ success: false, message: 'Campurile username, email si parola sunt obligatorii' });
 
         } else {
@@ -600,8 +600,8 @@ module.exports = function (router) {
                     if (err.errors != null) {
                         if (err.errors.name) {
                             res.json({ success: false, message: err.errors.name.message });
-                        } else if (err.errors.email) {
-                            res.json({ success: false, message: err.errors.email.message });
+                            // } else if (err.errors.email) {
+                            //     res.json({ success: false, message: err.errors.email.message });
                         } else if (err.errors.username) {
                             res.json({ success: false, message: err.errors.username.message });
                         } if (err.errors.password) {
@@ -613,9 +613,10 @@ module.exports = function (router) {
                         if (err.code == 11000) {
                             if (err.errmsg[61] == "u") {
                                 res.json({ success: false, message: 'Username deja exista' });
-                            } else if (err.errmsg[61] == "e") {
-                                res.json({ success: false, message: 'Adresa email deja exista' });
                             }
+                            //  else if (err.errmsg[61] == "e") {
+                            //     res.json({ success: false, message: 'Adresa email deja exista' });
+                            // }
                         } else {
                             res.json({ succes: false, message: err });
                         }

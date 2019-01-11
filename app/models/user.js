@@ -18,18 +18,18 @@ var nameValidator = [
     })
 ];
 
-var emailValidator = [
-    validate({
-        validator: 'matches',
-        arguments: /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/,
-        message: 'Name must be at least 3 characters, max 40, no special characters or numbers, must have space in between name.'
-    }),
-    validate({
-        validator: 'isLength',
-        arguments: [3, 40],
-        message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
-    })
-];
+// var emailValidator = [
+//     validate({
+//         validator: 'matches',
+//         arguments: /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/,
+//         message: 'Name must be at least 3 characters, max 40, no special characters or numbers, must have space in between name.'
+//     }),
+//     validate({
+//         validator: 'isLength',
+//         arguments: [3, 40],
+//         message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
+//     })
+// ];
 
 var passwordValidator = [
     validate({
@@ -48,7 +48,7 @@ var UserSchema = new Schema({
     name: { type: String, required: true, validate: nameValidator },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, validate: passwordValidator, select: false },
-    email: { type: String, required: true, lowercase: true, unique: true, validate: emailValidator },
+    // email: { type: String, required: true, lowercase: true, unique: true, validate: emailValidator },
     temporarytoken: { type: String, required: true },
     resettoken: { type: String, required: false },
     permission: { type: String, required: true, default: 'user' },

@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api', appRoutes);
 
 
-mongoose.connect('mongodb://localhost:27017/tutorial', function (err) {
+mongoose.connect('mongodb://localhost:27017/registruTehnic', function (err) {
 	if (err) {
 		console.log('Not connected to the database: ' + err);
 	} else {

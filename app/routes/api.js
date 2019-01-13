@@ -92,6 +92,9 @@ module.exports = function (router) {
                     else if (req.body.cnp == null || req.body.cnp == '') {
                         res.json({ success: false, message: 'Completeaza CNP' });
                     }
+                    else if (req.body.adresa == null || req.body.adresa == '') {
+                        res.json({ success: false, message: 'Completeaza Adresa' });
+                    }
 
                     else {
                         pacient.save(function (err) {

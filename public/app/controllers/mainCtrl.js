@@ -35,7 +35,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                 app.isLoggedIn = true;
                 Auth.getUser().then(function (data) {
                     app.username = data.data.username;
-                    app.useremail = data.data.email;
+                    // app.useremail = data.data.email;
 
                     User.getPermission().then(function (data) {
 

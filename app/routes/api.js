@@ -586,12 +586,11 @@ module.exports = function (router) {
 
         user.username = req.body.username;
         user.password = req.body.password;
-        // user.email = req.body.email;
         user.name = req.body.name;
         user.temporarytoken = jwt.sign({ username: user.username }, secret);
 
         if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.name == null || req.body.name == '') {
-            res.json({ success: false, message: 'Campurile username, email si parola sunt obligatorii' });
+            res.json({ success: false, message: 'Campurile username si parola sunt obligatorii' });
 
         } else {
             user.save(function (err) {
@@ -600,8 +599,6 @@ module.exports = function (router) {
                     if (err.errors != null) {
                         if (err.errors.name) {
                             res.json({ success: false, message: err.errors.name.message });
-                            // } else if (err.errors.email) {
-                            //     res.json({ success: false, message: err.errors.email.message });
                         } else if (err.errors.username) {
                             res.json({ success: false, message: err.errors.username.message });
                         } if (err.errors.password) {
@@ -630,7 +627,7 @@ module.exports = function (router) {
 
     // User Login Route ----------------------------------------------
     router.post('/authenticate', function (req, res) {
-        User.findOne({ username: req.body.username }).select('email username password').exec(function (err, user) {
+        User.findOne({ username: req.body.username }).select('username password').exec(function (err, user) {
             if (err) {
                 throw err;
             } else {
@@ -644,7 +641,7 @@ module.exports = function (router) {
                         if (!validPassword) {
                             res.json({ success: false, message: 'Parola introdusa nu este corecta' });
                         } else {
-                            var token = jwt.sign({ username: user.username, email: user.email }, secret);
+                            var token = jwt.sign({ username: user.username, }, secret);
                             res.json({ success: true, message: 'Utilizator autentificat', token: token });
                         }
                     }
@@ -708,7 +705,7 @@ module.exports = function (router) {
             if (!user) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                var newToken = jwt.sign({ username: user.username, email: user.email, name: user.name }, secret, { expiresIn: '24H' });
+                var newToken = jwt.sign({ username: user.username, name: user.name }, secret, { expiresIn: '24H' });
                 res.json({ success: true, token: newToken });
             }
         });
@@ -2904,7 +2901,7 @@ module.exports = function (router) {
         var editUser = req.body._id;
         if (req.body.name) var newName = req.body.name;
         if (req.body.username) var newUsername = req.body.username;
-        if (req.body.email) var newEmail = req.body.email;
+        // if (req.body.email) var newEmail = req.body.email;
         if (req.body.permission) var newPermission = req.body.permission;
 
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
@@ -2957,28 +2954,6 @@ module.exports = function (router) {
                     }
                 }
 
-                if (newEmail) {
-                    if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
-                        User.findOne({ _id: editUser }, function (err, user) {
-                            if (err) throw err;
-                            if (!user) {
-                                res.json({ success: false, message: 'No user found' });
-                            } else {
-                                user.email = newEmail;
-                                user.save(function (err) {
-                                    if (err) {
-                                        res.json({ success: false, message: 'Nu s-a putut salva' });
-                                    } else {
-                                        res.json({ success: true, message: 'Email has been updated!' });
-                                    }
-                                });
-                            }
-                        });
-
-                    } else {
-                        res.json({ success: false, message: 'Insufficient Permissions' });
-                    }
-                }
                 if (newPermission) {
                     if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
                         User.findOne({ _id: editUser }, function (err, user) {

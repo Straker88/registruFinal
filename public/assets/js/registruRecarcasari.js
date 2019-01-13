@@ -1,7 +1,7 @@
 var token = window.localStorage.getItem('token');
 
 $(document).ready(function () {
-    var oTable = $('#tabel').DataTable({
+    var oTable = $('#tabel').dataTable({
         "serverSide": false,
         "ajax": {
             "url": "api/registruRecarcasari/",
@@ -194,4 +194,3 @@ $("#fromdate").datepicker({
     $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
 });
 
-//--------------------- Registru Service General

@@ -568,12 +568,10 @@ editService.cost_reparatieForm.cost_reparatie.$valid)"
             </div>
         </form>
 
-        <form id="submit7" style="width:49%;float: right;display: table;" ng-submit="editService.updateExecutant_Reparatie(newExecutant_Reparatie,
-editService.executant_reparatieForm.executant_reparatie.$valid)"
-            name="editService.executant_reparatieForm" novalidate>
+        <form style="width:49%;float: right;display: table;" novalidate>
             <label>Executant Reparatie:</label>
-            <input maxlength="40" ng-disabled="!main.service" id="submit-holder7" class="form-control" type="text" name="executant_reparatie"
-                ng-model="newExecutant_Reparatie" placeholder="-" required autocomplete="off">
+            <input maxlength="40" disabled class="form-control" type="text" name="executant_reparatie" ng-model="newExecutant_Reparatie"
+                placeholder="-" required autocomplete="off">
 
             <div class="row show-hide-message" ng-show="editService.errorMsgExecutant_Reparatie">
                 <div class="alert alert-danger">{{ editService.errorMsgExecutant_Reparatie }}</div>
@@ -582,6 +580,10 @@ editService.executant_reparatieForm.executant_reparatie.$valid)"
 
     </div>
 </div>
+
+<input ng-show="main.admin1" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec" ng-value="exec=main.username"
+    placeholder="-" required autocomplete="off">
+
 
 <div class="row" style="margin-bottom:20px;">
     <div class="col-sm-12">
@@ -619,7 +621,7 @@ editService.taxa_constatareForm.taxa_constatare.$valid)"
             </div>
         </form>
 
-        <form id="submit9" style="width:11%;float: left;display: table;" ng-submit="editService.updateTaxa_Urgenta(newTaxa_Urgenta,
+        <form id="submit9" style="width:11%;float:left;display: table;" ng-submit="editService.updateTaxa_Urgenta(newTaxa_Urgenta,
 editService.taxa_urgentaForm.taxa_urgenta.$valid)"
             name="editService.taxa_urgentaForm" novalidate>
             <label>Taxa Urgenta:</label>
@@ -644,7 +646,7 @@ editService.taxa_urgentaForm.taxa_urgenta.$valid)"
                 </div>
             </form>
         </div>
-        <form class="no-print" style="margin-top:30px;padding-left: 0px;" id="submit12" ng-submit="editService.updateObservatii_service_Intern(Observatii_service_Intern, editService.observatii_service_internForm.observatii_service_intern.$valid)"
+        <form class="no-print" style="margin-top:30px;padding-left: 0px;clear:both;" id="submit12" ng-submit="editService.updateObservatii_service_Intern(Observatii_service_Intern, editService.observatii_service_internForm.observatii_service_intern.$valid)"
             class="col-md-12" name="editService.observatii_service_internForm" novalidate>
             <label>Adaugare Dep. Service: (vizibil doar intern, nu se printeaza)</label>
             <textarea ng-disabled="!main.service" id="submit-holder12" style="resize: none;" class="form-control" type="text"
@@ -698,8 +700,9 @@ editService.taxa_urgentaForm.taxa_urgenta.$valid)"
 </div>
 
 <div ng-show="main.service">
-    <button style="float: right;clear: both;" form="form1" ng-disabled="editService.disabled" class="btn btn-info btn-sm hidden-print"
-        type="submit" ng-model="newFinalizat_Service" name="finalizat_service" id="service1">Printeaza</button>
+    <button ng-click="addExec()" style="float: right;clear: both;" form="form1" ng-disabled="editService.disabled"
+        class="btn btn-info btn-sm hidden-print" type="submit" ng-model="newFinalizat_Service" name="finalizat_service"
+        id="service1">Printeaza</button>
 
 </div>
 <br>

@@ -379,8 +379,8 @@
         <input style="pointer-events: none;" id="time-holder12" class="form-control" type="text" name="finalizat_oliva"
             ng-model="newFinalizat_Oliva" readonly>
 
-        <button ng-show="main.plastie" ng-disabled="editOliva.disabled" class="btn btn-info btn-sm" type="submit" name="finalizat_oliva"
-            id="time12">Adauga</button>
+        <button ng-click="addExec()" ng-show="main.plastie" ng-disabled="editOliva.disabled" class="btn btn-info btn-sm"
+            type="submit" name="finalizat_oliva" id="time12">Adauga</button>
 
         <div class="row show-hide-message" ng-show="editOliva.successMsgFinalizat_Oliva">
             <div class="alert alert-success">{{ editOliva.successMsgFinalizat_Oliva }}</div>
@@ -412,6 +412,17 @@
         </div>
     </form>
 
+    <form class="col-md-12" style="clear: both;width:15%;float: left;display: table;margin-top:30px;" novalidate>
+        <label>Executant Oliva:</label>
+        <input maxlength="40" disabled class="form-control" type="text" name="executant_oliva" ng-model="newExecutant_Oliva"
+            placeholder="-" required autocomplete="off">
+
+        <div class="row show-hide-message" ng-show="editService.errorMsgExecutant_Oliva">
+            <div class="alert alert-danger">{{ editService.errorMsgExecutant_Oliva }}</div>
+        </div>
+    </form>
+
+
     <form style="margin-top:30px;" id="submit3" ng-submit="editOliva.updateObservatii_Plastie(newObservatii_Plastie, editOliva.observatii_plastieForm.observatii_plastie.$valid)"
         class="col-md-12" name="editOliva.observatii_plastieForm" novalidate>
         <label>Observatii Plastie:</label>
@@ -427,6 +438,8 @@
 
 </div>
 
+<input ng-show="main.admin1" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec" ng-value="exec=main.username"
+    placeholder="-" required autocomplete="off">
 
 
 <br>

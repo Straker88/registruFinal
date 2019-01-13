@@ -602,10 +602,10 @@ th.FilterinputSearch{
 
 .inputDateRegistruLog{
   border:none;
-  width: 135px;
+  width: 125px;
   margin-top: 0;
    margin-left: 6px; 
-   font-size: 12px;
+   font-size: 11px;
    text-align: center;
    border-radius: 4px;
    cursor: pointer;

@@ -45,6 +45,7 @@ var OlivaSchema = new Schema({
     finalizat_oliva: { type: String, },
     plastie_plecat: { type: String, },
     observatii_plastie: { type: String, },
+    executant_oliva: { type: String },
 
 
 }).plugin(AutoIncrement, { inc_field: 'nr_comanda_oliva' });

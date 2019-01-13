@@ -99,25 +99,25 @@ angular.module('mainController', ['authServices', 'userServices'])
                     app.loading = false;
                     app.successMsg = data.data.message + '...Se incarca';
                     $timeout(function () {
-                        if (app.username === 'LaboratorService') {
+                        if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel') {
                             $location.path('/registruService/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.username === 'LogisticRoxana') {
+                        else if (app.username === 'Logistic') {
                             $location.path('/registruLogistic/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.username === 'LaboratorAsamblare') {
+                        else if (app.username === 'Cristi Ghiburcea') {
                             $location.path('/registruIte/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.username === 'PlastieMarius') {
+                        else if (app.username === 'Chiritoiu Iuliana' || app.username === 'Adrian Ionescu') {
                             $location.path('/registruOlive/');
                             app.loginData = {};
                             app.successMsg = '';

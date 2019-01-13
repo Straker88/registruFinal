@@ -565,17 +565,16 @@ editRecarcasare.cost_recarcasareForm.cost_recarcasare.$valid)"
             </div>
         </form>
 
-        <form id="submit7" style="width:24%;float: right;display: table;" ng-submit="editRecarcasare.updateExecutant_Recarcasare(newExecutant_Recarcasare,
-editRecarcasare.executant_recarcasareForm.executant_recarcasare.$valid)"
-            name="editRecarcasare.executant_recarcasareForm" novalidate>
+        <form style="width:24%;float: right;display: table;" novalidate>
             <label>Executant Recarcasare:</label>
-            <input maxlength="40" ng-disabled="!main.asamblare" id="submit-holder7" class="form-control" type="text"
-                name="executant_recarcasare" ng-model="newExecutant_Recarcasare" placeholder="-" required autocomplete="off">
+            <input maxlength="40" disabled class="form-control" type="text" name="executant_recarcasare" ng-model="newExecutant_Recarcasare"
+                placeholder="-" required autocomplete="off">
 
-            <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgExecutant_Recarcasare">
-                <div class="alert alert-danger">{{ editRecarcasare.errorMsgExecutant_Recarcasare }}</div>
+            <div class="row show-hide-message" ng-show="editService.errorMsgExecutant_Recarcasare">
+                <div class="alert alert-danger">{{ editService.errorMsgExecutant_Recarcasare }}</div>
             </div>
         </form>
+
         <form id="submit13" style="width:24%;float: right;display: table;" ng-submit="editRecarcasare.updateExecutant_Reparatie(newExecutant_Reparatie,
 editRecarcasare.executant_reparatieForm.executant_reparatie.$valid)"
             name="editRecarcasare.executant_reparatieForm" novalidate>
@@ -590,6 +589,10 @@ editRecarcasare.executant_reparatieForm.executant_reparatie.$valid)"
 
     </div>
 </div>
+
+<input ng-show="main.admin" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec" ng-value="exec=main.username"
+    placeholder="-" required autocomplete="off">
+
 
 <div class="row" style="margin-bottom:20px;">
     <div class="col-sm-12">
@@ -707,8 +710,9 @@ editRecarcasare.taxa_urgentaForm.taxa_urgenta.$valid)"
 </div>
 
 <div ng-show="main.asamblare">
-    <button style="float: right;clear: both;" form="form1" ng-disabled="editRecarcasare.disabled" class="btn btn-info btn-sm hidden-print"
-        type="submit" ng-model="newFinalizat_Recarcasare" name="finalizat_recarcasare" id="recarcasare1">Printeaza</button>
+    <button ng-click="addExec()" style="float: right;clear: both;" form="form1" ng-disabled="editRecarcasare.disabled"
+        class="btn btn-info btn-sm hidden-print" type="submit" ng-model="newFinalizat_Recarcasare" name="finalizat_recarcasare"
+        id="recarcasare1">Printeaza</button>
 
 </div>
 <br>

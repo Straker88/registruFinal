@@ -150,6 +150,30 @@ angular.module('olivaControllers', ['userServices'])
                 $scope.newPlastie_Sosit = data.data.oliva.plastie_sosit;
                 $scope.newPlastie_Plecat = data.data.oliva.plastie_plecat;
                 $scope.newFinalizat_Oliva = data.data.oliva.finalizat_oliva;
+                $scope.newExecutant_Oliva = data.data.oliva.executant_oliva;
+
+                $scope.addExec = function () {
+                    $scope.newExecutant_Oliva = $scope.exec;
+
+                    var olivaObject = {};
+                    olivaObject._id = app.currentOliva;
+                    olivaObject.executant_oliva = $scope.exec;
+                    Oliva.editOliva(olivaObject).then(function (data) {
+                        if (data.data.success) {
+                            app.successExecutant_Oliva = data.data.message;
+                        } else {
+                            app.errorMsgExecutant_Oliva = data.data.message;
+                        }
+                        if (olivaObject.executant_oliva !== "-") {
+                            app.errorMsgExecutant_Oliva = data.data.message;
+                        }
+
+
+                    });
+
+                };
+
+
 
             } else {
                 app.errorMsg = data.data.message;

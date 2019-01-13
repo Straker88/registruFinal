@@ -1,6 +1,6 @@
 angular.module('userControllers', ['userServices'])
 
-    .controller('regCtrl', function ($http, $location, $timeout, User) {
+    .controller('regCtrl', function ($http, $location, $timeout, User, $window) {
 
         var app = this;
 
@@ -13,6 +13,7 @@ angular.module('userControllers', ['userServices'])
                     if (data.data.success) {
                         app.loading = false;
                         app.successMsg = data.data.message + '...Redirecting';
+                        $window.location.reload();
                         // $timeout(function () {
                         //     $location.path('/login');
                         // }, 2000);

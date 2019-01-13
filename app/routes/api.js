@@ -396,6 +396,7 @@ module.exports = function (router) {
                         oliva.plastie_plecat = '-';
                         oliva.finalizat_oliva = '-';
                         oliva.observatii_plastie = '-';
+                        oliva.executant_oliva = '-';
 
 
                         if (req.body.ureche_protezata == "Bilateral") {
@@ -1548,16 +1549,20 @@ module.exports = function (router) {
                     if (err) throw err;
                     if (mainUser.permission !== 'service') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Service.' });
-                    }
-                    else {
-                        service.executant_reparatie = newExecutant_Reparatie;
-                        service.save(function (err) {
-                            if (err) {
-                                res.json({ success: false, message: 'Nu s-a putut salva' });
-                            } else {
-                                res.json({ success: true, message: 'Completare adaugata cu succes' });
-                            }
-                        });
+                    } else {
+                        if (!service || service.executant_reparatie !== '-') {
+                            res.json({ success: false, message: 'Executant Reparatie a fost deja adaugat, modificarile nu sunt salvate' });
+                        }
+                        else {
+                            service.executant_reparatie = newExecutant_Reparatie;
+                            service.save(function (err) {
+                                if (err) {
+                                    res.json({ success: false, message: 'Nu s-a putut salva' });
+                                } else {
+                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                }
+                            });
+                        }
                     }
                 });
             }
@@ -2071,19 +2076,26 @@ module.exports = function (router) {
                     if (err) throw err;
                     if (mainUser.permission !== 'asamblare') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
-                    }
-                    else {
-                        recarcasare.executant_recarcasare = newExecutant_Recarcasare;
-                        recarcasare.save(function (err) {
-                            if (err) {
-                                res.json({ success: false, message: 'Nu s-a putut salva' });
-                            } else {
-                                res.json({ success: true, message: 'Completare adaugata cu succes' });
-                            }
-                        });
+                    } else {
+                        if (!recarcasare || recarcasare.executant_recarcasare !== '-') {
+                            res.json({ success: false, message: 'Executant Reparatie a fost deja adaugat, modificarile nu sunt salvate' });
+                        }
+                        else {
+                            recarcasare.executant_recarcasare = newExecutant_Recarcasare;
+                            recarcasare.save(function (err) {
+                                if (err) {
+                                    res.json({ success: false, message: 'Nu s-a putut salva' });
+                                } else {
+                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                }
+                            });
+                        }
                     }
                 });
             }
+
+
+
 
             if (newExecutant_Reparatie) {
                 Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
@@ -2235,6 +2247,7 @@ module.exports = function (router) {
             if (req.body.observatii_plastie) var newObservatii_Plastie = req.body.observatii_plastie;
             if (req.body.taxa_urgenta) var newTaxa_Urgenta = req.body.taxa_urgenta;
             if (req.body.finalizat_oliva) var newFinalizat_Oliva = new moment().format('DD/MM/YYYY');
+            if (req.body.executant_oliva) var newExecutant_Oliva = req.body.executant_oliva;
 
 
             //      1.Cabinet ----------------------------------------------
@@ -2522,6 +2535,30 @@ module.exports = function (router) {
                     }
                 });
             }
+
+            if (newExecutant_Oliva) {
+                Oliva.findOne({ _id: editOliva }, function (err, oliva) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'plastie') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Plastie.' });
+                    } else {
+                        if (!oliva || oliva.executant_oliva !== '-') {
+                            res.json({ success: false, message: 'Executant Oliva a fost deja adaugat, modificarile nu sunt salvate' });
+                        }
+                        else {
+                            oliva.executant_oliva = newExecutant_Oliva;
+                            oliva.save(function (err) {
+                                if (err) {
+                                    res.json({ success: false, message: 'Nu s-a putut salva' });
+                                } else {
+                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
 
 
         });

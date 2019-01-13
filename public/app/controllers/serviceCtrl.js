@@ -133,9 +133,32 @@ angular.module('serviceControllers', ['userServices'])
                 $scope.newCod_Componente = data.data.service.cod_componente;
                 $scope.newCost_Reparatie = data.data.service.cost_reparatie;
                 $scope.newExecutant_Reparatie = data.data.service.executant_reparatie;
+
                 $scope.newTaxa_Constatare = data.data.service.taxa_constatare;
                 $scope.newTaxa_Urgenta = data.data.service.taxa_urgenta;
                 $scope.newGarantie_Serv = data.data.service.garantie_serv;
+
+                $scope.addExec = function () {
+                    $scope.newExecutant_Reparatie = $scope.exec;
+
+                    var serviceObject = {};
+                    serviceObject._id = app.currentService;
+                    serviceObject.executant_reparatie = $scope.exec;
+                    Service.editService(serviceObject).then(function (data) {
+                        if (data.data.success) {
+                            app.successExecutant_Reparatie = data.data.message;
+                        } else {
+                            app.errorMsgExecutant_Reparatie = data.data.message;
+                        }
+                        if (serviceObject.executant_reparatie !== "-") {
+                            app.errorMsgExecutant_Reparatie = data.data.message;
+                        }
+
+
+                    });
+
+                };
+
 
             } else {
                 app.errorMsg = data.data.message;
@@ -722,38 +745,6 @@ angular.module('serviceControllers', ['userServices'])
 
         };
 
-        app.updateExecutant_Reparatie = function (newExecutant_Reparatie, valid) {
-            app.errorMsgExecutant_Reparatie = false;
-            app.disabled = false;
-
-            if (valid) {
-                var serviceObject = {};
-                serviceObject._id = app.currentService;
-                serviceObject.executant_reparatie = $scope.newExecutant_Reparatie;
-
-                Service.editService(serviceObject).then(function (data) {
-
-                    if (data.data.success) {
-                        app.successMsgExecutant_Reparatie = data.data.message;
-
-                        $timeout(function () {
-                            app.executant_reparatieForm.executant_reparatie.$setPristine();
-                            app.executant_reparatieForm.executant_reparatie.$setUntouched();
-                            app.successMsgExecutant_Reparatie = false;
-                            app.disabled = false;
-                        }, 700);
-
-                    } else {
-                        app.errorMsgExecutant_Reparatie = data.data.message;
-                        app.disabled = false;
-                    }
-                });
-            } else {
-                app.errorMsgExecutant_Reparatie = eroare;
-                app.disabled = true;
-            }
-
-        };
 
         app.updateObservatii_Service = function (newObservatii_Service, valid) {
             app.errorMsgObservatii_Service = false;

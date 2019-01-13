@@ -136,6 +136,29 @@ angular.module('recarcasareControllers', ['userServices'])
                 $scope.newTaxa_Urgenta = data.data.recarcasare.taxa_urgenta;
                 $scope.newGarantie_Asamblare = data.data.recarcasare.garantie_asamblare;
 
+
+                $scope.addExec = function () {
+                    $scope.newExecutant_Recarcasare = $scope.exec;
+
+                    var recarcasareObject = {};
+                    recarcasareObject._id = app.currentRecarcasare;
+                    recarcasareObject.executant_recarcasare = $scope.exec;
+                    Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+                        if (data.data.success) {
+                            app.successExecutant_Recarcasare = data.data.message;
+                        } else {
+                            app.errorMsgExecutant_Recarcasare = data.data.message;
+                        }
+                        if (recarcasareObject.executant_recarcasare !== "-") {
+                            app.errorMsgExecutant_Recarcasare = data.data.message;
+                        }
+
+
+                    });
+
+                };
+
+
             } else {
                 app.errorMsg = data.data.message;
             }
@@ -723,38 +746,38 @@ angular.module('recarcasareControllers', ['userServices'])
 
         };
 
-        app.updateExecutant_Recarcasare = function (newExecutant_Recarcasare, valid) {
-            app.errorMsgExecutant_Recarcasare = false;
-            app.disabled = false;
+        // app.updateExecutant_Recarcasare = function (newExecutant_Recarcasare, valid) {
+        //     app.errorMsgExecutant_Recarcasare = false;
+        //     app.disabled = false;
 
-            if (valid) {
-                var recarcasareObject = {};
-                recarcasareObject._id = app.currentRecarcasare;
-                recarcasareObject.executant_recarcasare = $scope.newExecutant_Recarcasare;
+        //     if (valid) {
+        //         var recarcasareObject = {};
+        //         recarcasareObject._id = app.currentRecarcasare;
+        //         recarcasareObject.executant_recarcasare = $scope.newExecutant_Recarcasare;
 
-                Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
+        //         Recarcasare.editRecarcasare(recarcasareObject).then(function (data) {
 
-                    if (data.data.success) {
-                        app.successMsgExecutant_Recarcasare = data.data.message;
+        //             if (data.data.success) {
+        //                 app.successMsgExecutant_Recarcasare = data.data.message;
 
-                        $timeout(function () {
-                            app.executant_recarcasareForm.executant_recarcasare.$setPristine();
-                            app.executant_recarcasareForm.executant_recarcasare.$setUntouched();
-                            app.successMsgExecutant_Recarcasare = false;
-                            app.disabled = false;
-                        }, 700);
+        //                 $timeout(function () {
+        //                     app.executant_recarcasareForm.executant_recarcasare.$setPristine();
+        //                     app.executant_recarcasareForm.executant_recarcasare.$setUntouched();
+        //                     app.successMsgExecutant_Recarcasare = false;
+        //                     app.disabled = false;
+        //                 }, 700);
 
-                    } else {
-                        app.errorMsgExecutant_Recarcasare = data.data.message;
-                        app.disabled = false;
-                    }
-                });
-            } else {
-                app.errorMsgExecutant_Recarcasare = eroare;
-                app.disabled = true;
-            }
+        //             } else {
+        //                 app.errorMsgExecutant_Recarcasare = data.data.message;
+        //                 app.disabled = false;
+        //             }
+        //         });
+        //     } else {
+        //         app.errorMsgExecutant_Recarcasare = eroare;
+        //         app.disabled = true;
+        //     }
 
-        };
+        // };
         app.updateExecutant_Reparatie = function (newExecutant_Reparatie, valid) {
             app.errorMsgExecutant_Reparatie = false;
             app.disabled = false;

@@ -195,4 +195,3 @@ $("#fromdate").datepicker({
 });
 
 
-//--------------------- Registru Service General

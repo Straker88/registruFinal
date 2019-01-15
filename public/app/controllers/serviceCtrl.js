@@ -23,16 +23,16 @@ angular.module('serviceControllers', ['userServices'])
                         if (data.data.success) {
                             $scope.comanda_service = data.data.comanda_service + 1;
 
-                            // app.disabled = true;
+                            app.disabled = true;
                             app.successMsg = data.data.message
 
-                            // $timeout(function () {
-                            //     window.print();
-                            // }, 300)
+                            $timeout(function () {
+                                window.print();
+                            }, 300)
 
-                            // $timeout(function () {
-                            //     $route.reload();
-                            // }, 1500)
+                            $timeout(function () {
+                                $route.reload();
+                            }, 1500)
 
 
 
@@ -94,6 +94,7 @@ angular.module('serviceControllers', ['userServices'])
                 $scope.newTelefon = data.data.service.telefon;
                 $scope.newDenumire_Aparat = data.data.service.denumire_aparat;
                 $scope.newSerie_Aparat = data.data.service.serie_aparat;
+                $scope.newNr_Comanda_Service = data.data.service.nr_comanda_service;
                 $scope.newDefectiune_Reclamata = data.data.service.defectiune_reclamata;
                 $scope.newConstatare_Cabinet = data.data.service.constatare_cabinet;
                 $scope.newCompletare_Cabinet = data.data.service.completare_cabinet;

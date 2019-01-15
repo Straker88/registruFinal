@@ -105,6 +105,11 @@
         <!-- Cabinet ------------------------------------------------------------------------>
 
         <div class="accesorii">
+            <form style="margin-top:-18px;" class="optiuni" novalidate>
+                <label>Nr. Comanda:</label>
+                <input style="text-align:center;" readonly class="form-control" name="nr_comanda_service" ng-model="newNr_Comanda_Service"
+                    required>
+            </form>
 
             <form style="margin-top:-18px;" class="optiuni" novalidate>
                 <label>Certif. Garantie:</label>
@@ -608,44 +613,36 @@ editService.cost_reparatieForm.cost_reparatie.$valid)"
 
 <div class="row" style="margin-bottom:20px;">
     <div class="col-sm-12">
+        <form style="max-width: 110px;" class="optiuni" novalidate>
+            <label style="color:#f00;">Taxa Urgenta:</label>
+            <input style="text-align: center;border: none;" readonly class="form-control" ng-class="newTaxa_Urgenta_Cabinet"
+                name="taxa_urgenta_cabinet" ng-model="newTaxa_Urgenta_Cabinet" required>
+        </form>
 
-        <form id="submit8" style="width:11%;float:left;display: table;margin-right: 5px;" ng-submit="editService.updateTaxa_Constatare(newTaxa_Constatare,
+        <form id="submit8" style="max-width: 110px;float:left;display: table;margin-right: 5px;" ng-submit="editService.updateTaxa_Constatare(newTaxa_Constatare,
 editService.taxa_constatareForm.taxa_constatare.$valid)"
             name="editService.taxa_constatareForm" novalidate>
             <label>Taxa Constatare:</label>
-            <input maxlength="2" ng-disabled="!main.service" id="submit-holder8" class="form-control" type="text" name="taxa_constatare"
-                ng-model="newTaxa_Constatare" placeholder="nu" required autocomplete="off">
+            <input style="text-align: center;" maxlength="2" ng-disabled="!main.service" id="submit-holder8" class="form-control"
+                type="text" name="taxa_constatare" ng-model="newTaxa_Constatare" placeholder="nu" required autocomplete="off">
 
             <div class="row show-hide-message" ng-show="editService.errorMsgTaxa_Constatare">
                 <div class="alert alert-danger">{{ editService.errorMsgTaxa_Constatare }}</div>
             </div>
         </form>
 
-        <form id="submit9" style="width:11%;float:left;display: table;" ng-submit="editService.updateTaxa_Urgenta(newTaxa_Urgenta,
-editService.taxa_urgentaForm.taxa_urgenta.$valid)"
-            name="editService.taxa_urgentaForm" novalidate>
-            <label>Taxa Urgenta:</label>
-            <input maxlength="2" ng-disabled="!main.service" id="submit-holder9" class="form-control" type="text" name="taxa_urgenta"
-                ng-model="newTaxa_Urgenta" placeholder="nu" required autocomplete="off">
 
-            <div class="row show-hide-message" ng-show="editService.errorMsgTaxa_Urgenta">
-                <div class="alert alert-danger">{{ editService.errorMsgTaxa_Urgenta }}</div>
+        <form class="hidden-print" id="submit10" style="max-width:5%;display: table;" ng-submit="editService.updateGarantie_Serv(newGarantie_Serv,
+        editService.garantie_servForm.garantie_serv.$valid)"
+            name="editService.garantie_servForm" novalidate>
+            <label>F/G: </label>
+            <input maxlength="3" ng-disabled="!main.service" id="submit-holder10" class="form-control" type="text" name="garantie_serv"
+                ng-model="newGarantie_Serv" placeholder="-" required autocomplete="off">
+
+            <div class="row show-hide-message" ng-show="editService.errorMsgGarantie_Serv">
+                <div class="alert alert-danger">{{ editService.errorMsgGarantie_Serv }}</div>
             </div>
         </form>
-        <div ng-show="main.service">
-
-            <form class="hidden-print" id="submit10" style="width:11%;display: table;" ng-submit="editService.updateGarantie_Serv(newGarantie_Serv,
-        editService.garantie_servForm.garantie_serv.$valid)"
-                name="editService.garantie_servForm" novalidate>
-                <label>F/G:</label>
-                <input maxlength="3" ng-disabled="!main.service" id="submit-holder10" class="form-control" type="text"
-                    name="garantie_serv" ng-model="newGarantie_Serv" placeholder="-" required autocomplete="off">
-
-                <div class="row show-hide-message" ng-show="editService.errorMsgGarantie_Serv">
-                    <div class="alert alert-danger">{{ editService.errorMsgGarantie_Serv }}</div>
-                </div>
-            </form>
-        </div>
         <form class="no-print" style="margin-top:30px;padding-left: 0px;clear:both;" id="submit12" ng-submit="editService.updateObservatii_service_Intern(Observatii_service_Intern, editService.observatii_service_internForm.observatii_service_intern.$valid)"
             class="col-md-12" name="editService.observatii_service_internForm" novalidate>
             <label>Adaugare Dep. Service: (vizibil doar intern, nu se printeaza)</label>

@@ -905,7 +905,8 @@
                         <div style="float:left;width: 49%;display:table;">
                             <label for="Observatii Cabinet">Observatii Cabinet</label>
                             <input type="text" class="form-control" maxlength="40" name="observatii_cabinet"
-                                placeholder="-" ng-model="registerService.regData.observatii_cabinet" autocomplete="off">
+                                placeholder="Ex. carcasa fisurata, buton programe rupt, lipsa fir extractie, etc."
+                                ng-model="registerService.regData.observatii_cabinet" autocomplete="off">
                         </div>
 
                     </div>
@@ -1152,7 +1153,8 @@
                         <div style="float:left;width: 49%;display:table;">
                             <label for="Observatii Cabinet">Observatii Cabinet</label>
                             <input type="text" class="form-control" maxlength="40" name="observatii_cabinet"
-                                placeholder="-" ng-model="registerRecarcasare.regData.observatii_cabinet" autocomplete="off">
+                                placeholder="Ex. carcasa fisurata, buton programe rupt, lipsa fir extractie, etc."
+                                ng-model="registerRecarcasare.regData.observatii_cabinet" autocomplete="off">
                         </div>
 
                     </div>
@@ -1345,7 +1347,7 @@
                 <div style="width:35%; float:left;">
                     <div style="width:100%;" class="regOlivaForm">
                         <label for="Model_Aparat">Model aparat(e) auditiv: </label>
-                        <input maxlength="31" type="text" class="form-control" name="model_aparat" placeholder="-"
+                        <input maxlength="31" type="text" class="form-control" name="model_aparat" placeholder="Ex. Flow 13 SP"
                             ng-model="registerOliva.regData.model_aparat" autocomplete="off">
                     </div>
                     <div style="width:100%;clear:both;float:left;" class="regOlivaForm">
@@ -1408,7 +1410,7 @@
                     <div style="width:100%;">
                         <label for="Observatii_Oliva">Observatii: </label>
                         <textarea maxlength="140" style="resize:none;min-height: 115px;border: 1px solid #000;" type="text"
-                            class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.observatii_oliva"
+                            class="form-control" name="nume" placeholder="Ex. Refacere Oliva" ng-model="registerOliva.regData.observatii_oliva"
                             autocomplete="off"></textarea>
                     </div>
                 </div>
@@ -1649,8 +1651,8 @@
                 <div style="width:26%; float:left;">
                     <div style="width:100%;" class="regIteForm">
                         <label for="Model_Aparat">Model aparat(e) auditiv: </label>
-                        <input type="text" class="form-control" name="model_aparat" placeholder="-" ng-model="registerIte.regData.model_aparat"
-                            autocomplete="off">
+                        <input type="text" class="form-control" name="model_aparat" placeholder="Ex. Shine Rev 4 SP"
+                            ng-model="registerIte.regData.model_aparat" autocomplete="off">
                     </div>
                     <div style="width:100%;clear:both;float:left;" class="regIteForm">
                         <p style="margin-bottom: 6px;color:#337ab7;font-weight: 600;font-size: 13px;">Ureche
@@ -1710,9 +1712,9 @@
                         </div>
                     </div>
 
-                    <div style="width:65%;display:table;clear:left;">
+                    <div style="width:427px;display:table;clear:left;">
                         <label for="Vent_Ite">Vent: (mm)</label>
-                        <input maxlength="28" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
+                        <input maxlength="27" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
                             autocomplete="off">
                     </div>
                     <hr class="visible-print-block">
@@ -1731,7 +1733,7 @@
                     <div style="width:100%;">
                         <label for="Observatii_Ite">Observatii: </label>
                         <textarea maxlength="140" style="resize:none;min-height: 115px;border: 1px solid #000;" type="text"
-                            class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.observatii_ite"
+                            class="form-control" name="nume" placeholder="Ex. fara fir extractie" ng-model="registerIte.regData.observatii_ite"
                             autocomplete="off"></textarea>
                     </div>
                 </div>
@@ -1764,7 +1766,7 @@
                             placeholder="-" ng-model="serie_ite" autocomplete="off">
                     </div>
                 </div>
-                <div style="width:40%;display: table;">
+                <div style="width:34%;display: table;clear:left;">
                     <label for="Pret_Final">Pret (RON)</label>
                     <input maxlength="43" type="number" class="form-control" name="pret_final" placeholder="-" ng-model="registerIte.regData.pret_final"
                         autocomplete="off">

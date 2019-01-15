@@ -4,6 +4,21 @@
   zoom: 100%;
 } 
 
+@media print {
+  ::-webkit-input-placeholder { /* WebKit browsers */
+opacity: 0;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    opacity: 0;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    opacity: 0;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    opacity: 0;
+  }
+}
+
 
 @page {
   margin: 0;
@@ -616,7 +631,7 @@ th.FilterinputSearch{
 
 canvas {
   border: 1px solid black;
-  cursor: crosshair;
+  cursor: not-allowed;
 }
 
 .tr_height tr{

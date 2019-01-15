@@ -1153,6 +1153,7 @@ module.exports = function (router) {
             //      Cabinet 
             //-----------------------------------------------------------------------------------
             if (req.body.completare_cabinet) var newCompletare_Cabinet = req.body.completare_cabinet;
+            if (req.body.nr_comanda_service) var newNr_Comanda_Service = req.body.nr_comanda_service;
             if (req.body.iesit_cabinet) var newIesit_Cabinet = new moment().format('DD/MM/YYYY');
             if (req.body.intrat_cabinet) var newIntrat_Cabinet = new moment().format('DD/MM/YYYY');
             if (req.body.predat_pacient) var newPredat_Pacient = new moment().format('DD/MM/YYYY');

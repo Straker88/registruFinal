@@ -1562,7 +1562,7 @@ module.exports = function (router) {
                                 if (err) {
                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                 } else {
-                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                    res.json({ success: true });
                                 }
                             });
                         }

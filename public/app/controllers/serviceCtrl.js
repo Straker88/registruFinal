@@ -23,16 +23,16 @@ angular.module('serviceControllers', ['userServices'])
                         if (data.data.success) {
                             $scope.comanda_service = data.data.comanda_service + 1;
 
-                            app.disabled = true;
+                            // app.disabled = true;
                             app.successMsg = data.data.message
 
-                            $timeout(function () {
-                                window.print();
-                            }, 300)
+                            // $timeout(function () {
+                            //     window.print();
+                            // }, 300)
 
-                            $timeout(function () {
-                                $route.reload();
-                            }, 1500)
+                            // $timeout(function () {
+                            //     $route.reload();
+                            // }, 1500)
 
 
 
@@ -146,7 +146,7 @@ angular.module('serviceControllers', ['userServices'])
                     serviceObject.executant_reparatie = $scope.exec;
                     Service.editService(serviceObject).then(function (data) {
                         if (data.data.success) {
-                            app.successExecutant_Reparatie = data.data.message;
+
                         } else {
                             app.errorMsgExecutant_Reparatie = data.data.message;
                         }

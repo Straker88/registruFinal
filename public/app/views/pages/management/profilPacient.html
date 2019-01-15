@@ -38,314 +38,137 @@
         }
     })
 
-    // var needFirstPoint = true;
-    // var lineTo = [{}];
+    //this is an array of arrays
+    //when I click on the canvas a new point is pushed on the last array of this array
+    // var ry = [[]];
 
-    // function drawNextLine(ctx, x, y) {
-    //     if (needFirstPoint) {
-    //         ctx.lineWidth = 2;
-    //         ctx.beginPath();
-    //         ctx.moveTo(x, y);
-    //         needFirstPoint = false;
 
-    //     }
-    //     else {
-    //         ctx.beginPath();
-    //         ctx.lineTo(x, y);
-    //         ctx.stroke();
-    //     }
-    // }
+    var canvas = document.querySelector("#myCanvas");
+    var w = (canvas.width = 450);
+    var h = (canvas.height = 280);
 
-    // function drawNextLine1(ctx, x, y) {
-    //     if (needFirstPoint) {
+    var ctx = canvas.getContext("2d");
 
-    //         ctx.lineWidth = 2;
-    //         ctx.beginPath();
-    //         ctx.moveTo(x, y);
-    //     }
-    //     else {
-    //         ctx.beginPath();
-    //         ctx.lineTo(x, y);
-    //         ctx.stroke();
-    //     }
-    // }
+    drawGrid();
 
-    // $(document).ready(function () {
-    //     var canvas = $('#myCanvas').get(0);
-    //     if (!canvas.getContext) { return; }
-    //     var ctx = canvas.getContext('2d');
-    //     var ctx1 = canvas.getContext('2d');
+    function drawGrid() {
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 0.1;
+        ctx.beginPath();
+        for (x = 15; x <= w; x += 60) {
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, h);
+            for (y = 20; y <= h; y += 20) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+            }
+        }
+        ctx.stroke();
+    }
 
-    //     var drawGrid = function (w, h, id) {
-    //         ctx.canvas.width = w;
-    //         ctx.canvas.height = h;
-    //         ctx.lineWidth = .1;
+    var canvas1 = document.querySelector("#myCanvasITE");
+    var w1 = (canvas1.width = 450);
+    var h1 = (canvas1.height = 280);
 
-    //         for (x = 15; x <= w; x += 60) {
-    //             ctx.moveTo(x, 0);
-    //             ctx.lineTo(x, h);
-    //             for (y = 20; y <= h; y += 20) {
-    //                 ctx.moveTo(0, y);
-    //                 ctx.lineTo(w, y);
-    //             }
-    //         }
-    //         ctx.stroke();
+    var ctx = canvas1.getContext("2d");
 
-    //     };
+    drawGrid();
 
-    //     drawGrid(450, 280, "myCanvas");
+    function drawGrid() {
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 0.1;
+        ctx.beginPath();
+        for (x = 15; x <= w; x += 60) {
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, h);
+            for (y = 20; y <= h; y += 20) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+            }
+        }
+        ctx.stroke();
+    }
 
-    //     var drawChart = function () {
-    //         ctx.arc(lineTo[lineTo.length - 1].x, lineTo[lineTo.length - 1].y, 6, 0, Math.PI * 2, false)
-    //         ctx.stroke();
-    //     }
 
+    // myCanvas.addEventListener("click", e => {
+    //     var offset = canvas.getBoundingClientRect();
+    //     var x = e.clientX - offset.left;
+    //     var y = e.clientY - offset.top;
+    //     //a new point is pushed on the last array of ry
+    //     ry[ry.length - 1].push({ x: x, y: y });
+    //     // delete everything
+    //     ctx.clearRect(0, 0, w, h);
+    //     // draw everything
+    //     drawGrid();
     //     drawChart();
-
-    //     document.getElementById('move').addEventListener('click', function () {
-
-    //         $('#myCanvas').on('click', function (e) {
-
-    //             var offset = $(this).offset();
-    //             var x = e.pageX - offset.left;
-    //             var y = e.pageY - offset.top;
-    //             ctx.strokeStyle = "red";
-    //             drawNextLine(ctx, x, y);
-
-    //             lineTo.push({ x: x, y: y });
-    //             drawChart();
-
-    //         });
-    //     });
-
-    //     document.getElementById('move1').addEventListener('click', function () {
-
-    //         $('#myCanvas').on('click', function (e) {
-
-    //             var offset = $(this).offset();
-    //             var x = e.pageX - offset.left;
-    //             var y = e.pageY - offset.top;
-    //             ctx.strokeStyle = "blue";
-    //             drawNextLine1(ctx, x, y);
-
-    //             lineTo.push({ x: x, y: y });
-    //             drawChart();
-
-    //         });
-    //     });
-
     // });
 
 
-    // var lineTo = [{}];
-    // var lineTo1 = [{}];
-
-    $(document).ready(function () {
-        var canvas = $("#myCanvas").get(0);
-        if (!canvas.getContext) {
-            return;
-        }
-        var ctx = canvas.getContext("2d");
-        var ctx1 = canvas.getContext("2d");
-
-        var drawGrid = function (w, h, id) {
-            ctx.canvas.width = w;
-            ctx.canvas.height = h;
-            ctx.lineWidth = 0.1;
-
-            for (x = 15; x <= w; x += 60) {
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, h);
-                for (y = 20; y <= h; y += 20) {
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(w, y);
-                }
-            }
-            ctx.stroke();
-        };
-
-        drawGrid(450, 280, "myCanvas");
-
-        var drawGrid1 = function (w, h, id) {
-            ctx1.canvas.width = w;
-            ctx1.canvas.height = h;
-            ctx1.lineWidth = 0.1;
-
-            for (x = 15; x <= w; x += 60) {
-                ctx1.moveTo(x, 0);
-                ctx1.lineTo(x, h);
-                for (y = 20; y <= h; y += 20) {
-                    ctx1.moveTo(0, y);
-                    ctx1.lineTo(w, y);
-                }
-            }
-            ctx1.stroke();
-        };
-
-        drawGrid1(450, 280, "myCanvas");
+    // dreapta.addEventListener("click", e => {
+    //     //when dreapta is clicked, a new array is pushed into the ry
+    //     ry.push([]);
+    // });
+    // stanga.addEventListener("click", e => {
+    //     //when dreapta is clicked, a new array is pushed into the ry
+    //     ry.push([]);
+    // });
 
 
+    // function drawChart() {
+    //     ctx.lineWidth = 1;
+    //     // for every array in the ry array
+    //     for (let index = 0; index < ry.length; index++) {
+    //         // for every point in the ry[index]
+    //         for (let i = 0; i < ry[index].length; i++) {
+    //             let l = ry[index][i];
+    //             // draw the circle
+    //             drawCircle(l.x, l.y);
+    //             // draw the line
+    //             if (i > 0) {
+    //                 let last = ry[index][i - 1];
+    //                 ctx.beginPath();
+    //                 ctx.moveTo(last.x, last.y);
+    //                 ctx.lineTo(l.x, l.y);
+    //                 ctx.strokeStyle = "blue";
+    //                 ctx.stroke();
+    //             }
+    //         }
+    //     }
+    // }
+    // function drawChartRed() {
+    //     ctx.lineWidth = 1;
+    //     // for every array in the ry array
+    //     for (let index = 0; index < ry.length; index++) {
+    //         // for every point in the ry[index]
+    //         for (let i = 0; i < ry[index].length; i++) {
+    //             let l = ry[index][i];
+    //             // draw the circle
+    //             drawCross(l.x, l.y);
+    //             // draw the line
+    //             if (i > 0) {
+    //                 let last = ry[index][i - 1];
+    //                 ctx.beginPath();
+    //                 ctx.moveTo(last.x, last.y);
+    //                 ctx.lineTo(l.x, l.y);
+    //                 ctx.strokeStyle = "red";
+    //                 ctx.stroke();
+    //             }
+    //         }
+    //     }
+    // }
 
-        ctx.lineWidth = 1;
-        ctx1.lineWidth = 2;
-
-
-
-        var drawChart = function (x, y) {
-            ctx.beginPath();
-            ctx.arc(x, y, 9, 0, Math.PI * 2);
-            ctx.strokeStyle = "red";
-            ctx.stroke();
-        };
-
-        var drawChart1 = function (x, y) {
-            ctx1.beginPath();
-            ctx1.arc(x, y, 6, 0, Math.PI * 1.3);
-            ctx1.strokeStyle = "blue";
-            ctx1.stroke();
-        };
-
-        // document.getElementById('move').addEventListener('click', function adi() {
-
-        // target = document.getElementById('move');
-        // dreapta = document.getElementById('myCanvas');
-        // // window.removeEventListener("move", adi)
-        // // $("#myCanvas").on("click",
-        // var adi;
-        // var adi1;
-        // dreapta.addEventListener('click',
-        //     function adi(e) {
-        //         var offset = $(this).offset();
-        //         var x = e.pageX - offset.left;
-        //         var y = e.pageY - offset.top;
-
-        //         drawChart(x, y);
-
-        //         if (lineTo.length > 0) {
-        //             var last = lineTo[lineTo.length - 1];
-        //             ctx.beginPath();
-        //             ctx.moveTo(last.x, last.y);
-        //             ctx.lineTo(x, y);
-        //             ctx.strokeStyle = "red";
-        //             ctx.stroke();
-
-        //         }
-
-        //         // if (lineTo1.length > 0) {
-        //         //     lineTo.push(0);
-        //         // }
-
-        //         lineTo.push({ x: x, y: y });
-
-        //         // dreapta.removeEventListener('click', adi);
-        //         console.log(lineTo.length)
-        //     });
-
-        // // });
-
-        // // document.getElementById('move1').addEventListener('click', function () {
-        // target1 = document.getElementById('move1');
-        // stanga = document.getElementById('myCanvas');
-
-        // // $("#myCanvas").on("click", function (e) {
-        // // document.getElementById("move").disabled = true;
-        // document.getElementById('move1').onclick = function () {
-        //     stanga.addEventListener('click',
-
-
-
-
-        //         function adi1(e) {
-        //             dreapta.removeEventListener('click', adi);
-
-        //             var offset = $(this).offset();
-
-        //             var x = e.pageX - offset.left;
-        //             var y = e.pageY - offset.top;
-        //             drawChart1(x, y);
-
-
-        //             if (lineTo.length > 0) {
-
-        //                 var last1 = lineTo1[lineTo1.length - 1];
-        //                 ctx1.beginPath();
-        //                 ctx1.moveTo(last1.x, last1.y);
-        //                 ctx1.lineTo(x, y);
-        //                 ctx1.strokeStyle = "blue";
-        //                 ctx1.stroke();
-        //             }
-        //             lineTo1.push({ x: x, y: y });
-
-        //         });
-
-
-        // }
-    });
-
-    $(document).ready(function () {
-        var canvas = $("#myCanvasITE").get(0);
-        if (!canvas.getContext) {
-            return;
-        }
-        var ctx = canvas.getContext("2d");
-
-        var drawGrid = function (w, h, id) {
-            ctx.canvas.width = w;
-            ctx.canvas.height = h;
-            ctx.lineWidth = 0.1;
-
-            for (x = 15; x <= w; x += 60) {
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, h);
-                for (y = 20; y <= h; y += 20) {
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(w, y);
-                }
-            }
-            ctx.stroke();
-        };
-
-        drawGrid(450, 280, "myCanvasITE");
-
-
-
-        ctx.lineWidth = 1;
-
-
-
-        var drawChart = function (x, y) {
-            ctx.beginPath();
-            ctx.arc(x, y, 6, 0, Math.PI * 2);
-            ctx.strokeStyle = "red";
-            ctx.stroke();
-        };
-
-        $("#myCanvasITE").on("click", function (e) {
-            var offset = $(this).offset();
-            var x = e.pageX - offset.left;
-            var y = e.pageY - offset.top;
-
-            drawChart(x, y);
-
-            if (lineTo.length > 0) {
-                var last = lineTo[lineTo.length - 1];
-                ctx.beginPath();
-                ctx.moveTo(last.x, last.y);
-                ctx.lineTo(x, y);
-                ctx.strokeStyle = "red";
-                ctx.stroke();
-            }
-
-            lineTo.push({ x: x, y: y });
-        });
-    });
-
-    $("#clear").click(function () {
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, 380, 300);
-    });
+    // function drawCircle(x, y) {
+    //     ctx.beginPath();
+    //     ctx.arc(x, y, 6, 0, Math.PI * 2);
+    //     ctx.strokeStyle = "blue";
+    //     ctx.stroke();
+    // }
+    // function drawCross(x, y) {
+    //     ctx.beginPath();
+    //     ctx.arc(x, y, 6, 0, Math.PI * 1);
+    //     ctx.strokeStyle = "red";
+    //     ctx.stroke();
+    // }
 
 </script>
 
@@ -1564,9 +1387,9 @@
                         </div>
                     </div>
 
-                    <div style="width:55%;display:table;">
+                    <div style="width:100%;display:table;">
                         <label for="Vent_Oliva">Vent: (mm)</label>
-                        <input maxlength="10" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.vent_oliva"
+                        <input maxlength="28" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.vent_oliva"
                             autocomplete="off">
                     </div>
                     <hr class="visible-print-block">
@@ -1574,9 +1397,9 @@
                 </div>
 
                 <!-- <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
-                    <button class="btn btn-info btn-sm no-print" type="button" id=move1>Stanga</button>
-                    <button class="btn btn-danger btn-sm no-print" type="button" id=move>Dreapta</button>
-                    <button type="button" class="no-print">Sterge</button>
+                    <button class="btn btn-info btn-sm no-print" type="button" id=stanga>Stanga</button>
+                    <button class="btn btn-danger btn-sm no-print" type="button" id=dreapta>Dreapta</button>
+                    <button id=sterge type="button" class="no-print">Sterge</button>
                 </div> -->
 
                 <br>
@@ -1889,18 +1712,18 @@
 
                     <div style="width:65%;display:table;clear:left;">
                         <label for="Vent_Ite">Vent: (mm)</label>
-                        <input maxlength="20" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
+                        <input maxlength="28" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.vent_ite"
                             autocomplete="off">
                     </div>
                     <hr class="visible-print-block">
 
                 </div>
 
-                <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
+                <!-- <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
                     <button class="btn btn-info btn-sm no-print" type="button" id=move3>Stanga</button>
                     <button class="btn btn-danger btn-sm no-print" type="button" id=move2>Dreapta</button>
                     <button type="button" id=move1 class="no-print">Sterge</button>
-                </div>
+                </div> -->
 
                 <br>
 
@@ -1947,7 +1770,7 @@
                         autocomplete="off">
                 </div>
 
-                <div style="width: 52%;display: table;">
+                <div style="width: 48%;display: table;">
                     <div style="width:70%;display: table;float:left;">
                         <label for="Nume">Achitat avans (RON)</label>
                         <input maxlength="33" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerIte.regData.avans"

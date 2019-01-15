@@ -105,7 +105,11 @@
         <!-- Cabinet ------------------------------------------------------------------------>
 
         <div class="accesorii">
-
+            <form style="margin-top:-18px;" class="optiuni" novalidate>
+                <label>Nr. Comanda:</label>
+                <input style="text-align:center;" readonly class="form-control" name="nr_comanda_recarcasare" ng-model="Nr_Comanda_Recarcasare"
+                    required>
+            </form>
             <form style="margin-top:-18px;" class="optiuni" novalidate>
                 <label>Certif. Garantie:</label>
                 <input readonly class="form-control" ng-class="newGarantie" name="garantie" ng-model="newGarantie"
@@ -618,32 +622,28 @@ editRecarcasare.executant_reparatieForm.executant_reparatie.$valid)"
 <div class="row" style="margin-bottom:20px;">
     <div class="col-sm-12">
 
-        <form id="submit8" style="width:11%;float:left;display: table;margin-right: 5px;" ng-submit="editRecarcasare.updateTaxa_Constatare(newTaxa_Constatare,
+        <form style="max-width: 110px;" class="optiuni" novalidate>
+            <label style="color:#f00;">Taxa Urgenta:</label>
+            <input style="text-align: center;border: none;" readonly class="form-control" ng-class="newTaxa_Urgenta_Cabinet"
+                name="taxa_urgenta_cabinet" ng-model="newTaxa_Urgenta_Cabinet" required>
+        </form>
+
+
+        <form id="submit8" style="max-width: 110px;float:left;display: table;margin-right: 5px;" ng-submit="editRecarcasare.updateTaxa_Constatare(newTaxa_Constatare,
 editRecarcasare.taxa_constatareForm.taxa_constatare.$valid)"
             name="editRecarcasare.taxa_constatareForm" novalidate>
             <label>Taxa Constatare:</label>
-            <input maxlength="2" ng-disabled="!main.asamblare" id="submit-holder8" class="form-control" type="text"
-                name="taxa_constatare" ng-model="newTaxa_Constatare" placeholder="nu" required autocomplete="off">
+            <input style="text-align: center;" maxlength="2" ng-disabled="!main.asamblare" id="submit-holder8" class="form-control"
+                type="text" name="taxa_constatare" ng-model="newTaxa_Constatare" placeholder="nu" required autocomplete="off">
 
             <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgTaxa_Constatare">
                 <div class="alert alert-danger">{{ editRecarcasare.errorMsgTaxa_Constatare }}</div>
             </div>
         </form>
 
-        <form id="submit9" style="width:11%;float: left;display: table;" ng-submit="editRecarcasare.updateTaxa_Urgenta(newTaxa_Urgenta,
-editRecarcasare.taxa_urgentaForm.taxa_urgenta.$valid)"
-            name="editRecarcasare.taxa_urgentaForm" novalidate>
-            <label>Taxa Urgenta:</label>
-            <input maxlength="2" ng-disabled="!main.asamblare" id="submit-holder9" class="form-control" type="text"
-                name="taxa_urgenta" ng-model="newTaxa_Urgenta" placeholder="nu" required autocomplete="off">
-
-            <div class="row show-hide-message" ng-show="editRecarcasare.errorMsgTaxa_Urgenta">
-                <div class="alert alert-danger">{{ editRecarcasare.errorMsgTaxa_Urgenta }}</div>
-            </div>
-        </form>
         <div ng-show="main.asamblare">
 
-            <form class="hidden-print" id="submit10" style="width:11%;display: table;" ng-submit="editRecarcasare.updateGarantie_Asamblare(newGarantie_Asamblare,
+            <form class="hidden-print" id="submit10" style="width:5%;display: table;" ng-submit="editRecarcasare.updateGarantie_Asamblare(newGarantie_Asamblare,
         editRecarcasare.garantie_asamblareForm.garantie_asamblare.$valid)"
                 name="editRecarcasare.garantie_asamblareForm" novalidate>
                 <label>F/G:</label>

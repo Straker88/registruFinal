@@ -422,8 +422,8 @@
         <input maxlength="40" disabled class="form-control" type="text" name="executant_oliva" ng-model="newExecutant_Oliva"
             placeholder="-" required autocomplete="off">
 
-        <div class="row show-hide-message" ng-show="editService.errorMsgExecutant_Oliva">
-            <div class="alert alert-danger">{{ editService.errorMsgExecutant_Oliva }}</div>
+        <div class="row show-hide-message" ng-show="editOliva.errorMsgExecutant_Oliva">
+            <div class="alert alert-danger">{{ editOliva.errorMsgExecutant_Oliva }}</div>
         </div>
     </form>
 
@@ -443,8 +443,8 @@
 
 </div>
 
-<input ng-show="main.admin1" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec" ng-value="exec=main.username"
-    placeholder="-" required autocomplete="off">
+<input disabled ng-show="main.admin1" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec"
+    ng-value="exec=main.username" placeholder="-" autocomplete="off">
 
 
 <br>

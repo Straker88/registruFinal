@@ -106,7 +106,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
                         }
                         else if (app.username === 'Logistic') {
-                            $location.path('/registruLogistic/');
+                            $location.path('/registruLogistic_service/');
                             app.loginData = {};
                             app.successMsg = '';
 

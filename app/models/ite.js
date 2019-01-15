@@ -48,6 +48,7 @@ var IteSchema = new Schema({
     finalizat_ite: { type: String, },
     asamblare_plecat: { type: String, },
     observatii_asamblare: { type: String, },
+    executant_ite: { type: String },
 
 
 }).plugin(AutoIncrement, { inc_field: 'nr_comanda_ite' });

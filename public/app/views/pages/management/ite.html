@@ -390,8 +390,8 @@
         <input style="pointer-events: none;" id="time-holder12" class="form-control" type="text" name="finalizat_ite"
             ng-model="newFinalizat_Ite" readonly>
 
-        <button ng-show="main.asamblare" ng-disabled="editIte.disabled" class="btn btn-info btn-sm" type="submit" name="finalizat_ite"
-            id="time12">Adauga</button>
+        <button ng-click="addExec()" ng-show="main.asamblare" ng-disabled="editIte.disabled" class="btn btn-info btn-sm"
+            type="submit" name="finalizat_ite" id="time12">Adauga</button>
 
         <div class="row show-hide-message" ng-show="editIte.successMsgFinalizat_Ite">
             <div class="alert alert-success">{{ editIte.successMsgFinalizat_Ite }}</div>
@@ -423,6 +423,17 @@
         </div>
     </form>
 
+    <form class="col-md-12" style="clear: both;width:15%;float: left;display: table;margin-top:30px;" novalidate>
+        <label>Executant ITE:</label>
+        <input maxlength="40" disabled class="form-control" type="text" name="executant_ite" ng-model="newExecutant_Ite"
+            placeholder="-" required autocomplete="off">
+
+        <div class="row show-hide-message" ng-show="editIte.errorMsgExecutant_Ite">
+            <div class="alert alert-danger">{{ editIte.errorMsgExecutant_Ite }}</div>
+        </div>
+    </form>
+
+
     <form style="margin-top:30px;" id="submit3" ng-submit="editIte.updateObservatii_Asamblare(newObservatii_Asamblare, editIte.observatii_asamblareForm.observatii_asamblare.$valid)"
         class="col-md-12" name="editIte.observatii_asamblareForm" novalidate>
         <label>Observatii Asamblare:</label>
@@ -439,6 +450,8 @@
 
 </div>
 
+<input disabled ng-show="main.admin1" maxlength="40" class="form-control" type="text" name="exec" ng-model="exec"
+    ng-value="exec=main.username" placeholder="-" autocomplete="off">
 
 <br>
 <br>

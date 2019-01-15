@@ -153,6 +153,31 @@ angular.module('iteControllers', ['userServices'])
                 $scope.newAsamblare_Sosit = data.data.ite.asamblare_sosit;
                 $scope.newAsamblare_Plecat = data.data.ite.asamblare_plecat;
                 $scope.newFinalizat_Ite = data.data.ite.finalizat_ite;
+                $scope.newExecutant_Ite = data.data.ite.executant_ite;
+
+                $scope.addExec = function () {
+                    $scope.newExecutant_Ite = $scope.exec;
+
+                    var iteObject = {};
+                    iteObject._id = app.currentIte;
+                    iteObject.executant_ite = $scope.exec;
+                    Ite.editIte(iteObject).then(function (data) {
+                        if (data.data.success) {
+                            app.successExecutant_Ite = data.data.message;
+                        } else {
+                            app.errorMsgExecutant_Ite = data.data.message;
+                        }
+                        if (iteObject.executant_ite !== "-") {
+                            app.errorMsgExecutant_Ite = data.data.message;
+                        }
+
+
+                    });
+
+                };
+
+
+
 
             } else {
                 app.errorMsg = data.data.message;

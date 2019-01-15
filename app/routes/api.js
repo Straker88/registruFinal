@@ -515,6 +515,9 @@ module.exports = function (router) {
                         ite.asamblare_plecat = '-';
                         ite.finalizat_ite = '-';
                         ite.observatii_plastie = '-';
+                        ite.executant_ite = '-';
+
+
 
                         if (req.body.ureche_protezata == "Bilateral") {
 
@@ -2598,6 +2601,7 @@ module.exports = function (router) {
             if (req.body.asamblare_plecat) var newAsamblare_Plecat = new moment().format('DD/MM/YYYY');
             if (req.body.observatii_asamblare) var newObservatii_Asamblare = req.body.observatii_asamblare;
             if (req.body.finalizat_ite) var newFinalizat_Ite = new moment().format('DD/MM/YYYY');
+            if (req.body.executant_ite) var newExecutant_Ite = req.body.executant_ite;
 
 
             //      1.Cabinet ----------------------------------------------
@@ -2885,6 +2889,30 @@ module.exports = function (router) {
                     }
                 });
             }
+
+            if (newExecutant_Ite) {
+                Ite.findOne({ _id: editIte }, function (err, ite) {
+                    if (err) throw err;
+                    if (mainUser.permission !== 'asamblare') {
+                        res.json({ success: false, message: 'Se completeaza de catre Dep. Asamblare.' });
+                    } else {
+                        if (!ite || ite.executant_ite !== '-') {
+                            res.json({ success: false, message: 'Executant ITE a fost deja adaugat, modificarile nu sunt salvate' });
+                        }
+                        else {
+                            ite.executant_ite = newExecutant_Ite;
+                            ite.save(function (err) {
+                                if (err) {
+                                    res.json({ success: false, message: 'Nu s-a putut salva' });
+                                } else {
+                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
 
 
         });

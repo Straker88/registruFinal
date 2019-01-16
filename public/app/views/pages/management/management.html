@@ -12,12 +12,12 @@
 
 <br>
 
-<button type="button" ng-click="management.showMore(number);" class="btn btn-success">Apply Filter</button>
-<button type="button" ng-click="management.showAll();" class="btn btn-warning">Show All</button>
+<button type="button" ng-click="management.showMore(number);" class="btn btn-success">Aplica Filtru</button>
+<button type="button" ng-click="management.showAll();" class="btn btn-warning">Arata toate</button>
 <div class="showmore">
     <div class="col-lg-6">
         <div class="input-group">
-            <span class="input-group-addon">Results to display:</span>
+            <span class="input-group-addon">Nr. rezultate de afisat:</span>
             <input type="text" class="form-control" ng-model="number">
         </div>
     </div>
@@ -40,9 +40,9 @@
     </div>
     <table class="table">
         <tr>
-            <th>Name</th>
+            <th>Nume</th>
             <th>Username</th>
-            <th>Permission</th>
+            <th>Permisiuni</th>
         </tr>
         <tr ng-repeat="person in management.users | limitTo: management.limit">
             <td>{{ person.name }}</td>
@@ -50,7 +50,7 @@
             <td>{{ person.permission }}</td>
             <td>
                 <a href="/edit/{{ person._id }}">
-                    <button type="button" ng-show="management.editAccess" class="btn btn-primary">Edit</button>
+                    <button type="button" ng-show="management.editAccess" class="btn btn-primary">Detalii</button>
                 </a>
                 <button type="button" ng-click="management.deleteUser(person.username);" ng-show="management.deleteAccess"
                     class="btn btn-danger">Delete</button>
@@ -64,12 +64,12 @@
 <br>
 <br>
 
-<button type="button" ng-click="management.showMore(number);" class="btn btn-success">Apply Filter</button>
-<button type="button" ng-click="management.showAll();" class="btn btn-warning">Show All</button>
+<button type="button" ng-click="management.showMore(number);" class="btn btn-success">Aplica Filtru</button>
+<button type="button" ng-click="management.showAll();" class="btn btn-warning">Arata toate</button>
 <div class="showmore">
     <div class="col-lg-6">
         <div class="input-group">
-            <span class="input-group-addon">Results to display:</span>
+            <span class="input-group-addon">Nr. rezultate de afisat:</span>
             <input type="text" class="form-control" ng-model="number">
         </div>
     </div>

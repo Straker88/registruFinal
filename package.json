@@ -22,8 +22,6 @@
     "async": "^2.6.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
-    "clone": "^2.1.2",
-    "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "jquery.auto-save-form": "^1.0.0",
@@ -39,9 +37,6 @@
     "morgan": "^1.9.1",
     "nodejs": "0.0.0",
     "passport": "^0.4.0",
-    "pdfkit": "^0.8.3",
-    "pdfmake": "^0.1.38",
-    "pm2-windows-service": "^0.2.1",
     "uuid": "^3.3.2"
   }
 }

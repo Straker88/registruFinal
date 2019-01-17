@@ -780,12 +780,13 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Service.find({ "cabinet": { "$regex": /^mainUser.username$/ } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet serv_sosit serv_plecat predat_pacient').exec(function (err, service) {
+                Service.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet serv_sosit serv_plecat predat_pacient').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
                         res.json({ success: false, message: 'Nu s-au gasit service-uri' });
                     } else {
                         res.json({ success: true, service: service });
+
                     }
 
                 });

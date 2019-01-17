@@ -4,174 +4,7 @@
 <script type="text/javascript" src="assets/js/profilPacient.js"></script>
 <script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
 
-<script type="text/javascript">
-    function show(elementId) {
-        document.getElementById("detalii_pacient").style.display = "none";
-        document.getElementById("add_service").style.display = "none";
-        document.getElementById("add_recarcasare").style.display = "none";
-        document.getElementById("add_oliva").style.display = "none";
-        document.getElementById("add_ite").style.display = "none";
-        document.getElementById("registru_service").style.display = "none";
-        document.getElementById("registru_recarcasare").style.display = "none";
-        document.getElementById("registru_olive").style.display = "none";
-        document.getElementById("registru_ite").style.display = "none";
-        document.getElementById(elementId).style.display = "block";
-    }
-
-    $("textarea").on('keydown keypress keyup', function (e) {
-        if (e.keyCode == 8 || e.keyCode == 46) {
-            return true;
-        }
-        var maxRowCount = $(this).attr("rows") || 2;
-        var lineCount = $(this).val().split('\n').length;
-        if (e.keyCode == 13) {
-            if (lineCount == maxRowCount) {
-                return false;
-            }
-        }
-        var jsElement = $(this)[0];
-        if (jsElement.clientHeight < jsElement.scrollHeight) {
-            var text = $(this).val();
-            text = text.slice(0, -1);
-            $(this).val(text);
-            return false;
-        }
-    })
-
-    //this is an array of arrays
-    //when I click on the canvas a new point is pushed on the last array of this array
-    // var ry = [[]];
-
-
-    var canvas = document.querySelector("#myCanvas");
-    var w = (canvas.width = 450);
-    var h = (canvas.height = 280);
-
-    var ctx = canvas.getContext("2d");
-
-    drawGrid();
-
-    function drawGrid() {
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 0.1;
-        ctx.beginPath();
-        for (x = 15; x <= w; x += 60) {
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, h);
-            for (y = 20; y <= h; y += 20) {
-                ctx.moveTo(0, y);
-                ctx.lineTo(w, y);
-            }
-        }
-        ctx.stroke();
-    }
-
-    var canvas1 = document.querySelector("#myCanvasITE");
-    var w1 = (canvas1.width = 450);
-    var h1 = (canvas1.height = 280);
-
-    var ctx = canvas1.getContext("2d");
-
-    drawGrid();
-
-    function drawGrid() {
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 0.1;
-        ctx.beginPath();
-        for (x = 15; x <= w; x += 60) {
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, h);
-            for (y = 20; y <= h; y += 20) {
-                ctx.moveTo(0, y);
-                ctx.lineTo(w, y);
-            }
-        }
-        ctx.stroke();
-    }
-
-
-    // myCanvas.addEventListener("click", e => {
-    //     var offset = canvas.getBoundingClientRect();
-    //     var x = e.clientX - offset.left;
-    //     var y = e.clientY - offset.top;
-    //     //a new point is pushed on the last array of ry
-    //     ry[ry.length - 1].push({ x: x, y: y });
-    //     // delete everything
-    //     ctx.clearRect(0, 0, w, h);
-    //     // draw everything
-    //     drawGrid();
-    //     drawChart();
-    // });
-
-
-    // dreapta.addEventListener("click", e => {
-    //     //when dreapta is clicked, a new array is pushed into the ry
-    //     ry.push([]);
-    // });
-    // stanga.addEventListener("click", e => {
-    //     //when dreapta is clicked, a new array is pushed into the ry
-    //     ry.push([]);
-    // });
-
-
-    // function drawChart() {
-    //     ctx.lineWidth = 1;
-    //     // for every array in the ry array
-    //     for (let index = 0; index < ry.length; index++) {
-    //         // for every point in the ry[index]
-    //         for (let i = 0; i < ry[index].length; i++) {
-    //             let l = ry[index][i];
-    //             // draw the circle
-    //             drawCircle(l.x, l.y);
-    //             // draw the line
-    //             if (i > 0) {
-    //                 let last = ry[index][i - 1];
-    //                 ctx.beginPath();
-    //                 ctx.moveTo(last.x, last.y);
-    //                 ctx.lineTo(l.x, l.y);
-    //                 ctx.strokeStyle = "blue";
-    //                 ctx.stroke();
-    //             }
-    //         }
-    //     }
-    // }
-    // function drawChartRed() {
-    //     ctx.lineWidth = 1;
-    //     // for every array in the ry array
-    //     for (let index = 0; index < ry.length; index++) {
-    //         // for every point in the ry[index]
-    //         for (let i = 0; i < ry[index].length; i++) {
-    //             let l = ry[index][i];
-    //             // draw the circle
-    //             drawCross(l.x, l.y);
-    //             // draw the line
-    //             if (i > 0) {
-    //                 let last = ry[index][i - 1];
-    //                 ctx.beginPath();
-    //                 ctx.moveTo(last.x, last.y);
-    //                 ctx.lineTo(l.x, l.y);
-    //                 ctx.strokeStyle = "red";
-    //                 ctx.stroke();
-    //             }
-    //         }
-    //     }
-    // }
-
-    // function drawCircle(x, y) {
-    //     ctx.beginPath();
-    //     ctx.arc(x, y, 6, 0, Math.PI * 2);
-    //     ctx.strokeStyle = "blue";
-    //     ctx.stroke();
-    // }
-    // function drawCross(x, y) {
-    //     ctx.beginPath();
-    //     ctx.arc(x, y, 6, 0, Math.PI * 1);
-    //     ctx.strokeStyle = "red";
-    //     ctx.stroke();
-    // }
-
-</script>
-
+`
 <div class="page-header" style="border-bottom:none;">
     <img class="visible-print-block" style="float:right;margin-top:15px;" src="/assets/img/clarfon_transparent.png">
 
@@ -206,6 +39,7 @@
 </div>
 <hr class="no-print">
 <div>
+
     <div ng-show="main.user || main.logistic" class="dropdown no-print" style="margin: -1px 10px 0 0;display: table;
     float: left;">
         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Adauga
@@ -945,11 +779,14 @@
 
                 <hr class="visible-print-block">
 
-                <button style="float: right;clear: both;margin-bottom: 80px;" class="btn btn-info
+                <button id="adauga_print" style="float: right;clear: both;margin-bottom: 80px;" class="btn btn-info
                       btn-sm no-print"
                     ng-disabled="registerService.disabled" type="submit">Adauga si Printeaza Fisa</button>
 
             </form>
+            <!-- <button id="printeaza" style="float: right;margin-right:10px;" class="btn btn-info
+            btn-sm no-print"
+                onclick="doPrint()">Printeaza</button> -->
 
         </div>
     </div>
@@ -1398,11 +1235,11 @@
 
                 </div>
 
-                <!-- <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
+                <div style="float: right; clear: right;margin: 10px 85px 5px 0;">
                     <button class="btn btn-info btn-sm no-print" type="button" id=stanga>Stanga</button>
                     <button class="btn btn-danger btn-sm no-print" type="button" id=dreapta>Dreapta</button>
-                    <button id=sterge type="button" class="no-print">Sterge</button>
-                </div> -->
+                    <button class="btn btn-warning no-print" id=sterge type="button" class="no-print">Sterge</button>
+                </div>
 
                 <br>
 
@@ -1448,13 +1285,13 @@
 
                 <div style="width:40%;display: table;">
                     <label for="Pret_Final">Pret (RON)</label>
-                    <input maxlength="43" type="number" class="form-control" name="pret_final" placeholder="-" ng-model="registerOliva.regData.pret_final"
+                    <input maxlength="43" type="text" class="form-control" name="pret_final" placeholder="-" ng-model="registerOliva.regData.pret_final"
                         autocomplete="off">
                 </div>
                 <div style="width: 52%;display: table;">
                     <div style="width:70%;display: table;float:left;">
                         <label for="Nume">Achitat avans (RON)</label>
-                        <input maxlength="33" type="number" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.avans"
+                        <input maxlength="33" type="text" class="form-control" name="nume" placeholder="-" ng-model="registerOliva.regData.avans"
                             autocomplete="off">
                     </div>
                     <div style="width:30%;display: table;text-align: center;">
@@ -1465,7 +1302,7 @@
                 </div>
                 <div style="display: table;">
                     <label for="Nume">Rest de plata la eliberarea produsului (RON)</label>
-                    <input disabled maxlength="26" type="number" class="form-control" name="nume" placeholder="-"
+                    <input disabled maxlength="26" type="text" class="form-control" name="nume" placeholder="-"
                         ng-model="registerOliva.regData.rest_plata" autocomplete="off">
 
                 </div>
@@ -1601,7 +1438,7 @@
 
                     </table>
 
-                    <canvas id="myCanvasITE" width="400" height="280" style="float:right;clear: both;"></canvas>
+                    <canvas id="myCanvasIte" width="400" height="280" style="float:right;clear: both;"></canvas>
 
                     <table class="tr_height" style="float:right; margin-right: 8px; margin-top: 12px;">
                         <tr>
@@ -1721,11 +1558,11 @@
 
                 </div>
 
-                <!-- <div style="float: right; clear: right;margin: 10px 120px 5px 0;">
-                    <button class="btn btn-info btn-sm no-print" type="button" id=move3>Stanga</button>
-                    <button class="btn btn-danger btn-sm no-print" type="button" id=move2>Dreapta</button>
-                    <button type="button" id=move1 class="no-print">Sterge</button>
-                </div> -->
+                <div style="float: right; clear: right;margin: 10px 85px 5px 0;">
+                    <button class="btn btn-info btn-sm no-print" type="button" id=stanga_ite>Stanga</button>
+                    <button class="btn btn-danger btn-sm no-print" type="button" id=dreapta_ite>Dreapta</button>
+                    <button class="btn btn-warning no-print" type="button" id=sterge_ite class="no-print">Sterge</button>
+                </div>
 
                 <br>
 
@@ -1768,7 +1605,7 @@
                 </div>
                 <div style="width:34%;display: table;clear:left;">
                     <label for="Pret_Final">Pret (RON)</label>
-                    <input maxlength="43" type="number" class="form-control" name="pret_final" placeholder="-" ng-model="registerIte.regData.pret_final"
+                    <input maxlength="43" type="text" class="form-control" name="pret_final" placeholder="-" ng-model="registerIte.regData.pret_final"
                         autocomplete="off">
                 </div>
 
@@ -1827,3 +1664,4 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="assets/js/audiograma.js"></script>

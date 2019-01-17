@@ -800,7 +800,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Recarcasare.find({ "cabinet": { "$regex": /^mainUser.username$/ } }).select('nr_comanda_recarcasare data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, recarcasare) {
+                Recarcasare.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_recarcasare data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, recarcasare) {
                     if (err) throw err;
                     if (!recarcasare) {
                         res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
@@ -819,7 +819,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Oliva.find({ "cabinet": { "$regex": /^mainUser.username$/ } }).select('nr_comanda_oliva serie_oliva data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva iesit_cabinet plastie_sosit plastie_plecat predat_pacient').exec(function (err, olive) {
+                Oliva.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_oliva serie_oliva data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva iesit_cabinet plastie_sosit plastie_plecat predat_pacient').exec(function (err, olive) {
                     if (err) throw err;
                     if (!olive) {
                         res.json({ success: false, message: 'Nu s-au gasit olive' });
@@ -838,7 +838,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Ite.find({ "cabinet": { "$regex": /^mainUser.username$/ } }).select('nr_comanda_ite serie_ite data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, ite) {
+                Ite.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_ite serie_ite data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, ite) {
                     if (err) throw err;
                     if (!ite) {
                         res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
@@ -859,7 +859,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Service.find({ "cabinet": { "$regex": /^mainUser.username$/ } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat').exec(function (err, service) {
+                Service.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
                         res.json({ success: false, message: 'Nu s-au gasit service-uri' });
@@ -873,7 +873,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruPiese', function (req, res) {
-        Service.find({}).select('finalizat_reparatie cabinet piese_inlocuite cod_componente').exec(function (err, service) {
+        Service.find({ "piese_inlocuite": { "$regex": '[a-zA-Z\\s\'\"/^\d+$/]+', "$options": "i" }, "finalizat_reparatie": { "$regex": '[a-zA-Z\\s\'\"/^\d+$/]+', "$options": "i", } }).select('finalizat_reparatie cabinet piese_inlocuite cod_componente nr_comanda_service').exec(function (err, service) {
             if (err) throw err;
             if (!service) {
                 res.json({ success: false, message: 'Nu s-au gasit service-uri' });
@@ -981,7 +981,7 @@ module.exports = function (router) {
 
 
     router.get('/registruService', function (req, res) {
-        Service.find({}).select('nr_comanda_service cabinet data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat').exec(function (err, service) {
+        Service.find({}).select('nr_comanda_service cabinet data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat garantie_serv').exec(function (err, service) {
             if (err) throw err;
             if (!service) {
                 res.json({ success: false, message: 'Nu s-au gasit service-uri' });

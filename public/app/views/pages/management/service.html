@@ -456,8 +456,8 @@
         <input style="pointer-events: none;" id="time-holder12" class="form-control" type="text" name="finalizat_reparatie"
             ng-model="newFinalizat_Reparatie" readonly>
 
-        <button ng-show="main.service" ng-disabled="editService.disabled" class="btn btn-info btn-sm" type="submit"
-            name="finalizat_reparatie" id="time12">Adauga</button>
+        <button ng-click="addExec()" ng-show="main.service" ng-disabled="editService.disabled" class="btn btn-info btn-sm"
+            type="submit" name="finalizat_reparatie" id="time12">Adauga</button>
 
         <div class="row show-hide-message" ng-show="editService.successMsgFinalizat_Reparatie">
             <div class="alert alert-success">{{ editService.successMsgFinalizat_Reparatie }}</div>
@@ -636,8 +636,8 @@ editService.taxa_constatareForm.taxa_constatare.$valid)"
         editService.garantie_servForm.garantie_serv.$valid)"
             name="editService.garantie_servForm" novalidate>
             <label>F/G: </label>
-            <input maxlength="3" ng-disabled="!main.service" id="submit-holder10" class="form-control" type="text" name="garantie_serv"
-                ng-model="newGarantie_Serv" placeholder="-" required autocomplete="off">
+            <input onfocus="this.value=''" maxlength="3" ng-disabled="!main.service" id="submit-holder10" class="form-control"
+                type="text" name="garantie_serv" ng-model="newGarantie_Serv" placeholder="-" required autocomplete="off">
 
             <div class="row show-hide-message" ng-show="editService.errorMsgGarantie_Serv">
                 <div class="alert alert-danger">{{ editService.errorMsgGarantie_Serv }}</div>
@@ -656,11 +656,9 @@ editService.taxa_constatareForm.taxa_constatare.$valid)"
         </form>
 
         <form ng-show="main.service" onsubmit="doPrint()" class="visible-print-block" id="form1" style="float:right;"
-            name="editService.finalizat_serviceForm" ng-submit="editService.updateFinalizat_Service(newFinalizat_Service, editService.finalizat_serviceForm.finalizat_service.$valid)"
             novalidate>
             <label for="Finalizat Service">Data si semnatura inginer </label>
-            <input id="service-holder1" type="text" class="form-control" name="finalizat_service" ng-model="newFinalizat_Service">.........................................
-
+            <input id="service-holder1" name="finalizat_service" ng-model="newFinalizat_Service" type="text" class="form-control">.........................................
         </form>
 
 
@@ -697,9 +695,8 @@ editService.taxa_constatareForm.taxa_constatare.$valid)"
 </div>
 
 <div ng-show="main.service">
-    <button ng-click="addExec()" style="float: right;clear: both;" form="form1" ng-disabled="editService.disabled"
-        class="btn btn-info btn-sm hidden-print" type="submit" ng-model="newFinalizat_Service" name="finalizat_service"
-        id="service1">Printeaza</button>
+    <button style="float: right;clear: both;" form="form1" ng-disabled="editService.disabled" class="btn btn-info btn-sm hidden-print"
+        type="submit" ng-model="newFinalizat_Service" name="finalizat_service" id="service1">Printeaza</button>
 
 </div>
 <br>

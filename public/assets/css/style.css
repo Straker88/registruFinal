@@ -586,6 +586,23 @@ th.FilterinputSearch{
   padding: 10px 0px;
   letter-spacing: -0.5px;
 }
+
+.inputDateRegistruLabServ{
+  border:none;
+  width: 133px;
+  margin-top: 1px; 
+  margin-left: 0; 
+  font-size: 12px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 22px;
+  color: #fff;
+  padding: 10px 0px;
+  letter-spacing: -0.5px;
+}
+
+
 .inputDateRegistruIte{
   border:none;
   width: 132px;
@@ -631,7 +648,7 @@ th.FilterinputSearch{
 
 canvas {
   border: 1px solid black;
-  cursor: not-allowed;
+  cursor: crosshair;
 }
 
 .tr_height tr{
@@ -674,4 +691,16 @@ input[type="number"] {
 }
 table#tabel {
   font-size: 12px;
+}
+
+td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#tabel_piese td {
+  white-space: normal;
+}
+.luna {
+  width:100px;
 }

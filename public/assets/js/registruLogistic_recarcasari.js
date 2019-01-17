@@ -54,9 +54,6 @@ $(document).ready(function () {
             "sLengthMenu": "Afiseaza _MENU_ inregistrari",
         }
     });
-    setInterval(function () {
-        table.ajax.reload(null, false);
-    }, 300000);
 
     var startdate;
     var enddate;

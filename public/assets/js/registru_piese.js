@@ -19,6 +19,7 @@ $(document).ready(function () {
         "pagination": true,
         "autoWidth": false,
         columns: [
+            { data: "nr_comanda_service" },
             { data: "finalizat_reparatie" },
             { data: "cabinet" },
             { data: "piese_inlocuite" },

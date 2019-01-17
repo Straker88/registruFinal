@@ -27,6 +27,7 @@ $(document).ready(function () {
             { data: "serv_sosit" },
             { data: "finalizat_reparatie" },
             { data: "serv_plecat" },
+            { data: "garantie_serv" },
             { data: "" },
             { data: "_id" }
         ],
@@ -37,11 +38,11 @@ $(document).ready(function () {
                 type: 'date-eu', targets: ([2]),
             },
             {
-                "targets": [10],
+                "targets": [11],
                 "visible": false,
             },
             {
-                "aTargets": [9],
+                "aTargets": [10],
                 "width": "60px",
                 "mRender": function (data, type, row) {
                     return '<a class="btn btn-primary btn-sm" href=/service/' + row._id + '>' + 'Detalii' + '</a>';
@@ -54,9 +55,6 @@ $(document).ready(function () {
         }
 
     });
-    setInterval(function () {
-        table.ajax.reload(null, false);
-    }, 300000);
 
     var startdate;
     var enddate;
@@ -162,7 +160,7 @@ $(document).ready(function () {
 
     var table = $('#tabel').DataTable();
 
-    table.columns([0, 1, 3, 4, 5, 6, 7, 8]).eq(0).each(function (colIdx) {
+    table.columns([0, 1, 3, 4, 5, 6, 7, 8, 9]).eq(0).each(function (colIdx) {
         $('input', $('.filters th')[colIdx]).on('keyup change', function () {
             table
                 .column(colIdx)

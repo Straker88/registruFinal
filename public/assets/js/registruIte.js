@@ -55,9 +55,6 @@ $(document).ready(function () {
         }
 
     });
-    setInterval(function () {
-        table.ajax.reload(null, false);
-    }, 300000);
 
     var startdate;
     var enddate;

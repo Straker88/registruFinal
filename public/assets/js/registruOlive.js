@@ -60,9 +60,6 @@ $(document).ready(function () {
         }
 
     });
-    setInterval(function () {
-        table.ajax.reload(null, false); // user paging is not reset on reload
-    }, 300000);
 
     var startdate;
     var enddate;

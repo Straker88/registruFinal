@@ -34,57 +34,43 @@ angular.module('mainController', ['authServices', 'userServices'])
             if (Auth.isLoggedIn()) {
                 app.isLoggedIn = true;
                 Auth.getUser().then(function (data) {
-                    app.username = data.data.username;
-                    // app.useremail = data.data.email;
+                    if (data.data.username === undefined) {
+                        app.isLoggedIn = false;
+                        Auth.logout();
+                        app.isLoggedIn = false;
+                        $location.path('/');
+                    } else {
+                        app.isLoggedIn = true;
+                        app.username = data.data.username;
 
-                    User.getPermission().then(function (data) {
+                        User.getPermission().then(function (data) {
 
-                        if (data.data.permission === 'admin') {
-                            app.authorized = true;
-                            app.loadme = true;
-                        } else {
-                            app.loadme = false;
-                        }
-                        if (data.data.permission === 'service') {
-                            app.service = true;
-                            app.loadme = true;
-                        } else {
-                            app.loadme = false;
-                        }
-                        if (data.data.permission === 'plastie') {
-                            app.plastie = true;
-                            app.loadme = true;
-                        } else {
-                            app.loadme = false;
-                        }
-                        if (data.data.permission === 'asamblare') {
-                            app.asamblare = true;
-                            app.loadme = true;
-                        } else {
-                            app.loadme = false;
-                        }
-                        if (data.data.permission === 'user') {
-                            app.user = true;
-                            app.loadme = true;
-                        } else {
-                            app.loadme = false;
-                        }
+                            if (data.data.permission === 'admin') {
+                                app.authorized = true;
+                                app.loadme = true;
+                            } else if (data.data.permission === 'service') {
+                                app.service = true;
+                                app.loadme = true;
+                            } else if (data.data.permission === 'plastie') {
+                                app.plastie = true;
+                                app.loadme = true;
+                            } else if (data.data.permission === 'asamblare') {
+                                app.asamblare = true;
+                                app.loadme = true;
+                            } else if (data.data.permission === 'user') {
+                                app.user = true;
+                                app.loadme = true;
+                            } else if (data.data.permission === 'logistic') {
+                                app.logistic = true;
+                                app.loadme = true;
 
-                        if (data.data.permission === 'logistic') {
-                            app.logistic = true;
-                            app.loadme = true;
-                        } else {
-                            app.loadme = false;
-                        }
-
-                    });
+                            } else {
+                                app.loadme = false;
+                            }
+                        });
+                    }
                 });
             } else {
-                app.service = '';
-                app.plastie = '';
-                app.asamblare = '';
-                app.user = '';
-                app.logistic = '';
                 app.isLoggedIn = false;
                 app.username = '';
                 app.loadme = false;

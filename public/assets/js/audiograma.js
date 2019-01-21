@@ -1,13 +1,8 @@
 function show(elementId) {
-    document.getElementById("detalii_pacient").style.display = "none";
     document.getElementById("add_service").style.display = "none";
     document.getElementById("add_recarcasare").style.display = "none";
     document.getElementById("add_oliva").style.display = "none";
     document.getElementById("add_ite").style.display = "none";
-    document.getElementById("registru_service").style.display = "none";
-    document.getElementById("registru_recarcasare").style.display = "none";
-    document.getElementById("registru_olive").style.display = "none";
-    document.getElementById("registru_ite").style.display = "none";
     document.getElementById(elementId).style.display = "block";
 }
 function doPrint() {

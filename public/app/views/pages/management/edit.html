@@ -25,7 +25,7 @@
     novalidate>
     <div ng-class="{ 'has-success':(edit.nameForm.name.$valid && !edit.nameForm.name.$pristine), 'has-error':(!edit.nameForm.name.$valid && !edit.nameForm.name.$pristine) || (!nameForm.name.$valid && nameForm.$submitted) }">
         <!-- Name -->
-        <label>Name:</label>
+        <label>Nume:</label>
         <input ng-disabled="edit.disabled" class="form-control" type="text" name="name" placeholder="please enter name"
             ng-model="newName" ng-pattern="/^(([a-zA-Z]{3,20})+[ ]+([a-zA-z]{3,20})+)+$/" ng-minlength="3" ng-maxlength="20"
             required>
@@ -91,7 +91,7 @@
 <!-- Phase four : Permissions-->
 
 <div ng-show="edit.phase4">
-    <label>Current Permission: &nbsp&nbsp</label>{{ newPermission }}
+    <label>Permisiuni Curente: &nbsp&nbsp</label>{{ newPermission }}
     <br>
     <br>
     <!-- <button ng-disabled="edit.disableUser" ng-click="edit.updatePermissions('user');" type="button" class="btn btn-success">User</button>&nbsp

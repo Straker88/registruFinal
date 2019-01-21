@@ -51,8 +51,10 @@
 
     </div>
   </div>
-
   <button style="float: right;clear: both;margin-bottom: 90px;" ng-disabled="registerPac.disabled" class="btn btn-info btn-sm no-print"
     type="submit">Inregistreaza Pacient</button>
 
 </form>
+
+<button ng-click="existent()" ng-show="registerPac.checked" style="float: right;margin: 0 10px;" class="btn btn-danger btn-sm no-print">Mergi
+  la Profil Pacient inregistrat</button>

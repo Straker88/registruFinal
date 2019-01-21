@@ -2,6 +2,8 @@ angular.module('olivaControllers', ['userServices'])
 
     .controller('regOlivaCtrl', function ($route, $routeParams, $http, $location, $timeout, Oliva, Pacient, $scope) {
         var app = this;
+        app.adauga = true;
+        app.print = false;
 
         $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
         $scope.data_estimativa = new moment().add(6, 'days').format('DD/MM/YYYY');
@@ -52,14 +54,17 @@ angular.module('olivaControllers', ['userServices'])
 
                                     app.disabled = true;
                                     app.successMsg = data.data.message
+                                    app.adauga = false;
+                                    app.print = true;
 
                                     $timeout(function () {
                                         window.print();
                                     }, 300)
 
-                                    $timeout(function () {
-                                        $route.reload();
-                                    }, 1500)
+                                    $scope.print_oliva = function () {
+                                        window.print();
+                                    }
+
 
                                 } else {
                                     app.loading = false;

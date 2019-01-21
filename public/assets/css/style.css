@@ -17,6 +17,29 @@ opacity: 0;
   :-ms-input-placeholder { /* Internet Explorer 10+ */
     opacity: 0;
   }
+
+  textarea.textarea_print {
+  height : 100px;
+  resize: none;
+}
+
+textarea.textarea_audiograma {
+  resize: none;
+width:450px;
+margin-left: -145px;
+height: 130px;
+}
+
+.pret_oliva {
+  margin-top:450px;
+}
+.pret_ite {
+  margin-top:450px;
+}
+
+.label_print{
+  margin-left:-145px;
+}
 }
 
 
@@ -290,7 +313,6 @@ padding:5px 25px;
 }
 
 .regPacForm {
-  margin-bottom: 40px;
   float: left;
   margin-right: 10px;
 }
@@ -703,4 +725,15 @@ td {
 }
 .luna {
   width:100px;
+}
+.textarea_print{
+  resize: none;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    color: #fff;
+  background-color: #337ab7;
+}
+.plus_glyph {
+  color: #337ab7;
+  margin-right: 5px;
 }

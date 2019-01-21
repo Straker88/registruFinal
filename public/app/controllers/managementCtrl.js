@@ -300,6 +300,206 @@ angular.module('managementController', [])
     .controller('editProfilPacientCtrl', function ($route, $scope, $routeParams, Pacient, $timeout) {
         var app = this;
 
+        app.servicePhase = function () {
+            service_loader();
+            $scope.serviceTab = 'active';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = true;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+
+        };
+
+        app.recarcasariPhase = function () {
+            recarcasari_loader();
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'active';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = true;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+
+        app.olivePhase = function () {
+            olive_loader();
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'active';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = true;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+
+        app.itePhase = function () {
+            ite_loader();
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'active';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = true;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+
+        app.detaliiPhase = function () {
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'active';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = true;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+
+        app.add_servicePhase = function () {
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'active';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = true;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+        app.add_recarcasarePhase = function () {
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'active';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = true;
+            app.phase8 = false;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+        app.add_olivaPhase = function () {
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'active';
+            $scope.add_iteTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = true;
+            app.phase9 = false;
+            app.errorMsg = false;
+        };
+        app.add_itePhase = function () {
+            $scope.serviceTab = 'default';
+            $scope.recarcasariTab = 'default';
+            $scope.oliveTab = 'default';
+            $scope.iteTab = 'default';
+            $scope.detaliiTab = 'default';
+            $scope.add_serviceTab = 'default';
+            $scope.add_recarcasareTab = 'default';
+            $scope.add_olivaTab = 'default';
+            $scope.add_iteTab = 'active';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.phase5 = false;
+            app.phase6 = false;
+            app.phase7 = false;
+            app.phase8 = false;
+            app.phase9 = true;
+            app.errorMsg = false;
+        };
+
         Pacient.getPacient($routeParams.id).then(function (data) {
             if (data.data.success) {
                 $scope.Pacient_Cabinet = data.data.pacient.cabinet;

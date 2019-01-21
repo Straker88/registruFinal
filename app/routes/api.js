@@ -15,105 +15,120 @@ module.exports = function (router) {
 
     router.post('/pacienti', function (req, res) {
         var token = req.body.token || req.body.query || req.headers['x-access-token'];
-        if (token) {
-            jwt.verify(token, secret, function (err, decoded) {
-                if (err) {
-                    res.json({ success: false, message: 'Token invalid' });
-                } else {
-                    var pacient = new Pacient();
-                    pacient.cabinet = decoded.username;
-                    pacient.nume = req.body.nume;
-                    pacient.telefon = req.body.telefon;
-                    pacient.data_inregistrare = new moment().format('DD/MM/YYYY');
-                    pacient.adresa = req.body.adresa;
-                    pacient.cnp = req.body.cnp;
-
-                    function getAge(dateString) {
-                        var today = new Date();
-                        var birthDate = new Date(dateString);
-                        var age = today.getFullYear() - birthDate.getFullYear();
-                        var m = today.getMonth() - birthDate.getMonth();
-                        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                            age--;
-                        }
-                        return age;
-                    }
-
-                    if (pacient.cnp == null) {
-                        pacient.cnp = '';
+        Pacient.find({ cnp: req.body.cnp }).select('_id cabinet').exec(function (err, pacient_existent) {
+            if (err) throw err;
+            if (!pacient_existent) {
+                console.log("Eroare Pacient Existent")
+            }
+            if (token) {
+                jwt.verify(token, secret, function (err, decoded) {
+                    if (err) {
+                        res.json({ success: false, message: 'Token invalid' });
                     } else {
 
-                        if (pacient.cnp.toString()[0] == 1) {
-                            pacient.sex = 'M';
-                            var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
+                        if (pacient_existent.length > 0) {
 
-                        else if (pacient.cnp.toString()[0] == 2) {
-                            pacient.sex = 'F';
-                            var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
+                            res.json({ message: 'Pacient deja inregistrat in cabinetul' + ' ' + pacient_existent[0].cabinet, pacient_existent: pacient_existent[0] });
 
-                        else if (pacient.cnp.toString()[0] == 5) {
-                            pacient.sex = 'M';
-                            var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
 
-                        else if (pacient.cnp.toString()[0] == 6) {
-                            pacient.sex = 'F';
-                            var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                            var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                            var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                            var n = x + '/' + y + '/' + z;
-                            pacient.data_nastere = x + '/' + y + '/' + z
-                            pacient.varsta = getAge(n);
-                        }
-                    }
-                    if (req.body.nume == null || req.body.nume == '') {
-                        res.json({ success: false, message: 'Completeaza Numele' });
-                    }
-                    else if (req.body.telefon == null || req.body.telefon == '') {
-                        res.json({ success: false, message: 'Completeaza Telefon' });
-                    }
-                    else if (req.body.cnp == null || req.body.cnp == '') {
-                        res.json({ success: false, message: 'Completeaza CNP' });
-                    }
-                    else if (req.body.adresa == null || req.body.adresa == '') {
-                        res.json({ success: false, message: 'Completeaza Adresa' });
-                    }
+                        } else {
 
-                    else {
-                        pacient.save(function (err) {
+                            var pacient = new Pacient();
+                            pacient.cabinet = decoded.username;
+                            pacient.nume = req.body.nume;
+                            pacient.telefon = req.body.telefon;
+                            pacient.data_inregistrare = new moment().format('DD/MM/YYYY');
+                            pacient.adresa = req.body.adresa;
+                            pacient.cnp = req.body.cnp;
 
-                            if (err) {
-                                res.json({ succes: false, message: err });
-                            } else {
-
-                                res.json({ success: true, message: 'Pacient adaugat cu succes. Se redirectioneaza catre profilul pacientului...', pacient: pacient._id });
+                            function getAge(dateString) {
+                                var today = new Date();
+                                var birthDate = new Date(dateString);
+                                var age = today.getFullYear() - birthDate.getFullYear();
+                                var m = today.getMonth() - birthDate.getMonth();
+                                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                                    age--;
+                                }
+                                return age;
                             }
 
-                        });
+                            if (pacient.cnp == null) {
+                                pacient.cnp = '';
+                            } else {
+
+                                if (pacient.cnp.toString()[0] == 1) {
+                                    pacient.sex = 'M';
+                                    var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                                    var n = x + '/' + y + '/' + z;
+                                    pacient.data_nastere = x + '/' + y + '/' + z
+                                    pacient.varsta = getAge(n);
+                                }
+
+                                else if (pacient.cnp.toString()[0] == 2) {
+                                    pacient.sex = 'F';
+                                    var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                                    var n = x + '/' + y + '/' + z;
+                                    pacient.data_nastere = x + '/' + y + '/' + z
+                                    pacient.varsta = getAge(n);
+                                }
+
+                                else if (pacient.cnp.toString()[0] == 5) {
+                                    pacient.sex = 'M';
+                                    var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                                    var n = x + '/' + y + '/' + z;
+                                    pacient.data_nastere = x + '/' + y + '/' + z
+                                    pacient.varsta = getAge(n);
+                                }
+
+                                else if (pacient.cnp.toString()[0] == 6) {
+                                    pacient.sex = 'F';
+                                    var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                                    var n = x + '/' + y + '/' + z;
+                                    pacient.data_nastere = x + '/' + y + '/' + z
+                                    pacient.varsta = getAge(n);
+                                }
+                            }
+                            if (req.body.nume == null || req.body.nume == '') {
+                                res.json({ success: false, message: 'Completeaza Numele' });
+                            }
+                            else if (req.body.telefon == null || req.body.telefon == '') {
+                                res.json({ success: false, message: 'Completeaza Telefon' });
+                            }
+                            else if (req.body.cnp == null || req.body.cnp == '') {
+                                res.json({ success: false, message: 'Completeaza CNP' });
+                            }
+                            else if (req.body.adresa == null || req.body.adresa == '') {
+                                res.json({ success: false, message: 'Completeaza Adresa' });
+                            }
+
+                            else {
+                                pacient.save(function (err) {
+
+                                    if (err) {
+                                        res.json({ succes: false, message: err });
+                                    } else {
+
+                                        res.json({ success: true, message: 'Pacient adaugat cu succes. Se redirectioneaza catre profilul pacientului...', pacient: pacient._id });
+                                    }
+
+                                });
+                            }
+
+                        }
                     }
-
-                }
-            });
-        }
+                });
+            }
 
 
+        });
     });
 
 
@@ -760,7 +775,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Pacient.find({ "cabinet": { "$regex": mainUser.username } }).select('data_inregistrare nume denumire_aparat defectiune_reclamata iesit_cabinet finalizat_reparatie intrat_cabinet predat_pacient').exec(function (err, pacienti) {
+                Pacient.find({ "cabinet": mainUser.username }).select('data_inregistrare nume denumire_aparat defectiune_reclamata iesit_cabinet finalizat_reparatie intrat_cabinet predat_pacient').exec(function (err, pacienti) {
                     if (err) throw err;
                     if (!pacienti) {
                         res.json({ success: false, message: 'Nu s-au gasit pacienti' });
@@ -780,7 +795,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Service.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet serv_sosit serv_plecat predat_pacient').exec(function (err, service) {
+                Service.find({ "cabinet": mainUser.username }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet serv_sosit serv_plecat predat_pacient').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
                         res.json({ success: false, message: 'Nu s-au gasit service-uri' });
@@ -800,7 +815,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Recarcasare.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_recarcasare data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, recarcasare) {
+                Recarcasare.find({ "cabinet": mainUser.username }).select('nr_comanda_recarcasare data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, recarcasare) {
                     if (err) throw err;
                     if (!recarcasare) {
                         res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
@@ -819,7 +834,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Oliva.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_oliva serie_oliva data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva iesit_cabinet plastie_sosit plastie_plecat predat_pacient').exec(function (err, olive) {
+                Oliva.find({ "cabinet": mainUser.username }).select('nr_comanda_oliva serie_oliva data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva iesit_cabinet plastie_sosit plastie_plecat predat_pacient').exec(function (err, olive) {
                     if (err) throw err;
                     if (!olive) {
                         res.json({ success: false, message: 'Nu s-au gasit olive' });
@@ -838,7 +853,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Ite.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_ite serie_ite data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, ite) {
+                Ite.find({ "cabinet": mainUser.username }).select('nr_comanda_ite serie_ite data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, ite) {
                     if (err) throw err;
                     if (!ite) {
                         res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
@@ -859,7 +874,7 @@ module.exports = function (router) {
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                Service.find({ "cabinet": { "$regex": mainUser.username } }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat').exec(function (err, service) {
+                Service.find({ "cabinet": mainUser.username }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
                         res.json({ success: false, message: 'Nu s-au gasit service-uri' });
@@ -955,14 +970,14 @@ module.exports = function (router) {
                     console.log('error')
                 }
             });
-            Oliva.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }, function (err, oliva) {
+            Oliva.find({ "pacient_id": pacient._id, "cabinet": username }, function (err, oliva) {
                 if (err) throw err;
-                Ite.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }, function (err, ite) {
+                Ite.find({ "pacient_id": pacient._id, "cabinet": username }, function (err, ite) {
                     if (err) throw err;
-                    Recarcasare.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }, function (err, recarcasare) {
+                    Recarcasare.find({ "pacient_id": pacient._id, "cabinet": username }, function (err, recarcasare) {
                         if (err) throw err;
 
-                        Service.find({ "pacient_id": { "$regex": pacient._id }, "cabinet": { "$regex": username } }).select('nr_comanda_service data_inregistrare denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat predat_pacient').exec(function (err, service) {
+                        Service.find({ "pacient_id": pacient._id, "cabinet": username }).select('nr_comanda_service data_inregistrare denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat predat_pacient').exec(function (err, service) {
                             if (err) throw err;
                             if (!service || !oliva) {
                                 res.json({ success: false, message: 'Nu s-au gasit service-uri sau olive' });

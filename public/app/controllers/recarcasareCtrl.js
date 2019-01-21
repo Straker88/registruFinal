@@ -2,6 +2,8 @@ angular.module('recarcasareControllers', ['userServices'])
 
     .controller('regRecarcasareCtrl', function ($route, $routeParams, $http, $location, $timeout, Recarcasare, Pacient, User, $scope) {
         var app = this;
+        app.adauga = true;
+        app.print = false;
 
         $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
         $scope.data_estimativa = new moment().add(15, 'days').format('DD/MM/YYYY');
@@ -21,17 +23,17 @@ angular.module('recarcasareControllers', ['userServices'])
                         if (data.data.success) {
                             $scope.comanda_recarcasare = data.data.comanda_recarcasare + 1;
                             app.disabled = true;
+                            app.print = true;
+                            app.adauga = false;
                             app.successMsg = data.data.message
 
                             $timeout(function () {
                                 window.print();
                             }, 300)
 
-                            $timeout(function () {
-                                $route.reload();
-                            }, 1500)
-
-
+                            $scope.print_recarcasare = function () {
+                                window.print();
+                            }
 
                         } else {
                             app.loading = false;

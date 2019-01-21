@@ -2,6 +2,8 @@ angular.module('serviceControllers', ['userServices'])
 
     .controller('regServiceCtrl', function ($route, $routeParams, $http, $location, $timeout, Service, Pacient, User, $scope) {
         var app = this;
+        app.adauga = true;
+        app.print = false;
 
         $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
         $scope.data_estimativa = new moment().add(15, 'days').format('DD/MM/YYYY');
@@ -22,18 +24,18 @@ angular.module('serviceControllers', ['userServices'])
 
                         if (data.data.success) {
                             $scope.comanda_service = data.data.comanda_service + 1;
-
                             app.disabled = true;
-                            app.successMsg = data.data.message
+                            app.print = true;
+                            app.adauga = false;
+                            app.successMsg = data.data.message;
 
                             $timeout(function () {
                                 window.print();
                             }, 300)
 
-                            $timeout(function () {
-                                $route.reload();
-                            }, 1500)
-
+                            $scope.print_service = function () {
+                                window.print();
+                            }
 
 
                         } else {

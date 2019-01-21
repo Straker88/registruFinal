@@ -2,6 +2,8 @@ angular.module('iteControllers', ['userServices'])
 
     .controller('regIteCtrl', function ($route, $routeParams, $http, $location, $timeout, Ite, Pacient, $scope) {
         var app = this;
+        app.adauga = true;
+        app.print = false;
 
         $scope.data_inregistrare = new moment().format('DD/MM/YYYY');
         $scope.data_estimativa = new moment().add(6, 'days').format('DD/MM/YYYY');
@@ -49,17 +51,18 @@ angular.module('iteControllers', ['userServices'])
                                         }
                                     }
                                     app.disabled = true;
+                                    app.print = true;
+                                    app.adauga = false;
                                     app.successMsg = data.data.message
 
                                     $timeout(function () {
                                         window.print();
-
                                     }, 300)
 
-                                    $timeout(function () {
-                                        $route.reload();
+                                    $scope.print_ite = function () {
+                                        window.print();
+                                    }
 
-                                    }, 1500)
 
                                 } else {
                                     app.loading = false;
@@ -135,7 +138,7 @@ angular.module('iteControllers', ['userServices'])
                 $scope.newIesit_Cabinet = data.data.ite.iesit_cabinet;
                 $scope.newIntrat_Cabinet = data.data.ite.intrat_cabinet;
                 $scope.newPredat_Pacient = data.data.ite.predat_pacient;
-                $scope.Observatii_ite = data.data.ite.observatii_ite;
+                $scope.Observatii_Ite = data.data.ite.observatii_ite;
                 currentCabinet = data.data.ite.cabinet;
                 app.currentIte = data.data.ite._id;
                 $scope.nr_comanda_ite = data.data.ite.nr_comanda_ite;

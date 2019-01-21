@@ -3,41 +3,41 @@
 <script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="assets/js/profilPacient.js"></script>
 <script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
+<div ng-controller="editProfilPacientCtrl as editPacient">
 
-<div class="page-header" style="border-bottom:none;">
-    <img class="visible-print-block" style="float:right;margin-top:15px;" src="/assets/img/clarfon_transparent.png">
+    <div class="page-header" style="border-bottom:none;">
+        <img class="visible-print-block" style="float:right;margin-top:15px;" src="/assets/img/clarfon_transparent.png">
 
-    <div class="no-print" ng-controller="editProfilPacientCtrl">
+        <div class="no-print">
 
-        <div>
-            <h1 style="color:#337ab7;">Profil Pacient:
+            <div>
+                <h1 style="color:#337ab7;">Profil Pacient:
 
-                <span style="color:#337ab7;">
-                    <input style="padding:5px;border: none;background: #e0f1ff9e;text-align: center" ng-model="Pacient_Nume"
-                        readonly><br>
+                    <span style="color:#337ab7;">
+                        <input style="padding:5px;border: none;background: #e0f1ff9e;text-align: center" ng-model="Pacient_Nume"
+                            readonly><br>
 
-                </span>
-            </h1>
-        </div>
-        <div style="font-size: 20px;color:#337ab7;">
-            <span>
-                Inregistrat:
-                <input readonly style="border: none;width: 120px;background: #e0f1ff9e;text-align: center;
+                    </span>
+                </h1>
+            </div>
+            <div style="font-size: 20px;color:#337ab7;">
+                <span>
+                    Inregistrat:
+                    <input readonly style="border: none;width: 120px;background: #e0f1ff9e;text-align: center;
             "
-                    ng-model="Pacient_Data_Inregistrare" readonly>
-            </span>
+                        ng-model="Pacient_Data_Inregistrare" readonly>
+                </span>
 
-            <span>
-                in cabinetul:
-                <input readonly style="border: none;background: #e0f1ff9e;text-align: center;
-            " ng-model="Pacient_Cabinet"
-                    readonly>
-            </span>
+                <span>
+                    in cabinetul:
+                    <input readonly style="border: none;background: #e0f1ff9e;text-align: center;
+            "
+                        ng-model="Pacient_Cabinet" readonly>
+                </span>
+            </div>
         </div>
     </div>
-</div>
-<hr class="no-print">
-<div ng-controller="editProfilPacientCtrl as editPacient">
+    <hr class="no-print">
 
     <div ng-show="main.user" class="dropdown no-print" style="margin: -1px 10px 0 0;display: table;
                 float: left;">
@@ -439,7 +439,7 @@
     <!---------------------------------------Detalii Pacient --------------------------------------------------->
 
     <div ng-show="editPacient.phase5">
-        <div style="padding-bottom:100px;" ng-controller="editProfilPacientCtrl as editPacient">
+        <div style="padding-bottom:100px;">
             <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;">Detalii
                 Pacient
             </h1>
@@ -651,15 +651,13 @@
                         <div class="col-sm-12">
 
 
-                            <div ng-controller="editProfilPacientCtrl" style="width:50%;float: left;clear:left;margin-right: 0;"
-                                class="visible-print-block">
+                            <div style="width:50%;float: left;clear:left;margin-right: 0;" class="visible-print-block">
                                 <label for="Nume">Nume Pacient: </label>
                                 <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
                                     name="nume" placeholder="-" ng-model="Pacient_Nume" autocomplete="off">
                             </div>
 
-                            <div ng-controller="editProfilPacientCtrl" style="width:37%;float:left;margin-right: 0;"
-                                class="regPacForm visible-print-block">
+                            <div style="width:37%;float:left;margin-right: 0;" class="regPacForm visible-print-block">
                                 <label for="Telefon">Telefon: </label>
                                 <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
                                     name="telefon" placeholder="-" ng-model="Pacient_Telefon" autocomplete="off">
@@ -910,15 +908,13 @@
                         <div class="col-sm-12">
 
 
-                            <div ng-controller="editProfilPacientCtrl" style="width:50%;float: left;clear:left;margin-right: 0;"
-                                class="visible-print-block">
+                            <div style="width:50%;float: left;clear:left;margin-right: 0;" class="visible-print-block">
                                 <label for="Nume">Nume Pacient: </label>
                                 <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
                                     name="nume" placeholder="-" ng-model="Pacient_Nume" autocomplete="off">
                             </div>
 
-                            <div ng-controller="editProfilPacientCtrl" style="width:37%;float:left;margin-right: 0;"
-                                class="regPacForm visible-print-block">
+                            <div style="width:37%;float:left;margin-right: 0;" class="regPacForm visible-print-block">
                                 <label for="Telefon">Telefon: </label>
                                 <input style="border: none;" readonly type="text" class="form-control" maxlength="26"
                                     name="telefon" placeholder="-" ng-model="Pacient_Telefon" autocomplete="off">
@@ -1045,9 +1041,9 @@
     <div ng-show="editPacient.phase8">
         <h2 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Comanda Oliva
             <span>
-                - <input ng-controller="editProfilPacientCtrl" readonly style="border: none;background: #e0f1ff9e;
-        width: 300px;"
-                    ng-model="Pacient_Cabinet" readonly></span>
+                - <input readonly style="border: none;background: #e0f1ff9e;
+        width: 300px;" ng-model="Pacient_Cabinet"
+                    readonly></span>
         </h2>
         <span class="visible-print-block" style="display:table;margin:0 0 20px 10px;font-size:14px;">Operator de
             date cu caracter personal nr. 23594
@@ -1074,7 +1070,7 @@
                     <div class="row visible-print-block" style="margin-bottom:40px;">
                         <div class="col-sm-12">
 
-                            <div ng-controller="editProfilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
+                            <div style="width:35%;margin-right: 10px;display: table;
                         float: left;
                         clear: left;"
                                 class="">
@@ -1093,8 +1089,7 @@
                                 <input readonly type="text" class="form-control" maxlength="3" name="varsta"
                                     placeholder="-" ng-model="Pacient_Varsta" autocomplete="off">
                             </div>
-                            <div ng-controller="editProfilPacientCtrl" style="width:5%;float: left;margin-right: 12px;text-align: center;"
-                                class="">
+                            <div style="width:5%;float: left;margin-right: 12px;text-align: center;" class="">
                                 <label for="Sex">Sex: </label>
                                 <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
                                     autocomplete="off">
@@ -1359,9 +1354,9 @@
     <div ng-show="editPacient.phase9">
         <h2 class="visible-print-block" style="margin-top:-25px;display: inline-block;color:#337ab7;">Comanda ITE
             <span>
-                - <input ng-controller="editProfilPacientCtrl" readonly style="border: none;background: #e0f1ff9e;
-            width: 300px;"
-                    ng-model="Pacient_Cabinet" readonly></span>
+                - <input readonly style="border: none;background: #e0f1ff9e;
+            width: 300px;" ng-model="Pacient_Cabinet"
+                    readonly></span>
         </h2>
         <span class="visible-print-block" style="display:table;margin:0 0 20px 10px;font-size:14px;">Operator de
             date cu caracter personal nr. 23594
@@ -1388,7 +1383,7 @@
                     <div class="row visible-print-block" style="margin-bottom:40px;">
                         <div class="col-sm-12">
 
-                            <div ng-controller="editProfilPacientCtrl" style="width:35%;margin-right: 10px;display: table;
+                            <div style="width:35%;margin-right: 10px;display: table;
                             float: left;
                             clear: left;"
                                 class="">
@@ -1407,8 +1402,7 @@
                                 <input readonly type="text" class="form-control" maxlength="3" name="varsta"
                                     placeholder="-" ng-model="Pacient_Varsta" autocomplete="off">
                             </div>
-                            <div ng-controller="editProfilPacientCtrl" style="width:5%;float: left;margin-right: 12px;text-align: center; "
-                                class="">
+                            <div style="width:5%;float: left;margin-right: 12px;text-align: center; " class="">
                                 <label for="Sex">Sex: </label>
                                 <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
                                     autocomplete="off">

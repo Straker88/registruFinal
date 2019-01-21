@@ -11,13 +11,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use('/api', appRoutes);
-
-
-mongoose.connect('mongodb://localhost:27017/registruTehnic', function (err) {
-	if (err) {
-		console.log('Not connected to the database: ' + err);
-	} else {
-	}
+mongoose.set('bufferCommands', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+mongoose.connect('mongodb://localhost:27017/registruTehnic', {
+	bufferMaxEntries: 0,
+	useNewUrlParser: true,
 });
 
 app.get('*', function (req, res) {

@@ -81,6 +81,10 @@ angular.module('mainController', ['authServices', 'userServices'])
                 });
             } else {
                 app.service = '';
+                app.plastie = '';
+                app.asamblare = '';
+                app.user = '';
+                app.logistic = '';
                 app.isLoggedIn = false;
                 app.username = '';
                 app.loadme = false;

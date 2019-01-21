@@ -967,7 +967,7 @@ module.exports = function (router) {
             pacient.varsta = getAge(pacient.data_nastere);
             pacient.save(function () {
                 if (err) {
-                    console.log('error')
+                    console.log('error calcul varsta pacient')
                 }
             });
             Oliva.find({ "pacient_id": pacient._id, "cabinet": username }, function (err, oliva) {

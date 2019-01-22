@@ -9,38 +9,25 @@ var nameValidator = [
     validate({
         validator: 'matches',
         arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-z]{3,20})+)$/,
-        message: 'Name must be at lest 3 characters, max 20, no special characters or numbers, must have space in between name.'
+        message: 'Numele trebuie sa contina cel putin 3 caractere, maxim 20, nici un caracter special sau numar, trebuie sa contina un spatiu intre nume si prenume.'
     }),
     validate({
         validator: 'isLength',
         arguments: [3, 20],
-        message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
+        message: 'Numele trebuie sa fie intre {ARGS[0]} si {ARGS[1]} caractere'
     })
 ];
-
-// var emailValidator = [
-//     validate({
-//         validator: 'matches',
-//         arguments: /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/,
-//         message: 'Name must be at least 3 characters, max 40, no special characters or numbers, must have space in between name.'
-//     }),
-//     validate({
-//         validator: 'isLength',
-//         arguments: [3, 40],
-//         message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
-//     })
-// ];
 
 var passwordValidator = [
     validate({
         validator: 'matches',
         arguments: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/,
-        message: 'Password needs to have at least one lower case, one uppercase, one number, one special character, and must be at least 8 characters but no more than 35.'
+        message: 'Parola trebuie sa contina cel putin o litera mare, o litera mica, 1 numar, 1 carcater special, sa fie de cel putin 8 caractere si nu mai mult de 35 caractere.'
     }),
     validate({
         validator: 'isLength',
         arguments: [8, 35],
-        message: 'Password should be between {ARGS[0]} and {ARGS[1]} characters'
+        message: 'Parola trebuie sa fie intre {ARGS[0]} si {ARGS[1]} caractere'
     })
 ];
 

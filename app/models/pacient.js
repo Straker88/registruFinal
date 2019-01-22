@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let moment = require('moment');
+var titlize = require('mongoose-title-case');
 
 const PacientSchema = new Schema({
 
@@ -22,6 +23,11 @@ PacientSchema.pre('save', function (next) {
     this.updated_at = now;
     next()
 });
+
+PacientSchema.plugin(titlize, {
+    paths: ['nume']
+});
+
 
 
 var Pacient = mongoose.model('Pacient', PacientSchema);

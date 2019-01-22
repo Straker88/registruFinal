@@ -5,8 +5,8 @@ var Recarcasare = require('../models/recarcasare');
 var Oliva = require('../models/oliva');
 var Ite = require('../models/ite');
 var jwt = require('jsonwebtoken');
-var secret = 'harrypotter';
-var moment = require('moment-business-days');
+var secret = 'clarfontehnic';
+var moment = require('moment');
 
 module.exports = function (router) {
 
@@ -45,9 +45,6 @@ module.exports = function (router) {
                             if (err.errmsg[61] == "u") {
                                 res.json({ success: false, message: 'Username deja exista' });
                             }
-                            //  else if (err.errmsg[61] == "e") {
-                            //     res.json({ success: false, message: 'Adresa email deja exista' });
-                            // }
                         } else {
                             res.json({ succes: false, message: err });
                         }
@@ -75,8 +72,8 @@ module.exports = function (router) {
                         if (!validPassword) {
                             res.json({ success: false, message: 'Parola introdusa nu este corecta' });
                         } else {
-                            var token = jwt.sign({ username: user.username, }, secret);
-                            res.json({ success: true, message: 'Utilizator autentificat', token: token, user: user });
+                            var token = jwt.sign({ username: user.username }, secret);
+                            res.json({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
                         }
                     }
                 }
@@ -94,7 +91,6 @@ module.exports = function (router) {
                     res.json({ success: false, message: 'Token invalid' });
                 } else {
                     req.decoded = decoded;
-
                     next();
                 }
             });
@@ -107,6 +103,18 @@ module.exports = function (router) {
 
     router.post('/me', function (req, res) {
         res.send(req.decoded);
+    });
+
+    router.get('/permission', function (req, res) {
+        User.findOne({ username: req.decoded.username }, function (err, user) {
+            if (err) throw err;
+            if (!user) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                res.json({ success: true, permission: user.permission, usernamePermission: user.username });
+            }
+
+        });
     });
 
     // Pacient Reg. Route 
@@ -238,6 +246,7 @@ module.exports = function (router) {
         Service.findOne({}, {}, { sort: { 'nr_comanda_service': -1 } }, function (err, comanda_service) {
 
             var token = req.body.token || req.body.query || req.headers['x-access-token'];
+            if (err) throw err;
             if (token) {
                 jwt.verify(token, secret, function (err, decoded) {
                     if (err) {
@@ -360,6 +369,7 @@ module.exports = function (router) {
         Recarcasare.findOne({}, {}, { sort: { 'nr_comanda_recarcasare': -1 } }, function (err, comanda_recarcasare) {
 
             var token = req.body.token || req.body.query || req.headers['x-access-token'];
+            if (err) throw err;
             if (token) {
                 jwt.verify(token, secret, function (err, decoded) {
                     if (err) {
@@ -476,6 +486,7 @@ module.exports = function (router) {
         Oliva.findOne({}, {}, { sort: { 'nr_comanda_oliva': -1 } }, function (err, comanda_oliva) {
 
             var token = req.body.token || req.body.query || req.headers['x-access-token'];
+            if (err) throw err;
             if (token) {
                 jwt.verify(token, secret, function (err, decoded) {
                     if (err) {
@@ -588,6 +599,7 @@ module.exports = function (router) {
     router.post('/ite', function (req, res) {
         Ite.findOne({}, {}, { sort: { 'nr_comanda_ite': -1 } }, function (err, comanda_ite) {
             var token = req.body.token || req.body.query || req.headers['x-access-token'];
+            if (err) throw err;
             if (token) {
                 jwt.verify(token, secret, function (err, decoded) {
                     if (err) {
@@ -728,24 +740,13 @@ module.exports = function (router) {
             if (!user) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                var newToken = jwt.sign({ username: user.username, name: user.name }, secret, { expiresIn: '24H' });
+                var newToken = jwt.sign({ username: user.username, name: user.name }, secret);
                 res.json({ success: true, token: newToken });
             }
         });
     });
 
     //Permissions ----------------------------------------------
-    router.get('/permission', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, user) {
-            if (err) throw err;
-            if (!user) {
-                res.json({ success: false, message: 'No user was found' });
-            } else {
-                res.json({ success: true, permission: user.permission, usernamePermission: user.username });
-            }
-
-        });
-    });
 
     //Users ----------------------------------------------
     router.get('/manangement', function (req, res) {
@@ -756,7 +757,7 @@ module.exports = function (router) {
                 if (!mainUser) {
                     res.json({ success: false, message: 'No user found' });
                 } else {
-                    if (mainUser.permission === 'admin' || mainUser.permission === 'moderator' || mainUser.permission === 'user' || mainUser.permission === 'logistic' || mainUser.permission === 'service') {
+                    if (mainUser.permission === 'admin' || mainUser.permission === 'moderator' || mainUser.permission === 'user') {
                         if (!users) {
                             res.json({ success: false, message: 'Users not found' });
                         } else {
@@ -773,8 +774,8 @@ module.exports = function (router) {
     router.get('/profilCabinet/:username', function (req, res) {
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
+            if (!mainUser || mainUser.permission !== 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
                 Pacient.find({ "cabinet": mainUser.username }).select('data_inregistrare nume denumire_aparat defectiune_reclamata iesit_cabinet finalizat_reparatie intrat_cabinet predat_pacient').exec(function (err, pacienti) {
                     if (err) throw err;
@@ -793,8 +794,8 @@ module.exports = function (router) {
     router.get('/registruServiceCabinet/:username', function (req, res) {
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
+            if (!mainUser || mainUser.permission !== 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
                 Service.find({ "cabinet": mainUser.username }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet serv_sosit serv_plecat predat_pacient').exec(function (err, service) {
                     if (err) throw err;
@@ -813,8 +814,8 @@ module.exports = function (router) {
     router.get('/registruRecarcasariCabinet/:username', function (req, res) {
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
+            if (!mainUser || mainUser.permission !== 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
                 Recarcasare.find({ "cabinet": mainUser.username }).select('nr_comanda_recarcasare data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, recarcasare) {
                     if (err) throw err;
@@ -832,8 +833,8 @@ module.exports = function (router) {
     router.get('/registruOliveCabinet/:username', function (req, res) {
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
+            if (!mainUser || mainUser.permission !== 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
                 Oliva.find({ "cabinet": mainUser.username }).select('nr_comanda_oliva serie_oliva data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva iesit_cabinet plastie_sosit plastie_plecat predat_pacient').exec(function (err, olive) {
                     if (err) throw err;
@@ -851,8 +852,8 @@ module.exports = function (router) {
     router.get('/registruIteCabinet/:username', function (req, res) {
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
+            if (!mainUser || mainUser.permission !== 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
                 Ite.find({ "cabinet": mainUser.username }).select('nr_comanda_ite serie_ite data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite iesit_cabinet asamblare_sosit asamblare_plecat predat_pacient').exec(function (err, ite) {
                     if (err) throw err;
@@ -868,14 +869,14 @@ module.exports = function (router) {
     });
 
 
-    router.get('/profilService/:username', function (req, res) {
+    router.get('/registruPiese', function (req, res) {
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
-
             if (err) throw err;
-            if (!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
+            if (!mainUser || mainUser.permission !== 'service') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                Service.find({ "cabinet": mainUser.username }).select('nr_comanda_service data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat').exec(function (err, service) {
+
+                Service.find({ "piese_inlocuite": { "$regex": '[a-zA-Z\\s\'\"/^\d+$/]+', "$options": "i" }, "finalizat_reparatie": { "$regex": '[a-zA-Z\\s\'\"/^\d+$/]+', "$options": "i", } }).select('finalizat_reparatie cabinet piese_inlocuite cod_componente nr_comanda_service').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
                         res.json({ success: false, message: 'Nu s-au gasit service-uri' });
@@ -888,63 +889,83 @@ module.exports = function (router) {
         });
     });
 
-    router.get('/registruPiese', function (req, res) {
-        Service.find({ "piese_inlocuite": { "$regex": '[a-zA-Z\\s\'\"/^\d+$/]+', "$options": "i" }, "finalizat_reparatie": { "$regex": '[a-zA-Z\\s\'\"/^\d+$/]+', "$options": "i", } }).select('finalizat_reparatie cabinet piese_inlocuite cod_componente nr_comanda_service').exec(function (err, service) {
-            if (err) throw err;
-            if (!service) {
-                res.json({ success: false, message: 'Nu s-au gasit service-uri' });
-            } else {
-                res.json({ success: true, service: service });
-            }
-
-        });
-    });
-
     router.get('/registruLogistic_service', function (req, res) {
-        Service.find({}).select('nr_comanda_service cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis service_inregistrat_pacient denumire_aparat').exec(function (err, service) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!service) {
-                res.json({ success: false, message: 'Nu s-au gasit service-uri' });
+            if (!mainUser || mainUser.permission !== 'logistic') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, service: service });
-            }
 
+                Service.find({}).select('nr_comanda_service cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis service_inregistrat_pacient denumire_aparat').exec(function (err, service) {
+                    if (err) throw err;
+                    if (!service) {
+                        res.json({ success: false, message: 'Nu s-au gasit service-uri' });
+                    } else {
+                        res.json({ success: true, service: service });
+                    }
+
+                });
+            }
         });
+
     });
 
     router.get('/registruLogistic_recarcasari', function (req, res) {
-        Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis recarcasare_inregistrat_pacient denumire_aparat').exec(function (err, recarcasare) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!recarcasare) {
-                res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
+            if (!mainUser || mainUser.permission !== 'logistic') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, recarcasare: recarcasare });
-            }
+                Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis recarcasare_inregistrat_pacient denumire_aparat').exec(function (err, recarcasare) {
+                    if (err) throw err;
+                    if (!recarcasare) {
+                        res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
+                    } else {
+                        res.json({ success: true, recarcasare: recarcasare });
+                    }
 
+                });
+            }
         });
     });
 
     router.get('/registruLogistic_olive', function (req, res) {
-        Oliva.find({}).select('nr_comanda_oliva serie_oliva cabinet data_inregistrare oliva_inregistrat_pacient log_sosit log_plecat log_preluat log_trimis material_oliva').exec(function (err, oliva) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!oliva) {
-                res.json({ success: false, message: 'Nu s-au gasit comenzi olive' });
+            if (!mainUser || mainUser.permission !== 'logistic') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, oliva: oliva });
-            }
 
+                Oliva.find({}).select('nr_comanda_oliva serie_oliva cabinet data_inregistrare oliva_inregistrat_pacient log_sosit log_plecat log_preluat log_trimis material_oliva').exec(function (err, oliva) {
+                    if (err) throw err;
+                    if (!oliva) {
+                        res.json({ success: false, message: 'Nu s-au gasit comenzi olive' });
+                    } else {
+                        res.json({ success: true, oliva: oliva });
+                    }
+
+                });
+            }
         });
     });
 
     router.get('/registruLogistic_ite', function (req, res) {
-        Ite.find({}).select('nr_comanda_ite serie_ite cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis ite_inregistrat_pacient model_aparat').exec(function (err, ite) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!ite) {
-                res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
+            if (!mainUser || mainUser.permission !== 'logistic') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, ite: ite });
-            }
 
+                Ite.find({}).select('nr_comanda_ite serie_ite cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis ite_inregistrat_pacient model_aparat').exec(function (err, ite) {
+                    if (err) throw err;
+                    if (!ite) {
+                        res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
+                    } else {
+                        res.json({ success: true, ite: ite });
+                    }
+
+                });
+            }
         });
     });
 
@@ -997,46 +1018,78 @@ module.exports = function (router) {
 
 
     router.get('/registruService', function (req, res) {
-        Service.find({}).select('nr_comanda_service cabinet data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat garantie_serv').exec(function (err, service) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!service) {
-                res.json({ success: false, message: 'Nu s-au gasit service-uri' });
+            if (!mainUser || mainUser.permission === 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, service: service });
+
+                Service.find({}).select('nr_comanda_service cabinet data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat garantie_serv').exec(function (err, service) {
+                    if (err) throw err;
+                    if (!service) {
+                        res.json({ success: false, message: 'Nu s-au gasit service-uri' });
+                    } else {
+                        res.json({ success: true, service: service });
+                    }
+                });
             }
         });
     });
 
     router.get('/registruRecarcasari', function (req, res) {
-        Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata asamblare_sosit finalizat_recarcasare asamblare_plecat').exec(function (err, recarcasare) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!recarcasare) {
-                res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
+            if (!mainUser || mainUser.permission === 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, recarcasare: recarcasare });
+
+                Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare recarcasare_inregistrat_pacient denumire_aparat defectiune_reclamata asamblare_sosit finalizat_recarcasare asamblare_plecat').exec(function (err, recarcasare) {
+                    if (err) throw err;
+                    if (!recarcasare) {
+                        res.json({ success: false, message: 'Nu s-au gasit recarcasari' });
+                    } else {
+                        res.json({ success: true, recarcasare: recarcasare });
+                    }
+                });
             }
         });
     });
 
 
     router.get('/registruOlive', function (req, res) {
-        Oliva.find({}).select('nr_comanda_oliva serie_oliva cabinet data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva plastie_sosit finalizat_oliva plastie_plecat').exec(function (err, oliva) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!oliva) {
-                res.json({ success: false, message: 'Nu s-au gasit comenzi olive' });
+            if (!mainUser || mainUser.permission === 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, oliva: oliva });
+
+                Oliva.find({}).select('nr_comanda_oliva serie_oliva cabinet data_inregistrare oliva_inregistrat_pacient material_oliva tip_oliva plastie_sosit finalizat_oliva plastie_plecat').exec(function (err, oliva) {
+                    if (err) throw err;
+                    if (!oliva) {
+                        res.json({ success: false, message: 'Nu s-au gasit comenzi olive' });
+                    } else {
+                        res.json({ success: true, oliva: oliva });
+                    }
+                });
             }
         });
     });
 
     router.get('/registruIte', function (req, res) {
-        Ite.find({}).select('nr_comanda_ite serie_ite cabinet data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite asamblare_sosit finalizat_ite asamblare_plecat').exec(function (err, ite) {
+        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!ite) {
-                res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
+            if (!mainUser || mainUser.permission === 'user') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-                res.json({ success: true, ite: ite });
+
+                Ite.find({}).select('nr_comanda_ite serie_ite cabinet data_inregistrare ite_inregistrat_pacient model_aparat carcasa_ite asamblare_sosit finalizat_ite asamblare_plecat').exec(function (err, ite) {
+                    if (err) throw err;
+                    if (!ite) {
+                        res.json({ success: false, message: 'Nu s-au gasit comenzi ITE' });
+                    } else {
+                        res.json({ success: true, ite: ite });
+                    }
+                });
             }
         });
     });
@@ -1121,7 +1174,7 @@ module.exports = function (router) {
 
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
 
-
+            if (err) throw err;
             if (Pacient_Adresa) {
                 Pacient.findOne({ _id: editPacient }, function (err, pacient) {
                     if (err) throw err;
@@ -1169,6 +1222,7 @@ module.exports = function (router) {
     router.put('/editService', function (req, res) {
         var editService = req.body._id;
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+            if (err) throw err;
 
             //      Cabinet 
             //-----------------------------------------------------------------------------------
@@ -1697,6 +1751,7 @@ module.exports = function (router) {
     router.put('/editRecarcasare', function (req, res) {
         var editRecarcasare = req.body._id;
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+            if (err) throw err;
 
             //      Cabinet 
             //-----------------------------------------------------------------------------------
@@ -2247,6 +2302,7 @@ module.exports = function (router) {
     router.put('/editOliva', function (req, res) {
         var editOliva = req.body._id;
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+            if (err) throw err;
 
             //      Cabinet 
             //-----------------------------------------------------------------------------------
@@ -2595,6 +2651,7 @@ module.exports = function (router) {
     router.put('/editIte', function (req, res) {
         var editIte = req.body._id;
         User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+            if (err) throw err;
 
             //      Cabinet 
             //-----------------------------------------------------------------------------------
@@ -2950,7 +3007,7 @@ module.exports = function (router) {
                 } else {
                     User.findOneAndRemove({ username: deletedUser }, function (err, user) {
                         if (err) throw err;
-                        res.json({ success: true });
+                        res.json({ success: true, user: user });
                     });
                 }
             }

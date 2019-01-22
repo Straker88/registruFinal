@@ -1,21 +1,17 @@
 angular.module('mainController', ['authServices', 'userServices'])
 
-    .controller('mainCtrl', function (Auth, $timeout, $location, $rootScope, $interval, $window, $route, User, AuthToken, $scope) {
+    .controller('mainCtrl', function (Auth, $timeout, $location, $rootScope, $route, User, AuthToken) {
         var app = this;
 
         app.loadme = false;
 
-        var exit = function (option) {
-            app.choiceMade = false;
-            app.hideButton = false;
-
-
-            ($timeout(function () {
+        var exit = function () {
+            $timeout(function () {
                 Auth.logout();
                 $location.path('/login');
-                $route.reload();
+                app.isLoggedIn = false;
             }, 1000)
-            )
+
         };
 
         app.renewSession = function () {
@@ -44,30 +40,25 @@ angular.module('mainController', ['authServices', 'userServices'])
                         app.username = data.data.username;
 
                         User.getPermission().then(function (data) {
-                            if (data.data.permission === 'admin') {
-                                app.authorized = true;
+                            if (data.data.permission === 'user' && data.data.usernamePermission !== 'Logistic' && data.data.permission !== 'logistic') {
+                                app.user = true;
                                 app.loadme = true;
-                            } else if (data.data.permission === 'service') {
+                            }
+                            else if (data.data.permission === 'service') {
                                 app.service = true;
                                 app.loadme = true;
                             } else if (data.data.permission === 'plastie') {
                                 app.plastie = true;
                                 app.loadme = true;
+                            } else if (data.data.usernamePermission === 'Logistic' && data.data.permission === 'logistic') {
+                                app.logistic = true;
+                                app.loadme = true;
                             } else if (data.data.permission === 'asamblare') {
                                 app.asamblare = true;
                                 app.loadme = true;
-                            } else if (data.data.permission === 'user' && data.data.usernamePermission !== 'Logistic' && data.data.permission !== 'logistic') {
-                                console.log(data.data.permission + ' ' + 'data permission --- user')
-                                console.log(data.data.usernamePermission + ' ' + 'data UsernamePermission ---- user username')
-                                app.user = true;
+                            } else if (data.data.permission === 'admin') {
+                                app.authorized = true;
                                 app.loadme = true;
-                            } else if (data.data.usernamePermission === 'Logistic' && data.data.permission === 'logistic') {
-                                console.log(data.data.permission + ' ' + 'data permission --- logistic user')
-                                console.log(data.data.usernamePermission + ' ' + 'data UsernamePermission ---- logistic user username')
-
-                                app.logistic = true;
-                                app.loadme = true;
-
                             } else {
                                 app.loadme = false;
                             }
@@ -75,12 +66,13 @@ angular.module('mainController', ['authServices', 'userServices'])
                     }
                 });
 
+
+
             } else {
                 app.isLoggedIn = false;
                 app.username = '';
                 app.loadme = false;
             }
-            if ($location.hash() == '_=_') $location.hash(null);
 
         });
 
@@ -93,48 +85,47 @@ angular.module('mainController', ['authServices', 'userServices'])
                 if (data.data.success) {
                     app.loading = false;
                     app.successMsg = data.data.message + '...Se incarca';
-                    app.usernamePermission = data.data.user.username;
-                    app.permission = data.data.user.permission;
-                    console.log(app.usernamePermission)
-                    console.log(app.permission)
+                    app.usernamePermission = data.data.username;
+                    app.permission = data.data.permission;
+                    console.log(app.usernamePermission + ' ' + '-' + 'Username')
+                    console.log(app.permission + ' ' + '-' + 'Permission')
 
                     $timeout(function () {
-                        if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel' && app.permission !== 'logistic') {
+                        if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel') {
                             location.reload();
                             $location.path('/registruService/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.usernamePermission === 'Logistic' || app.permission === 'logistic') {
+                        else if (app.usernamePermission === 'Logistic' && app.permission === 'logistic') {
                             location.reload();
                             $location.path('/registruLogistic_service/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.username === 'Cristi Ghiburcea' && app.permission !== 'logistic') {
+                        else if (app.username === 'Cristi Ghiburcea') {
                             location.reload();
                             $location.path('/registruIte/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.username === 'Chiritoiu Iuliana' || app.username === 'Adrian Ionescu' && app.permission !== 'logistic') {
+                        else if (app.username === 'Chiritoiu Iuliana' || app.username === 'Adrian Ionescu') {
                             location.reload();
                             $location.path('/registruOlive/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-                        else if (app.username === 'Madalin Ion' || app.username === 'muscallu' && app.permission !== 'logistic') {
+                        else if (app.username === 'Madalin Ion' || app.username === 'muscallu') {
                             location.reload();
                             $location.path('/registruService/');
                             app.loginData = {};
                             app.successMsg = '';
 
                         }
-
                         else {
                             location.reload();
                             $location.path('/profil/' + app.username);

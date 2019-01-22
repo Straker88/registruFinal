@@ -16,6 +16,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
                 controllerAs: 'register',
+                permission: ['admin']
 
             })
 
@@ -43,6 +44,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true,
                 permission: ['admin', 'moderator', 'user']
             })
+
             .when('/registruRecarcasariCabinet/:username', {
                 templateUrl: 'app/views/pages/management/registru_recarcasari_cabinet.html',
                 controller: 'registruRecarcasariCabinetCtrl',
@@ -73,15 +75,14 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controllerAs: 'management',
                 authenticated: true,
                 permission: ['admin']
-
             })
+
             .when('/edit/:id', {
                 templateUrl: 'app/views/pages/management/edit.html',
                 controller: 'editCtrl',
                 controllerAs: 'edit',
                 authenticated: true,
                 permission: ['admin', 'moderator', 'service', 'logistic']
-
             })
 
             .when('/registru', {
@@ -122,7 +123,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true,
                 permission: ['admin', 'moderator', 'asamblare']
             })
-
 
             .when('/registruLogistic_service', {
                 templateUrl: 'app/views/pages/management/registruLogistic_service.html',
@@ -183,6 +183,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controllerAs: 'editOliva',
                 authenticated: true,
             })
+
             .when('/ite/:id', {
                 templateUrl: 'app/views/pages/management/ite.html',
                 controller: 'editIteCtrl',
@@ -190,12 +191,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true,
             })
 
-
             .when('/profilPacient/:id', {
                 templateUrl: 'app/views/pages/management/profilPacient.html',
                 authenticated: true,
             })
-
 
             .when('/registerPac', {
                 templateUrl: 'app/views/pages/users/registerPacient.html',
@@ -203,16 +202,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controllerAs: 'registerPac',
                 authenticated: true,
                 permission: ['user']
-
-
-            })
-
-            .when('/search', {
-                templateUrl: 'app/views/pages/management/search.html',
-                controller: 'registruCtrl',
-                controllerAs: 'registru',
-                authenticated: true,
-                permission: ['admin', 'moderator']
             })
 
             .otherwise({ redirectTo: '/' });
@@ -227,7 +216,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
 
 app.run(['$rootScope', 'Auth', '$location', 'User', function ($rootScope, Auth, $location, User) {
 
-    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+    $rootScope.$on('$routeChangeStart', function (event, next) {
 
         if (next.$$route !== undefined) {
             if (next.$$route.authenticated === true) {

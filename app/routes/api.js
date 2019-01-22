@@ -10,6 +10,105 @@ var moment = require('moment-business-days');
 
 module.exports = function (router) {
 
+
+
+    // User Reg. Route
+    // -------------------------------------------------------------------------------------------------
+
+    router.post('/users', function (req, res) {
+        var user = new User();
+
+        user.username = req.body.username;
+        user.password = req.body.password;
+        user.name = req.body.name;
+        user.temporarytoken = jwt.sign({ username: user.username }, secret);
+
+        if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.name == null || req.body.name == '') {
+            res.json({ success: false, message: 'Campurile username si parola sunt obligatorii' });
+
+        } else {
+            user.save(function (err) {
+                if (err) {
+
+                    if (err.errors != null) {
+                        if (err.errors.name) {
+                            res.json({ success: false, message: err.errors.name.message });
+                        } else if (err.errors.username) {
+                            res.json({ success: false, message: err.errors.username.message });
+                        } if (err.errors.password) {
+                            res.json({ success: false, message: err.errors.password.message });
+                        } else {
+                            res.json({ success: false, message: err });
+                        }
+                    } else if (err) {
+                        if (err.code == 11000) {
+                            if (err.errmsg[61] == "u") {
+                                res.json({ success: false, message: 'Username deja exista' });
+                            }
+                            //  else if (err.errmsg[61] == "e") {
+                            //     res.json({ success: false, message: 'Adresa email deja exista' });
+                            // }
+                        } else {
+                            res.json({ succes: false, message: err });
+                        }
+                    }
+                } else {
+                    res.json({ success: true, message: 'Utilizator Adaugat!' });
+                }
+            });
+        }
+    });
+
+    // User Login Route ----------------------------------------------
+    router.post('/authenticate', function (req, res) {
+        User.findOne({ username: req.body.username }).select('username password permission').exec(function (err, user) {
+            if (err) {
+                throw err;
+            } else {
+                if (!user) {
+                    res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
+                } else if (user) {
+                    if (!req.body.password) {
+                        res.json({ success: false, message: 'Parola trebuie introdusa' });
+                    } else {
+                        var validPassword = user.comparePassword(req.body.password);
+                        if (!validPassword) {
+                            res.json({ success: false, message: 'Parola introdusa nu este corecta' });
+                        } else {
+                            var token = jwt.sign({ username: user.username, }, secret);
+                            res.json({ success: true, message: 'Utilizator autentificat', token: token, user: user });
+                        }
+                    }
+                }
+            }
+        });
+
+    });
+    router.use(function (req, res, next) {
+
+        var token = req.headers['x-access-token'];
+
+        if (token) {
+            jwt.verify(token, secret, function (err, decoded) {
+                if (err) {
+                    res.json({ success: false, message: 'Token invalid' });
+                } else {
+                    req.decoded = decoded;
+
+                    next();
+                }
+            });
+        } else {
+            res.json({ success: false, message: 'No token provided' });
+        }
+
+    });
+
+
+    router.post('/me', function (req, res) {
+        res.send(req.decoded);
+    });
+
     // Pacient Reg. Route 
     // -------------------------------------------------------------------------------------------------
 
@@ -597,104 +696,6 @@ module.exports = function (router) {
             }
         });
 
-    });
-
-
-    // User Reg. Route
-    // -------------------------------------------------------------------------------------------------
-
-    router.post('/users', function (req, res) {
-        var user = new User();
-
-        user.username = req.body.username;
-        user.password = req.body.password;
-        user.name = req.body.name;
-        user.temporarytoken = jwt.sign({ username: user.username }, secret);
-
-        if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.name == null || req.body.name == '') {
-            res.json({ success: false, message: 'Campurile username si parola sunt obligatorii' });
-
-        } else {
-            user.save(function (err) {
-                if (err) {
-
-                    if (err.errors != null) {
-                        if (err.errors.name) {
-                            res.json({ success: false, message: err.errors.name.message });
-                        } else if (err.errors.username) {
-                            res.json({ success: false, message: err.errors.username.message });
-                        } if (err.errors.password) {
-                            res.json({ success: false, message: err.errors.password.message });
-                        } else {
-                            res.json({ success: false, message: err });
-                        }
-                    } else if (err) {
-                        if (err.code == 11000) {
-                            if (err.errmsg[61] == "u") {
-                                res.json({ success: false, message: 'Username deja exista' });
-                            }
-                            //  else if (err.errmsg[61] == "e") {
-                            //     res.json({ success: false, message: 'Adresa email deja exista' });
-                            // }
-                        } else {
-                            res.json({ succes: false, message: err });
-                        }
-                    }
-                } else {
-                    res.json({ success: true, message: 'Utilizator Adaugat!' });
-                }
-            });
-        }
-    });
-
-    // User Login Route ----------------------------------------------
-    router.post('/authenticate', function (req, res) {
-        User.findOne({ username: req.body.username }).select('username password permission').exec(function (err, user) {
-            if (err) {
-                throw err;
-            } else {
-                if (!user) {
-                    res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
-                } else if (user) {
-                    if (!req.body.password) {
-                        res.json({ success: false, message: 'Parola trebuie introdusa' });
-                    } else {
-                        var validPassword = user.comparePassword(req.body.password);
-                        if (!validPassword) {
-                            res.json({ success: false, message: 'Parola introdusa nu este corecta' });
-                        } else {
-                            var token = jwt.sign({ username: user.username, }, secret);
-                            res.json({ success: true, message: 'Utilizator autentificat', token: token, user: user });
-                        }
-                    }
-                }
-            }
-        });
-
-    });
-    router.use(function (req, res, next) {
-
-        var token = req.headers['x-access-token'];
-
-        if (token) {
-            jwt.verify(token, secret, function (err, decoded) {
-                if (err) {
-                    res.json({ success: false, message: 'Token invalid' });
-                } else {
-                    req.decoded = decoded;
-
-                    next();
-                }
-            });
-        } else {
-            res.json({ success: false, message: 'No token provided' });
-        }
-
-    });
-
-
-    router.post('/me', function (req, res) {
-        res.send(req.decoded);
     });
 
 

@@ -649,7 +649,7 @@ module.exports = function (router) {
 
     // User Login Route ----------------------------------------------
     router.post('/authenticate', function (req, res) {
-        User.findOne({ username: req.body.username }).select('username password').exec(function (err, user) {
+        User.findOne({ username: req.body.username }).select('username password permission').exec(function (err, user) {
             if (err) {
                 throw err;
             } else {
@@ -664,7 +664,7 @@ module.exports = function (router) {
                             res.json({ success: false, message: 'Parola introdusa nu este corecta' });
                         } else {
                             var token = jwt.sign({ username: user.username, }, secret);
-                            res.json({ success: true, message: 'Utilizator autentificat', token: token });
+                            res.json({ success: true, message: 'Utilizator autentificat', token: token, user: user });
                         }
                     }
                 }
@@ -674,7 +674,7 @@ module.exports = function (router) {
     });
     router.use(function (req, res, next) {
 
-        var token = req.body.token || req.body.query || req.headers['x-access-token'];
+        var token = req.headers['x-access-token'];
 
         if (token) {
             jwt.verify(token, secret, function (err, decoded) {
@@ -740,7 +740,7 @@ module.exports = function (router) {
             if (!user) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
-                res.json({ success: true, permission: user.permission });
+                res.json({ success: true, permission: user.permission, usernamePermission: user.username });
             }
 
         });

@@ -1,6 +1,7 @@
 var token = window.localStorage.getItem('token');
 var url = window.location.pathname;
 var user = url.substr(url.lastIndexOf('/') + 1);
+console.log(token + ' ' + 'token profil cab pacienti')
 
 $(document).ready(function () {
     var oTable = $('#tabel').dataTable({

@@ -18,7 +18,6 @@ angular.module('mainController', ['authServices', 'userServices'])
                 app.checkingSession = true;
                 var interval = $interval(function () {
                     var token = $window.localStorage.getItem('token');
-                    console.log(token)
                     if (token === null) {
                         $interval.cancel(interval);
                     } else {

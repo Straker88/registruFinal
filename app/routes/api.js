@@ -7,6 +7,7 @@ var Ite = require('../models/ite');
 var jwt = require('jsonwebtoken');
 var secret = 'clarfontehnic';
 var moment = require('moment');
+var passport = require('passport');
 
 module.exports = function (router) {
 
@@ -57,56 +58,28 @@ module.exports = function (router) {
     });
 
     // User Login Route ----------------------------------------------
-    router.post('/authenticate', function (req, res) {
-        User.findOne({ username: req.body.username }).select('username password permission').exec(function (err, user) {
-            if (err) {
-                throw err;
-            } else {
-                if (!user) {
-                    res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
-                } else if (user) {
-                    if (!req.body.password) {
-                        res.json({ success: false, message: 'Parola trebuie introdusa' });
-                    } else {
-                        var validPassword = user.comparePassword(req.body.password);
-                        if (!validPassword) {
-                            res.json({ success: false, message: 'Parola introdusa nu este corecta' });
-                        } else {
-                            var token = jwt.sign({ username: user.username }, secret);
-                            res.json({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
-                        }
-                    }
-                }
+
+
+    router.post('/authenticate', function (req, res, next) {
+        passport.authenticate('local', function (err, user, info) {
+            if (err) { return next(err); }
+            if (!user) {
+                return res.redirect('/login');
             }
-        });
-
-    });
-    router.use(function (req, res, next) {
-
-        var token = req.headers['x-access-token'];
-
-        if (token) {
-            jwt.verify(token, secret, function (err, decoded) {
-                if (err) {
-                    res.json({ success: false, message: 'Token invalid' });
-                } else {
-                    req.decoded = decoded;
-                    next();
-                }
+            req.logIn(user, function (err) {
+                if (err) { return next(err); }
+                res.json({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
             });
-        } else {
-            res.json({ success: false, message: 'No token provided' });
-        }
-
+        })
+            (req, res, next);
     });
-
 
     router.post('/me', function (req, res) {
-        res.send(req.decoded);
+        res.send(req.user);
     });
 
     router.get('/permission', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, user) {
+        User.findOne({ username: req.user.username }, function (err, user) {
             if (err) throw err;
             if (!user) {
                 res.json({ success: false, message: 'No user was found' });
@@ -116,6 +89,7 @@ module.exports = function (router) {
 
         });
     });
+
 
     // Pacient Reg. Route 
     // -------------------------------------------------------------------------------------------------
@@ -752,7 +726,7 @@ module.exports = function (router) {
     router.get('/manangement', function (req, res) {
         User.find({}, function (err, users) {
             if (err) throw err;
-            User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+            User.findOne({ username: req.user.username }, function (err, mainUser) {
                 if (err) throw err;
                 if (!mainUser) {
                     res.json({ success: false, message: 'No user found' });
@@ -772,7 +746,7 @@ module.exports = function (router) {
     });
 
     router.get('/profilCabinet/:username', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -792,7 +766,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruServiceCabinet/:username', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -812,7 +786,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruRecarcasariCabinet/:username', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -831,7 +805,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruOliveCabinet/:username', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -850,7 +824,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruIteCabinet/:username', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -870,7 +844,7 @@ module.exports = function (router) {
 
 
     router.get('/registruPiese', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'service') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -890,7 +864,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruLogistic_service', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'logistic') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -911,7 +885,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruLogistic_recarcasari', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'logistic') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -930,7 +904,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruLogistic_olive', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'logistic') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -950,7 +924,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruLogistic_ite', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission !== 'logistic') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -972,7 +946,7 @@ module.exports = function (router) {
 
     router.get('/profilPacient/:id', function (req, res) {
         var pacID = req.params.id;
-        var username = req.decoded.username;
+        var username = req.user.username;
 
         Pacient.findByIdAndUpdate({ _id: pacID }).select('_id nume data_nastere').exec(function (err, pacient) {
             if (err) throw err;
@@ -1018,7 +992,7 @@ module.exports = function (router) {
 
 
     router.get('/registruService', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission === 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -1037,7 +1011,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruRecarcasari', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission === 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -1057,7 +1031,7 @@ module.exports = function (router) {
 
 
     router.get('/registruOlive', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission === 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -1076,7 +1050,7 @@ module.exports = function (router) {
     });
 
     router.get('/registruIte', function (req, res) {
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser || mainUser.permission === 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
@@ -1172,7 +1146,7 @@ module.exports = function (router) {
         if (req.body.telefon) var Pacient_Telefon = req.body.telefon;
         if (req.body.adresa) var Pacient_Adresa = req.body.adresa;
 
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
 
             if (err) throw err;
             if (Pacient_Adresa) {
@@ -1221,7 +1195,7 @@ module.exports = function (router) {
 
     router.put('/editService', function (req, res) {
         var editService = req.body._id;
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
 
             //      Cabinet 
@@ -1750,7 +1724,7 @@ module.exports = function (router) {
 
     router.put('/editRecarcasare', function (req, res) {
         var editRecarcasare = req.body._id;
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
 
             //      Cabinet 
@@ -2301,7 +2275,7 @@ module.exports = function (router) {
 
     router.put('/editOliva', function (req, res) {
         var editOliva = req.body._id;
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
 
             //      Cabinet 
@@ -2650,7 +2624,7 @@ module.exports = function (router) {
 
     router.put('/editIte', function (req, res) {
         var editIte = req.body._id;
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
 
             //      Cabinet 
@@ -2997,7 +2971,7 @@ module.exports = function (router) {
     //      User Delete ----------------------------------------------
     router.delete('/management/:username', function (req, res) {
         var deletedUser = req.params.username;
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser) {
                 res.json({ success: false, message: 'No user was found' });
@@ -3018,7 +2992,7 @@ module.exports = function (router) {
     //      Get User for Update ----------------------------------------------
     router.get('/edit/:id', function (req, res) {
         var editUser = req.params.id;
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser) {
                 res.json({ success: false, message: 'No user found' });
@@ -3047,7 +3021,7 @@ module.exports = function (router) {
         // if (req.body.email) var newEmail = req.body.email;
         if (req.body.permission) var newPermission = req.body.permission;
 
-        User.findOne({ username: req.decoded.username }, function (err, mainUser) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser) {
                 res.json({ success: false, message: 'No user found' });

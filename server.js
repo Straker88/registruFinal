@@ -6,7 +6,15 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var appRoutes = require('./app/routes/api')(router);
 var path = require('path');
+var passport = require('passport');
+var social = require('./app/passport/passport')(app, passport);
 
+app.use(function (req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+	next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +35,3 @@ app.get('*', function (req, res) {
 app.listen(port, function () {
 	console.log('Running the server on port ' + port);
 });
-
-
-

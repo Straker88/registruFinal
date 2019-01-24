@@ -85,7 +85,7 @@
 
     <div ng-show="editPacient.phase1">
         <div>
-            <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
                 Service Pacient
             </h1>
 
@@ -172,7 +172,7 @@
     <div ng-show="editPacient.phase2">
 
         <div>
-            <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
                 Recarcasari Pacient
             </h1>
 
@@ -258,7 +258,7 @@
 
     <div ng-show="editPacient.phase3">
         <div>
-            <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
                 Olive Pacient
             </h1>
 
@@ -350,7 +350,7 @@
     <div ng-show="editPacient.phase4">
 
         <div>
-            <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;margin-bottom: 30px;">Registru
                 ITE Pacient
             </h1>
 
@@ -440,7 +440,7 @@
 
     <div ng-show="editPacient.phase5">
         <div style="padding-bottom:100px;">
-            <h1 class="" style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;">Detalii
+            <h1 style="clear:both;color:#337ab7;border-bottom: 1px solid #cac3c373;text-align: center;">Detalii
                 Pacient
             </h1>
 
@@ -523,7 +523,7 @@
             nr. 23594
         </span>
 
-        <h3 class="" style="clear:both;color:#337ab7;">I. Receptie
+        <h3 style="clear:both;color:#337ab7;">I. Receptie
             Service - Clarfon {{main.username}}
         </h3>
 
@@ -532,12 +532,6 @@
             <div class="col-sm-12">
                 <form ng-controller="regServiceCtrl as registerService" name="regServForm" ng-submit="registerService.regService(regData, regServForm.$valid);">
 
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerService.errorMsg">
-                        <div class="alertRed alert-danger">{{ registerService.errorMsg }}</div>
-                    </div>
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerService.successMsg">
-                        <div class="alertGreen alert-success">{{ registerService.successMsg }}</div>
-                    </div>
 
                     <div style="float:left;max-width: 34%;">
                         <div style="display: table;max-width: 46%;float:left;text-align: center;" class="regServForm">
@@ -762,6 +756,12 @@
                         </div>
                     </div>
                     <hr class="visible-print-block">
+                    <div class="row show-hide-message no-print" ng-show="registerService.errorMsg">
+                        <div id="regPacAlert" class="alert-danger">{{ registerService.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerService.successMsg">
+                        <div id="regPacAlert" class="alert-success">{{ registerService.successMsg }}</div>
+                    </div>
 
                     <button style="float: right;clear: both;margin-bottom: 90px;" class="btn btn-info
                       btn-sm no-print"
@@ -790,7 +790,7 @@
             nr. 23594
         </span>
 
-        <h3 class="" style="clear:both;color:#337ab7;">I. Receptie
+        <h3 style="clear:both;color:#337ab7;">I. Receptie
             Recarcasare - Clarfon {{main.username}}
         </h3>
 
@@ -798,13 +798,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <form ng-controller="regRecarcasareCtrl as registerRecarcasare" name="regServForm" ng-submit="registerRecarcasare.regRecarcasare(regData, regServForm.$valid);">
-
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerRecarcasare.errorMsg">
-                        <div class="alertRed alert-danger">{{ registerRecarcasare.errorMsg }}</div>
-                    </div>
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerRecarcasare.successMsg">
-                        <div class="alertGreen alert-success">{{ registerRecarcasare.successMsg }}</div>
-                    </div>
 
                     <div style="float:left;max-width: 34%;">
                         <div style="display: table;max-width: 46%;float:left;text-align: center;" class="regServForm">
@@ -1022,6 +1015,13 @@
 
                     <hr class="visible-print-block">
 
+                    <div class="row show-hide-message no-print" ng-show="registerRecarcasare.errorMsg">
+                        <div id="regPacAlert" class="alert-danger">{{ registerRecarcasare.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerRecarcasare.successMsg">
+                        <div id="regPacAlert" class="alert-success">{{ registerRecarcasare.successMsg }}</div>
+                    </div>
+
                     <button style="float: right;clear: both;margin-bottom: 90px;" class="btn btn-info
                       btn-sm no-print"
                         ng-disabled="registerRecarcasare.disabled" ng-show="registerRecarcasare.adauga" type="submit">Adauga
@@ -1060,47 +1060,39 @@
                 <form ng-controller="regOlivaCtrl as registerOliva" name="regOlivaForm" ng-submit="registerOliva.regOliva(regData, regOlivaForm.$valid);">
 
 
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerOliva.errorMsg">
-                        <div class="alertRed alert-danger">{{ registerOliva.errorMsg }}</div>
-                    </div>
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerOliva.successMsg">
-                        <div class="alertGreen alert-success">{{ registerOliva.successMsg }}</div>
-                    </div>
-
                     <div class="row visible-print-block" style="margin-bottom:40px;">
                         <div class="col-sm-12">
 
                             <div style="width:35%;margin-right: 10px;display: table;
                         float: left;
-                        clear: left;"
-                                class="">
+                        clear: left;">
                                 <label for="Nume">Nume Pacient: </label>
                                 <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="Pacient_Nume"
                                     autocomplete="off">
                             </div>
 
-                            <div ng-controller="regOlivaCtrl" style="width:35%;float: left;margin-right:11px;" class="">
+                            <div ng-controller="regOlivaCtrl" style="width:35%;float: left;margin-right:11px;">
                                 <label for="Telefon">Telefon: </label>
                                 <input readonly type="text" class="form-control" name="telefon" placeholder="-"
                                     ng-model="Pacient_Telefon" autocomplete="off">
                             </div>
-                            <div ng-controller="regOlivaCtrl" style="width:6%;float: left;margin-right: 12px;" class="">
+                            <div ng-controller="regOlivaCtrl" style="width:6%;float: left;margin-right: 12px;">
                                 <label for="Varsta">Varsta: </label>
                                 <input readonly type="text" class="form-control" maxlength="3" name="varsta"
                                     placeholder="-" ng-model="Pacient_Varsta" autocomplete="off">
                             </div>
-                            <div style="width:5%;float: left;margin-right: 12px;text-align: center;" class="">
+                            <div style="width:5%;float: left;margin-right: 12px;text-align: center;">
                                 <label for="Sex">Sex: </label>
                                 <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
                                     autocomplete="off">
                             </div>
-                            <div style="width:13%;float: left;text-align: center;" class="">
+                            <div style="width:13%;float: left;text-align: center;">
                                 <label for="Nr. Comanda">Nr. Comanda: </label>
                                 <input readonly type="text" style="text-align: center;" class="form-control" name="comanda_oliva"
                                     placeholder="-" ng-model="comanda_oliva" autocomplete="off">
                             </div>
 
-                            <div ng-controller="regOlivaCtrl" style="width:100%; margin-top: 10px;float: left;" class="">
+                            <div ng-controller="regOlivaCtrl" style="width:100%; margin-top: 10px;float: left;">
                                 <label for="Adresa">Adresa: </label>
                                 <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
                                     autocomplete="off">
@@ -1273,7 +1265,7 @@
                             <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="data_inregistrare"
                                 autocomplete="off">
                         </div>
-                        <div style="width:13%;float: right;text-align: center;" class="">
+                        <div style="width:13%;float: right;text-align: center;">
                             <label style="width: 50%; margin: 0 auto; margin-top: 5px;" for="Serie">Serie Oliva(e):
                             </label>
                             <input readonly type="text" style="text-align: center;" class="form-control" name="serie_oliva"
@@ -1334,6 +1326,12 @@
                                 pacient.</p>
                         </div>
                     </div>
+                    <div class="row show-hide-message no-print" ng-show="registerOliva.errorMsg">
+                        <div id="regPacAlert" class="alert-danger">{{ registerOliva.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerOliva.successMsg">
+                        <div id="regPacAlert" class="alert-success">{{ registerOliva.successMsg }}</div>
+                    </div>
 
                     <button style="float: right;clear:both;margin-bottom: 90px;" ng-show="registerOliva.adauga"
                         ng-disabled="registerOliva.disabled" class="btn btn-info btn-sm no-print" type="submit">Adauga
@@ -1373,48 +1371,39 @@
                 <form ng-controller="regIteCtrl as registerIte" name="regIteForm" ng-submit="registerIte.regIte(regData, regIteForm.$valid);">
 
 
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerIte.errorMsg">
-                        <div class="alertRed alert-danger">{{ registerIte.errorMsg }}</div>
-                    </div>
-                    <div id="regPacAlert" class="row show-hide-message no-print" ng-show="registerIte.successMsg">
-                        <div class="alertGreen alert-success">{{ registerIte.successMsg }}</div>
-                    </div>
-
                     <div class="row visible-print-block" style="margin-bottom:40px;">
                         <div class="col-sm-12">
 
                             <div style="width:35%;margin-right: 10px;display: table;
                             float: left;
-                            clear: left;"
-                                class="">
+                            clear: left;">
                                 <label for="Nume">Nume Pacient: </label>
                                 <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="Pacient_Nume"
                                     autocomplete="off">
                             </div>
 
-                            <div ng-controller="regIteCtrl" style="width:35%;float: left;margin-right:11px;" class="">
+                            <div ng-controller="regIteCtrl" style="width:35%;float: left;margin-right:11px;">
                                 <label for="Telefon">Telefon: </label>
                                 <input readonly type="text" class="form-control" name="telefon" placeholder="-"
                                     ng-model="Pacient_Telefon" autocomplete="off">
                             </div>
-                            <div ng-controller="regIteCtrl" style="width:6%;float: left;margin-right: 12px;" class="">
+                            <div ng-controller="regIteCtrl" style="width:6%;float: left;margin-right: 12px;">
                                 <label for="Varsta">Varsta: </label>
                                 <input readonly type="text" class="form-control" maxlength="3" name="varsta"
                                     placeholder="-" ng-model="Pacient_Varsta" autocomplete="off">
                             </div>
-                            <div style="width:5%;float: left;margin-right: 12px;text-align: center; " class="">
+                            <div style="width:5%;float: left;margin-right: 12px;text-align: center; ">
                                 <label for="Sex">Sex: </label>
                                 <input readonly type="text" class="form-control" name="sex" placeholder="-" ng-model="Pacient_Sex"
                                     autocomplete="off">
                             </div>
-                            <div style="width:13%;float: left;text-align: center; " class="">
+                            <div style="width:13%;float: left;text-align: center; ">
                                 <label for="Nr. Comanda">Nr. Comanda: </label>
                                 <input readonly type="text" style="text-align: center;" class="form-control" name="comanda_ite"
                                     placeholder="-" ng-model="comanda_ite" autocomplete="off">
                             </div>
 
-                            <div ng-controller="regIteCtrl" style="width:100%;margin-top:10px; margin-bottom: 10px;float: left;"
-                                class="">
+                            <div ng-controller="regIteCtrl" style="width:100%;margin-top:10px; margin-bottom: 10px;float: left;">
                                 <label for="Adresa">Adresa: </label>
                                 <input readonly type="text" class="form-control" name="adresa" placeholder="-" ng-model="Pacient_Adresa"
                                     autocomplete="off">
@@ -1609,7 +1598,7 @@
                             <input readonly type="text" class="form-control" name="nume" placeholder="-" ng-model="data_inregistrare"
                                 autocomplete="off">
                         </div>
-                        <div style="width:13%;float: right;text-align: center;" class="">
+                        <div style="width:13%;float: right;text-align: center;">
                             <label style="width: 50%; margin: 0 auto; margin-top: 5px;" for="Serie">Serie ITE: </label>
                             <input readonly type="text" style="text-align: center;" class="form-control" name="serie_ite"
                                 placeholder="-" ng-model="serie_ite" autocomplete="off">
@@ -1667,6 +1656,12 @@
                                 catre pacient.
                             </p>
                         </div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerIte.errorMsg">
+                        <div id="regPacAlert" class=" alert-danger">{{ registerIte.errorMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message no-print" ng-show="registerIte.successMsg">
+                        <div id="regPacAlert" class=" alert-success">{{ registerIte.successMsg }}</div>
                     </div>
 
                     <button style="float: right;clear:both;margin-bottom: 90px;" ng-show="registerIte.adauga"

@@ -1,6 +1,6 @@
 angular.module('mainController', ['authServices', 'userServices'])
 
-    .controller('mainCtrl', function (Auth, $timeout, $location, $rootScope, $route, User, AuthToken) {
+    .controller('mainCtrl', function ($http, Auth, $timeout, $location, $rootScope, $window, $interval, $route, User, AuthToken) {
         var app = this;
 
         app.loadme = false;
@@ -13,6 +13,32 @@ angular.module('mainController', ['authServices', 'userServices'])
             }, 1000)
 
         };
+        app.checkSession = function () {
+            if (Auth.isLoggedIn()) {
+                app.checkingSession = true;
+                var interval = $interval(function () {
+                    var token = $window.localStorage.getItem('token');
+                    console.log(token)
+                    if (token === null) {
+                        $interval.cancel(interval);
+                    } else {
+                        self.parseJwt = function (token) {
+                            var base64Url = token.split('.')[1];
+                            var base64 = base64Url.replace('-', '+').replace('_', '/');
+                            return JSON.parse($window.atob(base64));
+                        };
+                        var expireTime = self.parseJwt(token);
+                        var timeStamp = Math.floor(Date.now() / 1000);
+                        var timeCheck = expireTime.exp - timeStamp;
+                        if (timeCheck <= 1800) {
+                            $interval.cancel(interval);
+                        }
+                    }
+                }, 30000);
+            }
+        };
+
+        app.checkSession();
 
         app.renewSession = function () {
             app.choiceMade = true;
@@ -25,10 +51,11 @@ angular.module('mainController', ['authServices', 'userServices'])
             });
         };
 
+
         $rootScope.$on('$routeChangeStart', function () {
+            if (!app.checkingSession) app.checkSession();
 
             if (Auth.isLoggedIn()) {
-                app.isLoggedIn = true;
                 Auth.getUser().then(function (data) {
 
                     if (data.data.username === undefined) {
@@ -36,9 +63,8 @@ angular.module('mainController', ['authServices', 'userServices'])
                         Auth.logout();
                         $location.path('/');
                     } else {
-                        app.isLoggedIn = true;
                         app.username = data.data.username;
-
+                        app.isLoggedIn = true;
                         User.getPermission().then(function (data) {
                             if (data.data.permission === 'user' && data.data.usernamePermission !== 'Logistic' && data.data.permission !== 'logistic') {
                                 app.user = true;
@@ -75,6 +101,8 @@ angular.module('mainController', ['authServices', 'userServices'])
             }
 
         });
+
+
 
         this.doLogin = function (loginData) {
             app.loading = true;

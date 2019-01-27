@@ -1,5 +1,4 @@
 //--------------------- Registru Profil Service
-var token = window.localStorage.getItem('token');
 var user = window.localStorage.getItem('user');
 
 $(document).ready(function () {
@@ -11,9 +10,6 @@ $(document).ready(function () {
             "contentType": "application/json; charset=utf-8",
             "type": "GET",
             "dataSrc": "service",
-            headers: {
-                'x-access-token': token,
-            },
         },
         "stateSave": false,
         "deferRender": true,

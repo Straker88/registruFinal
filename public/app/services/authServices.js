@@ -53,18 +53,18 @@ angular.module('authServices', [])
         return authTokenFactory;
     })
 
-    .factory('AuthInterceptors', function (AuthToken) {
-        var authInterceptorsFactory = {};
+    // .factory('AuthInterceptors', function (AuthToken) {
+    //     var authInterceptorsFactory = {};
 
-        authInterceptorsFactory.request = function (config) {
+    //     authInterceptorsFactory.request = function (config) {
 
-            var token = AuthToken.getToken();
+    //         var token = AuthToken.getToken();
 
-            if (token) config.headers['x-access-token'] = token;
+    //         if (token) config.headers['x-access-token'] = token;
 
-            return config;
-        };
+    //         return config;
+    //     };
 
-        return authInterceptorsFactory;
+    //     return authInterceptorsFactory;
 
-    });
+    // });

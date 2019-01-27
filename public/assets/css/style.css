@@ -60,10 +60,6 @@ select::-ms-expand {
   display: none;
 }
 
-.page-header {
-  margin: 5px 0 20px;
-}
-
 }
 @media print {
   html, body {

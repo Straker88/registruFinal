@@ -422,6 +422,10 @@
         <input maxlength="40" disabled class="form-control" type="text" name="executant_oliva" ng-model="newExecutant_Oliva"
             placeholder="-" required autocomplete="off">
 
+        <div class="row show-hide-message" ng-show="editOliva.successMsgExecutant_Oliva">
+            <div class="alert alert-success">{{ editOliva.successMsgExecutant_Oliva }}</div>
+        </div>
+
         <div class="row show-hide-message" ng-show="editOliva.errorMsgExecutant_Oliva">
             <div class="alert alert-danger">{{ editOliva.errorMsgExecutant_Oliva }}</div>
         </div>

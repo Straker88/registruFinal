@@ -1,13 +1,10 @@
-var token = window.localStorage.getItem('token');
+
 
 $(document).ready(function () {
     var oTable = $('#tabel').dataTable({
         "serverSide": false,
         "ajax": {
             "url": "api/registruIte/",
-            headers: {
-                'x-access-token': token
-            },
             "dataType": "json",
             "contentType": "application/json; charset=utf-8",
             "type": "GET",

@@ -166,14 +166,17 @@ angular.module('iteControllers', ['userServices'])
                     iteObject.executant_ite = $scope.exec;
                     Ite.editIte(iteObject).then(function (data) {
                         if (data.data.success) {
-                            app.successExecutant_Ite = data.data.message;
+                            app.successMsgExecutant_Ite = data.data.message;
+                            $timeout(function () {
+                                app.successMsgExecutant_Ite = false;
+                            }, 1500);
+
                         } else {
                             app.errorMsgExecutant_Ite = data.data.message;
+                            $timeout(function () {
+                                app.errorMsgExecutant_Ite = false;
+                            }, 2000);
                         }
-                        if (iteObject.executant_ite !== "-") {
-                            app.errorMsgExecutant_Ite = data.data.message;
-                        }
-
 
                     });
 

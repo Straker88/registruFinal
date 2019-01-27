@@ -165,15 +165,18 @@ angular.module('olivaControllers', ['userServices'])
                     olivaObject.executant_oliva = $scope.exec;
                     Oliva.editOliva(olivaObject).then(function (data) {
                         if (data.data.success) {
-                            app.successExecutant_Oliva = data.data.message;
+                            app.successMsgExecutant_Oliva = data.data.message;
+                            $timeout(function () {
+                                app.successMsgExecutant_Oliva = false;
+                            }, 1500);
+
                         } else {
                             app.errorMsgExecutant_Oliva = data.data.message;
-                        }
-                        if (olivaObject.executant_oliva !== "-") {
-                            app.errorMsgExecutant_Oliva = data.data.message;
-                        }
+                            $timeout(function () {
+                                app.errorMsgExecutant_Oliva = false;
+                            }, 2000);
 
-
+                        }
                     });
 
                 };

@@ -35,7 +35,6 @@ var UserSchema = new Schema({
     name: { type: String, required: true, validate: nameValidator },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, validate: passwordValidator, select: false },
-    // email: { type: String, required: true, lowercase: true, unique: true, validate: emailValidator },
     temporarytoken: { type: String, required: true },
     resettoken: { type: String, required: false },
     permission: { type: String, required: true, default: 'user' },
@@ -55,7 +54,7 @@ UserSchema.plugin(titlize, {
     paths: ['name']
 });
 
-UserSchema.methods.comparePassword = function (password) {
+UserSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 };
 

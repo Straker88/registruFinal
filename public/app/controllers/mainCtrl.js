@@ -13,46 +13,46 @@ angular.module('mainController', ['authServices', 'userServices'])
             }, 1000)
 
         };
-        app.checkSession = function () {
-            if (Auth.isLoggedIn()) {
-                app.checkingSession = true;
-                var interval = $interval(function () {
-                    var token = $window.localStorage.getItem('token');
-                    if (token === null) {
-                        $interval.cancel(interval);
-                    } else {
-                        self.parseJwt = function (token) {
-                            var base64Url = token.split('.')[1];
-                            var base64 = base64Url.replace('-', '+').replace('_', '/');
-                            return JSON.parse($window.atob(base64));
-                        };
-                        var expireTime = self.parseJwt(token);
-                        var timeStamp = Math.floor(Date.now() / 1000);
-                        var timeCheck = expireTime.exp - timeStamp;
-                        if (timeCheck <= 1800) {
-                            $interval.cancel(interval);
-                        }
-                    }
-                }, 30000);
-            }
-        };
+        // app.checkSession = function () {
+        //     if (Auth.isLoggedIn()) {
+        //         app.checkingSession = true;
+        //         var interval = $interval(function () {
+        //             var token = $window.localStorage.getItem('token');
+        //             if (token === null) {
+        //                 $interval.cancel(interval);
+        //             } else {
+        //                 self.parseJwt = function (token) {
+        //                     var base64Url = token.split('.')[1];
+        //                     var base64 = base64Url.replace('-', '+').replace('_', '/');
+        //                     return JSON.parse($window.atob(base64));
+        //                 };
+        //                 var expireTime = self.parseJwt(token);
+        //                 var timeStamp = Math.floor(Date.now() / 1000);
+        //                 var timeCheck = expireTime.exp - timeStamp;
+        //                 if (timeCheck <= 1800) {
+        //                     $interval.cancel(interval);
+        //                 }
+        //             }
+        //         }, 28800000);
+        //     }
+        // };
 
-        app.checkSession();
+        // app.checkSession();
 
-        app.renewSession = function () {
-            app.choiceMade = true;
-            User.renewSession(app.username).then(function (data) {
-                if (data.data.success) {
-                    AuthToken.setToken(data.data.token);
-                } else {
-                    app.modalBody = data.data.message;
-                }
-            });
-        };
+        // app.renewSession = function () {
+        //     app.choiceMade = true;
+        //     User.renewSession(app.username).then(function (data) {
+        //         if (data.data.success) {
+        //             AuthToken.setToken(data.data.token);
+        //         } else {
+        //             app.modalBody = data.data.message;
+        //         }
+        //     });
+        // };
 
 
         $rootScope.$on('$routeChangeStart', function () {
-            if (!app.checkingSession) app.checkSession();
+            // if (!app.checkingSession) app.checkSession();
 
             if (Auth.isLoggedIn()) {
                 Auth.getUser().then(function (data) {
@@ -90,19 +90,12 @@ angular.module('mainController', ['authServices', 'userServices'])
                         });
                     }
                 });
-
-
-
             } else {
                 app.isLoggedIn = false;
                 app.username = '';
                 app.loadme = false;
             }
-
         });
-
-
-
         this.doLogin = function (loginData) {
             app.loading = true;
             app.errorMsg = false;
@@ -167,12 +160,9 @@ angular.module('mainController', ['authServices', 'userServices'])
                 }
             });
         };
-
         app.logout = function () {
             exit();
         };
-
-
     });
 
 

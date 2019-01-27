@@ -428,6 +428,11 @@
         <input maxlength="40" disabled class="form-control" type="text" name="executant_ite" ng-model="newExecutant_Ite"
             placeholder="-" required autocomplete="off">
 
+
+        <div class="row show-hide-message" ng-show="editIte.successMsgExecutant_Ite">
+            <div class="alert alert-success">{{ editIte.successMsgExecutant_Ite }}</div>
+        </div>
+
         <div class="row show-hide-message" ng-show="editIte.errorMsgExecutant_Ite">
             <div class="alert alert-danger">{{ editIte.errorMsgExecutant_Ite }}</div>
         </div>

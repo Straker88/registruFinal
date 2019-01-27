@@ -19,7 +19,7 @@ angular.module('pacientControllers', ['userServices'])
                         $timeout(function () {
                             $location.path('/profilPacient/' + id_pac);
                             app.disabled = true;
-                        }, 2000)
+                        }, 1500)
 
                     }
                     else if (data.data.pacient_existent) {

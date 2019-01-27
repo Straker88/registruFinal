@@ -1,4 +1,3 @@
-var token = window.localStorage.getItem('token');
 var url = window.location.pathname;
 var user = url.substr(url.lastIndexOf('/') + 1);
 
@@ -7,10 +6,6 @@ $(document).ready(function () {
         "serverSide": false,
         "ajax": {
             "url": "api/registruServiceCabinet/" + user,
-            headers: {
-                'x-access-token': token
-
-            },
             "dataType": "json",
             "contentType": "application/json; charset=utf-8",
             "type": "GET",

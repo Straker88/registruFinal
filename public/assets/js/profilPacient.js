@@ -1,4 +1,3 @@
-var token = window.localStorage.getItem('token');
 var url = window.location.pathname;
 var id = url.substr(url.lastIndexOf('/') + 1);
 
@@ -13,12 +12,7 @@ function service_loader() {
         dataType: 'json',
         url: 'api/profilPacient/' + id,
         "dataSrc": "service",
-        headers: {
-            'x-access-token': token
-
-        },
         success: function (data) {
-
             var table = $('#tabel').DataTable();
             table.clear().draw();
             table.rows.add(data.service).draw();
@@ -115,16 +109,10 @@ function olive_loader() {
         dataType: 'json',
         url: 'api/profilPacient/' + id,
         "dataSrc": "oliva",
-        headers: {
-            'x-access-token': token
-
-        },
-
         success: function (data) {
             var table = $('#tabel_olive').DataTable();
             table.clear().draw();
             table.rows.add(data.oliva).draw();
-
         }
     });
 }
@@ -224,11 +212,6 @@ function ite_loader() {
         dataType: 'json',
         url: 'api/profilPacient/' + id,
         "dataSrc": "ite",
-        headers: {
-            'x-access-token': token
-
-        },
-
         success: function (data) {
             var table = $('#tabel_ite').DataTable();
             table.clear().draw();
@@ -243,10 +226,6 @@ var oTable = $('#tabel_ite').DataTable({
     "serverSide": false,
     "ajax": {
         "url": "api/profilPacient/" + id,
-        headers: {
-            'x-access-token': token
-
-        },
         "dataType": "json",
         "contentType": "application/json; charset=utf-8",
         "type": "GET",
@@ -345,11 +324,6 @@ function recarcasari_loader() {
         dataType: 'json',
         url: 'api/profilPacient/' + id,
         "dataSrc": "recarcasare",
-        headers: {
-            'x-access-token': token
-
-        },
-
         success: function (data) {
             var table = $('#tabel_recarcasari').DataTable();
             table.clear().draw();
@@ -363,10 +337,6 @@ var oTable = $('#tabel_recarcasari').DataTable({
     "serverSide": false,
     "ajax": {
         "url": "api/profilPacient/" + id,
-        headers: {
-            'x-access-token': token
-
-        },
         "dataType": "json",
         "contentType": "application/json; charset=utf-8",
         "type": "GET",

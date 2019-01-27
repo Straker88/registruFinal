@@ -1,19 +1,16 @@
 //--------------------- Registru Logistic
-var token = window.localStorage.getItem('token');
 
 
 $(document).ready(function () {
     var oTable = $('#tabel').dataTable({
         "ajax": {
             "url": "api/registruLogistic_recarcasari/",
-            headers: {
-                'x-access-token': token
-            },
             "dataType": "json",
             "contentType": "application/json; charset=utf-8",
             "type": "GET",
             "dataSrc": "recarcasare",
         },
+        serverside: false,
         "stateSave": false,
         "pageLength": 25,
         "searching": true,
@@ -167,29 +164,29 @@ $(document).ready(function () {
                 .draw();
         });
     });
-
-    var endYear = new Date(new Date().getFullYear(), 11, 31);
-
-    $('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
-        clearBtn: true,
-        todayHighlight: true,
-        toggleActive: true,
-        endDate: endYear,
-        language: 'ro',
-        format: "mm/yyyy",
-        startView: "months",
-        minViewMode: "months",
-        maxViewMode: "years",
-    });
-
-    $("#fromdate").datepicker({
-        minViewMode: 1,
-
-    }).on('changeDate', function (ev) {
-        $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
-    });
-
 });
+
+var endYear = new Date(new Date().getFullYear(), 11, 31);
+
+$('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
+    clearBtn: true,
+    todayHighlight: true,
+    toggleActive: true,
+    endDate: endYear,
+    language: 'ro',
+    format: "mm/yyyy",
+    startView: "months",
+    minViewMode: "months",
+    maxViewMode: "years",
+});
+
+$("#fromdate").datepicker({
+    minViewMode: 1,
+
+}).on('changeDate', function (ev) {
+    $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
+});
+
 
 
 //--------------------- Registru Logistic

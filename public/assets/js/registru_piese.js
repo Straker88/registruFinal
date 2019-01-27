@@ -1,6 +1,4 @@
 //--------------------- Registru Profil Service
-var token = window.localStorage.getItem('token');
-
 $(document).ready(function () {
     $('#tabel_piese').dataTable({
         "ajax": {
@@ -9,9 +7,6 @@ $(document).ready(function () {
             "contentType": "application/json; charset=utf-8",
             "type": "GET",
             "dataSrc": "service",
-            headers: {
-                'x-access-token': token,
-            },
         },
         "stateSave": false,
         "pageLength": 100,
@@ -48,29 +43,29 @@ $(document).ready(function () {
                 .draw();
         });
     });
-
-    var endYear = new Date(new Date().getFullYear(), 11, 31);
-
-    $('#pickyDate').datepicker({
-        clearBtn: true,
-        todayHighlight: true,
-        toggleActive: true,
-        endDate: endYear,
-        language: 'ro',
-        format: "mm/yyyy",
-        startView: "months",
-        minViewMode: "months",
-        maxViewMode: "years",
-    });
-
-    $("#fromdate").datepicker({
-        minViewMode: 1,
-
-    }).on('changeDate', function (ev) {
-        $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
-    });
-
 });
+
+var endYear = new Date(new Date().getFullYear(), 11, 31);
+
+$('#pickyDate').datepicker({
+    clearBtn: true,
+    todayHighlight: true,
+    toggleActive: true,
+    endDate: endYear,
+    language: 'ro',
+    format: "mm/yyyy",
+    startView: "months",
+    minViewMode: "months",
+    maxViewMode: "years",
+});
+
+$("#fromdate").datepicker({
+    minViewMode: 1,
+
+}).on('changeDate', function (ev) {
+    $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
+});
+
 
 
 //--------------------- Registru Profil Service

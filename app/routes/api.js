@@ -68,7 +68,21 @@ module.exports = function (router) {
             }
             req.logIn(user, function (err) {
                 if (err) { return next(err); }
-                res.json({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
+                if (!user) {
+                    res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
+                }
+                User.findOne({ username: req.user.username }).select('username password').exec(function (err, userLogged) {
+                    if (!userLogged) {
+                        res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
+                    }
+                    var validPassword = userLogged.validPassword(req.body.password);
+                    if (!validPassword) {
+                        res.json({ success: false, message: 'Parola introdusa nu este corecta' });
+                    }
+                    else {
+                        res.json({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
+                    }
+                });
             });
         })
             (req, res, next);
@@ -95,121 +109,119 @@ module.exports = function (router) {
     // -------------------------------------------------------------------------------------------------
 
     router.post('/pacienti', function (req, res) {
-        var token = req.body.token || req.body.query || req.headers['x-access-token'];
         Pacient.find({ cnp: req.body.cnp }).select('_id cabinet').exec(function (err, pacient_existent) {
             if (err) throw err;
             if (!pacient_existent) {
                 console.log("Eroare Pacient Existent")
             }
-            if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.json({ success: false, message: 'Token invalid' });
-                    } else {
+            else if (pacient_existent.length > 0) {
 
-                        if (pacient_existent.length > 0) {
-
-                            res.json({ message: 'Pacient deja inregistrat in cabinetul' + ' ' + pacient_existent[0].cabinet, pacient_existent: pacient_existent[0] });
-
-
-                        } else {
-
-                            var pacient = new Pacient();
-                            pacient.cabinet = decoded.username;
-                            pacient.nume = req.body.nume;
-                            pacient.telefon = req.body.telefon;
-                            pacient.data_inregistrare = new moment().format('DD/MM/YYYY');
-                            pacient.adresa = req.body.adresa;
-                            pacient.cnp = req.body.cnp;
-
-                            function getAge(dateString) {
-                                var today = new Date();
-                                var birthDate = new Date(dateString);
-                                var age = today.getFullYear() - birthDate.getFullYear();
-                                var m = today.getMonth() - birthDate.getMonth();
-                                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                                    age--;
-                                }
-                                return age;
-                            }
-
-                            if (pacient.cnp == null) {
-                                pacient.cnp = '';
-                            } else {
-
-                                if (pacient.cnp.toString()[0] == 1) {
-                                    pacient.sex = 'M';
-                                    var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                                    var n = x + '/' + y + '/' + z;
-                                    pacient.data_nastere = x + '/' + y + '/' + z
-                                    pacient.varsta = getAge(n);
-                                }
-
-                                else if (pacient.cnp.toString()[0] == 2) {
-                                    pacient.sex = 'F';
-                                    var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                                    var n = x + '/' + y + '/' + z;
-                                    pacient.data_nastere = x + '/' + y + '/' + z
-                                    pacient.varsta = getAge(n);
-                                }
-
-                                else if (pacient.cnp.toString()[0] == 5) {
-                                    pacient.sex = 'M';
-                                    var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                                    var n = x + '/' + y + '/' + z;
-                                    pacient.data_nastere = x + '/' + y + '/' + z
-                                    pacient.varsta = getAge(n);
-                                }
-
-                                else if (pacient.cnp.toString()[0] == 6) {
-                                    pacient.sex = 'F';
-                                    var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
-                                    var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
-                                    var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
-                                    var n = x + '/' + y + '/' + z;
-                                    pacient.data_nastere = x + '/' + y + '/' + z
-                                    pacient.varsta = getAge(n);
-                                }
-                            }
-                            if (req.body.nume == null || req.body.nume == '') {
-                                res.json({ success: false, message: 'Completeaza Numele' });
-                            }
-                            else if (req.body.telefon == null || req.body.telefon == '') {
-                                res.json({ success: false, message: 'Completeaza Telefon' });
-                            }
-                            else if (req.body.cnp == null || req.body.cnp == '') {
-                                res.json({ success: false, message: 'Completeaza CNP' });
-                            }
-                            else if (req.body.adresa == null || req.body.adresa == '') {
-                                res.json({ success: false, message: 'Completeaza Adresa' });
-                            }
-
-                            else {
-                                pacient.save(function (err) {
-
-                                    if (err) {
-                                        res.json({ succes: false, message: err });
-                                    } else {
-
-                                        res.json({ success: true, message: 'Pacient adaugat cu succes. Se redirectioneaza catre profilul pacientului...', pacient: pacient._id });
-                                    }
-
-                                });
-                            }
-
-                        }
-                    }
-                });
+                res.json({ message: 'Pacient deja inregistrat in cabinetul' + ' ' + pacient_existent[0].cabinet, pacient_existent: pacient_existent[0] });
             }
 
+            else {
+                var pacient = new Pacient();
+                pacient.cabinet = req.user.username;
+                pacient.nume = req.body.nume;
+                pacient.telefon = req.body.telefon;
+                pacient.data_inregistrare = new moment().format('DD/MM/YYYY');
+                pacient.adresa = req.body.adresa;
+                pacient.cnp = req.body.cnp;
 
+                function getAge(dateString) {
+                    var today = new Date();
+                    var birthDate = new Date(dateString);
+                    var age = today.getFullYear() - birthDate.getFullYear();
+                    var m = today.getMonth() - birthDate.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+                    return age;
+                }
+
+                if (pacient.cnp == null) {
+                    pacient.cnp = '';
+                } else {
+
+                    if (pacient.cnp.toString()[0] == 1) {
+                        pacient.sex = 'M';
+                        var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+
+                    else if (pacient.cnp.toString()[0] == 2) {
+                        pacient.sex = 'F';
+                        var x = 19 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+
+                    else if (pacient.cnp.toString()[0] == 5) {
+                        pacient.sex = 'M';
+                        var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+
+                    else if (pacient.cnp.toString()[0] == 6) {
+                        pacient.sex = 'F';
+                        var x = 20 + pacient.cnp.toString()[1] + pacient.cnp.toString()[2]
+                        var y = pacient.cnp.toString()[3] + pacient.cnp.toString()[4]
+                        var z = pacient.cnp.toString()[5] + pacient.cnp.toString()[6]
+                        var n = x + '/' + y + '/' + z;
+                        pacient.data_nastere = x + '/' + y + '/' + z
+                        pacient.varsta = getAge(n);
+                    }
+                }
+
+
+                if (req.body.nume == null || req.body.nume == '') {
+                    res.json({ success: false, message: 'Completeaza Numele' });
+                }
+                else if (req.body.telefon == null || req.body.telefon == '') {
+                    res.json({ success: false, message: 'Completeaza Telefon' });
+                }
+                else if (req.body.cnp == null || req.body.cnp == '') {
+                    res.json({ success: false, message: 'Completeaza CNP' });
+                }
+                else if (pacient.cnp.length < 13) {
+                    res.json({ success: false, message: 'CNP nu contine 13 caractere' });
+                }
+                else if (isNaN(pacient.varsta)) {
+                    res.json({ success: false, message: 'CNP Invalid' });
+                }
+                else if (req.body.adresa == null || req.body.adresa == '') {
+                    res.json({ success: false, message: 'Completeaza Adresa' });
+                }
+
+                else {
+                    pacient.save(function (err) {
+
+                        if (err) {
+                            res.json({ succes: false, message: err });
+                        } else {
+
+                            res.json({ success: true, message: 'Pacient adaugat cu succes. Se redirectioneaza catre profilul pacientului...', pacient: pacient._id });
+                        }
+
+                    });
+                }
+
+
+            }
         });
+
+
     });
 
 
@@ -219,238 +231,223 @@ module.exports = function (router) {
     router.post('/service', function (req, res) {
         Service.findOne({}, {}, { sort: { 'nr_comanda_service': -1 } }, function (err, comanda_service) {
 
-            var token = req.body.token || req.body.query || req.headers['x-access-token'];
             if (err) throw err;
-            if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.json({ success: false, message: 'Token invalid' });
-                    } else {
-                        var service = new Service();
-                        service.pacient_id = req.body.service_pacient_id;
-                        service.cabinet = decoded.username;
-                        service.nume = req.body.nume;
-                        service.telefon = req.body.telefon;
-                        service.service_inregistrat_pacient = req.body.service_inregistrat_pacient;
-                        service.denumire_aparat = req.body.denumire_aparat;
-                        service.serie_aparat = req.body.serie_aparat;
-                        service.defectiune_reclamata = req.body.defectiune_reclamata;
-                        service.constatare_cabinet = req.body.constatare_cabinet;
-                        service.completare_cabinet = '-';
-                        service.u_stanga = req.body.u_stanga;
-                        service.u_dreapta = req.body.u_dreapta;
-                        service.garantie = req.body.garantie;
-                        service.cutie = req.body.cutie;
-                        service.baterie = req.body.baterie;
-                        service.mulaj = req.body.mulaj;
-                        service.oliva = req.body.oliva;
-                        service.observatii_cabinet = req.body.observatii_cabinet;
-                        service.observatii_pacient = req.body.observatii_pacient;
-                        service.iesit_cabinet = '-';
-                        service.intrat_cabinet = '-';
-                        service.predat_pacient = '-';
-                        service.taxa_urgenta_cabinet = req.body.taxa_urgenta_cabinet;
+            else {
+                var service = new Service();
+                service.pacient_id = req.body.service_pacient_id;
+                service.cabinet = req.user.username;
+                service.nume = req.body.nume;
+                service.telefon = req.body.telefon;
+                service.service_inregistrat_pacient = req.body.service_inregistrat_pacient;
+                service.denumire_aparat = req.body.denumire_aparat;
+                service.serie_aparat = req.body.serie_aparat;
+                service.defectiune_reclamata = req.body.defectiune_reclamata;
+                service.constatare_cabinet = req.body.constatare_cabinet;
+                service.completare_cabinet = '-';
+                service.u_stanga = req.body.u_stanga;
+                service.u_dreapta = req.body.u_dreapta;
+                service.garantie = req.body.garantie;
+                service.cutie = req.body.cutie;
+                service.baterie = req.body.baterie;
+                service.mulaj = req.body.mulaj;
+                service.oliva = req.body.oliva;
+                service.observatii_cabinet = req.body.observatii_cabinet;
+                service.observatii_pacient = req.body.observatii_pacient;
+                service.iesit_cabinet = '-';
+                service.intrat_cabinet = '-';
+                service.predat_pacient = '-';
+                service.taxa_urgenta_cabinet = req.body.taxa_urgenta_cabinet;
 
 
-                        service.log_sosit = '-';
-                        service.log_plecat = '-';
-                        service.log_preluat = '-';
-                        service.log_trimis = '-';
+                service.log_sosit = '-';
+                service.log_plecat = '-';
+                service.log_preluat = '-';
+                service.log_trimis = '-';
 
 
-                        service.serv_sosit = '-';
-                        service.serv_plecat = '-';
-                        service.finalizat_reparatie = '-';
-                        service.executant_reparatie = '-';
-                        service.piese_inlocuite = '-';
-                        service.cod_componente = '-';
-                        service.garantie_serv = req.body.garantie_serv;
-                        service.observatii_service = req.body.observatii_service;
-                        service.observatii_service_intern = '-';
-                        service.constatare_service = '-';
-                        service.operatiuni_efectuate = '-';
-                        service.cost_reparatie = '-';
-                        service.observatii_service = '-';
-                        service.garantie_serv = '-';
+                service.serv_sosit = '-';
+                service.serv_plecat = '-';
+                service.finalizat_reparatie = '-';
+                service.executant_reparatie = '-';
+                service.piese_inlocuite = '-';
+                service.cod_componente = '-';
+                service.garantie_serv = req.body.garantie_serv;
+                service.observatii_service = req.body.observatii_service;
+                service.observatii_service_intern = '-';
+                service.constatare_service = '-';
+                service.operatiuni_efectuate = '-';
+                service.cost_reparatie = '-';
+                service.observatii_service = '-';
+                service.garantie_serv = '-';
 
-                        if (req.body.denumire_aparat == null || req.body.denumire_aparat == '') {
-                            res.json({ success: false, message: 'Completeaza Denumire Aparat' });
+                if (req.body.denumire_aparat == null || req.body.denumire_aparat == '') {
+                    res.json({ success: false, message: 'Completeaza Denumire Aparat' });
+                }
+
+                else if (req.body.serie_aparat == null || req.body.serie_aparat == '') {
+                    res.json({ success: false, message: 'Completeaza Serie Aparat' });
+                }
+
+                else if (req.body.defectiune_reclamata == null || req.body.defectiune_reclamata == '') {
+                    res.json({ success: false, message: 'Completeaza Defectiune Reclamata' });
+                }
+
+                else if (req.body.constatare_cabinet == null || req.body.constatare_cabinet == '') {
+                    res.json({ success: false, message: 'Completeaza Constatare Cabinet' });
+                }
+
+                else if (req.body.u_stanga == null || req.body.u_stanga == '') {
+                    res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
+                }
+
+                else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
+                    res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
+                }
+
+                else if (req.body.garantie == null || req.body.garantie == '') {
+                    res.json({ success: false, message: 'Alege optiune Garantie' });
+                }
+
+                else if (req.body.cutie == null || req.body.cutie == '') {
+                    res.json({ success: false, message: 'Alege optiune Cutie' });
+                }
+
+                else if (req.body.baterie == null || req.body.baterie == '') {
+                    res.json({ success: false, message: 'Alege optiune Baterie' });
+                }
+
+                else if (req.body.mulaj == null || req.body.mulaj == '') {
+                    res.json({ success: false, message: 'Alege optiune Mulaj' });
+                }
+
+                else if (req.body.oliva == null || req.body.oliva == '') {
+                    res.json({ success: false, message: 'Alege optiune Oliva' });
+                }
+
+                else {
+
+                    service.save(function (err) {
+                        if (err) {
+                            res.json({ succes: false, message: err });
+                        } else {
+                            res.json({ success: true, message: 'Service adaugat cu succes.', comanda_service: comanda_service.nr_comanda_service });
                         }
+                    });
 
-                        else if (req.body.serie_aparat == null || req.body.serie_aparat == '') {
-                            res.json({ success: false, message: 'Completeaza Serie Aparat' });
-                        }
-
-                        else if (req.body.defectiune_reclamata == null || req.body.defectiune_reclamata == '') {
-                            res.json({ success: false, message: 'Completeaza Defectiune Reclamata' });
-                        }
-
-                        else if (req.body.constatare_cabinet == null || req.body.constatare_cabinet == '') {
-                            res.json({ success: false, message: 'Completeaza Constatare Cabinet' });
-                        }
-
-                        else if (req.body.u_stanga == null || req.body.u_stanga == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
-                        }
-
-                        else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
-                        }
-
-                        else if (req.body.garantie == null || req.body.garantie == '') {
-                            res.json({ success: false, message: 'Alege optiune Garantie' });
-                        }
-
-                        else if (req.body.cutie == null || req.body.cutie == '') {
-                            res.json({ success: false, message: 'Alege optiune Cutie' });
-                        }
-
-                        else if (req.body.baterie == null || req.body.baterie == '') {
-                            res.json({ success: false, message: 'Alege optiune Baterie' });
-                        }
-
-                        else if (req.body.mulaj == null || req.body.mulaj == '') {
-                            res.json({ success: false, message: 'Alege optiune Mulaj' });
-                        }
-
-                        else if (req.body.oliva == null || req.body.oliva == '') {
-                            res.json({ success: false, message: 'Alege optiune Oliva' });
-                        }
-
-                        else {
-
-                            service.save(function (err) {
-                                if (err) {
-                                    res.json({ succes: false, message: err });
-                                } else {
-                                    res.json({ success: true, message: 'Service adaugat cu succes.', comanda_service: comanda_service.nr_comanda_service });
-                                }
-                            });
-
-                        }
-                    }
-
-                });
+                }
             }
-        });
 
+        });
     });
+
 
     // Recarcasare Reg. Route 
     // -------------------------------------------------------------------------------------------------
 
     router.post('/recarcasare', function (req, res) {
         Recarcasare.findOne({}, {}, { sort: { 'nr_comanda_recarcasare': -1 } }, function (err, comanda_recarcasare) {
-
-            var token = req.body.token || req.body.query || req.headers['x-access-token'];
             if (err) throw err;
-            if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.json({ success: false, message: 'Token invalid' });
-                    } else {
-                        var recarcasare = new Recarcasare();
-                        recarcasare.pacient_id = req.body.recarcasare_pacient_id;
-                        recarcasare.cabinet = decoded.username;
-                        recarcasare.nume = req.body.nume;
-                        recarcasare.telefon = req.body.telefon;
-                        recarcasare.recarcasare_inregistrat_pacient = req.body.recarcasare_inregistrat_pacient;
-                        recarcasare.denumire_aparat = req.body.denumire_aparat;
-                        recarcasare.serie_aparat = req.body.serie_aparat;
-                        recarcasare.defectiune_reclamata = req.body.defectiune_reclamata;
-                        recarcasare.constatare_cabinet = req.body.constatare_cabinet;
-                        recarcasare.completare_cabinet = '-';
-                        recarcasare.u_stanga = req.body.u_stanga;
-                        recarcasare.u_dreapta = req.body.u_dreapta;
-                        recarcasare.garantie = req.body.garantie;
-                        recarcasare.cutie = req.body.cutie;
-                        recarcasare.baterie = req.body.baterie;
-                        recarcasare.mulaj = req.body.mulaj;
-                        recarcasare.observatii_cabinet = req.body.observatii_cabinet;
-                        recarcasare.observatii_pacient = req.body.observatii_pacient;
-                        recarcasare.iesit_cabinet = '-';
-                        recarcasare.intrat_cabinet = '-';
-                        recarcasare.predat_pacient = '-';
-                        recarcasare.taxa_urgenta_cabinet = req.body.taxa_urgenta_cabinet;
+            else {
+                var recarcasare = new Recarcasare();
+                recarcasare.pacient_id = req.body.recarcasare_pacient_id;
+                recarcasare.cabinet = req.user.username;
+                recarcasare.nume = req.body.nume;
+                recarcasare.telefon = req.body.telefon;
+                recarcasare.recarcasare_inregistrat_pacient = req.body.recarcasare_inregistrat_pacient;
+                recarcasare.denumire_aparat = req.body.denumire_aparat;
+                recarcasare.serie_aparat = req.body.serie_aparat;
+                recarcasare.defectiune_reclamata = req.body.defectiune_reclamata;
+                recarcasare.constatare_cabinet = req.body.constatare_cabinet;
+                recarcasare.completare_cabinet = '-';
+                recarcasare.u_stanga = req.body.u_stanga;
+                recarcasare.u_dreapta = req.body.u_dreapta;
+                recarcasare.garantie = req.body.garantie;
+                recarcasare.cutie = req.body.cutie;
+                recarcasare.baterie = req.body.baterie;
+                recarcasare.mulaj = req.body.mulaj;
+                recarcasare.observatii_cabinet = req.body.observatii_cabinet;
+                recarcasare.observatii_pacient = req.body.observatii_pacient;
+                recarcasare.iesit_cabinet = '-';
+                recarcasare.intrat_cabinet = '-';
+                recarcasare.predat_pacient = '-';
+                recarcasare.taxa_urgenta_cabinet = req.body.taxa_urgenta_cabinet;
 
 
-                        recarcasare.log_sosit = '-';
-                        recarcasare.log_plecat = '-';
-                        recarcasare.log_preluat = '-';
-                        recarcasare.log_trimis = '-';
+                recarcasare.log_sosit = '-';
+                recarcasare.log_plecat = '-';
+                recarcasare.log_preluat = '-';
+                recarcasare.log_trimis = '-';
 
-                        recarcasare.asamblare_sosit = '-';
-                        recarcasare.asamblare_plecat = '-';
-                        recarcasare.finalizat_recarcasare = '-';
-                        recarcasare.executant_recarcasare = '-';
-                        recarcasare.executant_reparatie = '-';
-                        recarcasare.piese_inlocuite = '-';
-                        recarcasare.cod_componente = '-';
-                        recarcasare.garantie_asamblare = req.body.garantie_asamblare;
-                        recarcasare.observatii_asamblare = req.body.observatii_asamblare;
-                        recarcasare.observatii_recarcasare_intern = '-';
-                        recarcasare.constatare_asamblare = '-';
-                        recarcasare.operatiuni_efectuate = '-';
-                        recarcasare.cost_recarcasare = '-';
-                        recarcasare.observatii_asamblare = '-';
-                        recarcasare.garantie_asamblare = '-';
+                recarcasare.asamblare_sosit = '-';
+                recarcasare.asamblare_plecat = '-';
+                recarcasare.finalizat_recarcasare = '-';
+                recarcasare.executant_recarcasare = '-';
+                recarcasare.executant_reparatie = '-';
+                recarcasare.piese_inlocuite = '-';
+                recarcasare.cod_componente = '-';
+                recarcasare.garantie_asamblare = req.body.garantie_asamblare;
+                recarcasare.observatii_asamblare = req.body.observatii_asamblare;
+                recarcasare.observatii_recarcasare_intern = '-';
+                recarcasare.constatare_asamblare = '-';
+                recarcasare.operatiuni_efectuate = '-';
+                recarcasare.cost_recarcasare = '-';
+                recarcasare.observatii_asamblare = '-';
+                recarcasare.garantie_asamblare = '-';
 
-                        if (req.body.denumire_aparat == null || req.body.denumire_aparat == '') {
-                            res.json({ success: false, message: 'Completeaza Denumire Aparat' });
+                if (req.body.denumire_aparat == null || req.body.denumire_aparat == '') {
+                    res.json({ success: false, message: 'Completeaza Denumire Aparat' });
+                }
+
+                else if (req.body.serie_aparat == null || req.body.serie_aparat == '') {
+                    res.json({ success: false, message: 'Completeaza Serie Aparat' });
+                }
+
+                else if (req.body.defectiune_reclamata == null || req.body.defectiune_reclamata == '') {
+                    res.json({ success: false, message: 'Completeaza Defectiune Reclamata' });
+                }
+
+                else if (req.body.constatare_cabinet == null || req.body.constatare_cabinet == '') {
+                    res.json({ success: false, message: 'Completeaza Constatare Cabinet' });
+                }
+                else if (req.body.u_stanga == null || req.body.u_stanga == '') {
+                    res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
+                }
+
+                else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
+                    res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
+                }
+                else if (req.body.garantie == null || req.body.garantie == '') {
+                    res.json({ success: false, message: 'Alege optiune Garantie' });
+                }
+
+                else if (req.body.cutie == null || req.body.cutie == '') {
+                    res.json({ success: false, message: 'Alege optiune Cutie' });
+                }
+
+                else if (req.body.baterie == null || req.body.baterie == '') {
+                    res.json({ success: false, message: 'Alege optiune Baterie' });
+                }
+
+                else if (req.body.mulaj == null || req.body.mulaj == '') {
+                    res.json({ success: false, message: 'Alege optiune Mulaj' });
+                }
+
+                else {
+
+                    recarcasare.save(function (err) {
+                        if (err) {
+                            res.json({ succes: false, message: err });
+                        } else {
+                            res.json({ success: true, message: 'Recarcasare adaugata cu succes.', comanda_recarcasare: comanda_recarcasare.nr_comanda_recarcasare });
                         }
+                    });
 
-                        else if (req.body.serie_aparat == null || req.body.serie_aparat == '') {
-                            res.json({ success: false, message: 'Completeaza Serie Aparat' });
-                        }
-
-                        else if (req.body.defectiune_reclamata == null || req.body.defectiune_reclamata == '') {
-                            res.json({ success: false, message: 'Completeaza Defectiune Reclamata' });
-                        }
-
-                        else if (req.body.constatare_cabinet == null || req.body.constatare_cabinet == '') {
-                            res.json({ success: false, message: 'Completeaza Constatare Cabinet' });
-                        }
-                        else if (req.body.u_stanga == null || req.body.u_stanga == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Stanga' });
-                        }
-
-                        else if (req.body.u_dreapta == null || req.body.u_dreapta == '') {
-                            res.json({ success: false, message: 'Alege optiune Urechea Dreapta' });
-                        }
-                        else if (req.body.garantie == null || req.body.garantie == '') {
-                            res.json({ success: false, message: 'Alege optiune Garantie' });
-                        }
-
-                        else if (req.body.cutie == null || req.body.cutie == '') {
-                            res.json({ success: false, message: 'Alege optiune Cutie' });
-                        }
-
-                        else if (req.body.baterie == null || req.body.baterie == '') {
-                            res.json({ success: false, message: 'Alege optiune Baterie' });
-                        }
-
-                        else if (req.body.mulaj == null || req.body.mulaj == '') {
-                            res.json({ success: false, message: 'Alege optiune Mulaj' });
-                        }
-
-                        else {
-
-                            recarcasare.save(function (err) {
-                                if (err) {
-                                    res.json({ succes: false, message: err });
-                                } else {
-                                    res.json({ success: true, message: 'Recarcasare adaugata cu succes.', comanda_recarcasare: comanda_recarcasare.nr_comanda_recarcasare });
-                                }
-                            });
-
-                        }
-                    }
-
-                });
+                }
             }
-        });
 
+        });
     });
+
 
 
     // Oliva Reg. Route 
@@ -458,111 +455,103 @@ module.exports = function (router) {
 
     router.post('/oliva', function (req, res) {
         Oliva.findOne({}, {}, { sort: { 'nr_comanda_oliva': -1 } }, function (err, comanda_oliva) {
-
-            var token = req.body.token || req.body.query || req.headers['x-access-token'];
             if (err) throw err;
-            if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.json({ success: false, message: 'Token invalid' });
-                    } else {
-                        var oliva = new Oliva();
-                        oliva.cabinet = decoded.username;
-                        oliva.pacient_id = req.body.oliva_pacient_id;
-                        oliva.nume = req.body.nume;
-                        oliva.telefon = req.body.telefon;
-                        oliva.oliva_inregistrat_pacient = req.body.oliva_inregistrat_pacient;
-                        oliva.model_aparat = req.body.model_aparat;
-                        oliva.ureche_protezata = req.body.ureche_protezata;
-                        oliva.material_oliva = req.body.material_oliva;
-                        oliva.tip_oliva = req.body.tip_oliva;
-                        oliva.vent_oliva = req.body.vent_oliva;
-                        oliva.pret_final = req.body.pret_final;
-                        oliva.avans = req.body.avans;
-                        oliva.data_avans = new moment().format('DD/MM/YYYY');
-                        oliva.rest_plata = req.body.rest_plata;
-                        oliva.observatii_oliva = req.body.observatii_oliva;
-                        oliva.oliva_taxa_urgenta = req.body.oliva_taxa_urgenta;
-                        oliva.predat_pacient = '-';
-                        oliva.iesit_cabinet = '-';
-                        oliva.intrat_cabinet = '-';
-                        oliva.completare_cabinet = '-';
+            else {
+                var oliva = new Oliva();
+                oliva.cabinet = req.user.username;
+                oliva.pacient_id = req.body.oliva_pacient_id;
+                oliva.nume = req.body.nume;
+                oliva.telefon = req.body.telefon;
+                oliva.oliva_inregistrat_pacient = req.body.oliva_inregistrat_pacient;
+                oliva.model_aparat = req.body.model_aparat;
+                oliva.ureche_protezata = req.body.ureche_protezata;
+                oliva.material_oliva = req.body.material_oliva;
+                oliva.tip_oliva = req.body.tip_oliva;
+                oliva.vent_oliva = req.body.vent_oliva;
+                oliva.pret_final = req.body.pret_final;
+                oliva.avans = req.body.avans;
+                oliva.data_avans = new moment().format('DD/MM/YYYY');
+                oliva.rest_plata = req.body.rest_plata;
+                oliva.observatii_oliva = req.body.observatii_oliva;
+                oliva.oliva_taxa_urgenta = req.body.oliva_taxa_urgenta;
+                oliva.predat_pacient = '-';
+                oliva.iesit_cabinet = '-';
+                oliva.intrat_cabinet = '-';
+                oliva.completare_cabinet = '-';
 
-                        oliva.log_sosit = '-';
-                        oliva.log_plecat = '-';
-                        oliva.log_preluat = '-';
-                        oliva.log_trimis = '-';
+                oliva.log_sosit = '-';
+                oliva.log_plecat = '-';
+                oliva.log_preluat = '-';
+                oliva.log_trimis = '-';
 
 
-                        oliva.plastie_sosit = '-';
-                        oliva.plastie_plecat = '-';
-                        oliva.finalizat_oliva = '-';
-                        oliva.observatii_plastie = '-';
-                        oliva.executant_oliva = '-';
+                oliva.plastie_sosit = '-';
+                oliva.plastie_plecat = '-';
+                oliva.finalizat_oliva = '-';
+                oliva.observatii_plastie = '-';
+                oliva.executant_oliva = '-';
 
 
-                        if (req.body.ureche_protezata == "Bilateral") {
+                if (req.body.ureche_protezata == "Bilateral") {
 
-                            var serie = comanda_oliva.serie_oliva;
-                            if (serie.includes("-")) {
+                    var serie = comanda_oliva.serie_oliva;
+                    if (serie.includes("-")) {
 
-                                oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 2 + "-" + (parseInt(comanda_oliva.serie_oliva) + 3)
-                            }
-                            else {
-                                oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 1 + "-" + (parseInt(comanda_oliva.serie_oliva) + 2)
-                            }
-
-                        } else {
-
-                            var serie = comanda_oliva.serie_oliva;
-                            if (serie.includes("-")) {
-                                oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 2;
-                            } else {
-                                oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 1;
-                            }
-
-                        }
-
-                        if (req.body.model_aparat == null || req.body.model_aparat == '') {
-                            res.json({ success: false, message: 'Completeaza Model Aparat' });
-                        }
-
-                        else if (req.body.ureche_protezata == null || req.body.ureche_protezata == '') {
-                            res.json({ success: false, message: 'Completeaza Ureche Protezata' });
-                        }
-
-                        else if (req.body.material_oliva == null || req.body.material_oliva == '') {
-                            res.json({ success: false, message: 'Completeaza Material Oliva' });
-                        }
-
-                        else if (req.body.tip_oliva == null || req.body.tip_oliva == '') {
-                            res.json({ success: false, message: 'Completeaza Tip Oliva' });
-                        }
-
-                        else if (req.body.vent_oliva == null || req.body.vent_oliva == '') {
-                            res.json({ success: false, message: 'Completeaza Vent' });
-                        }
-
-                        else if (req.body.pret_final == null || req.body.pret_final == '') {
-                            res.json({ success: false, message: 'Completeaza Pret Final' });
-                        }
-
-
-                        else {
-
-                            oliva.save(function (err) {
-                                if (err) {
-                                    res.json({ succes: false, message: err });
-                                } else {
-                                    res.json({ success: true, message: 'Comanda Oliva adaugata cu succes.', comanda_oliva: comanda_oliva });
-                                }
-                            });
-
-                        }
+                        oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 2 + "-" + (parseInt(comanda_oliva.serie_oliva) + 3)
+                    }
+                    else {
+                        oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 1 + "-" + (parseInt(comanda_oliva.serie_oliva) + 2)
                     }
 
-                });
+                } else {
+
+                    var serie = comanda_oliva.serie_oliva;
+                    if (serie.includes("-")) {
+                        oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 2;
+                    } else {
+                        oliva.serie_oliva = parseInt(comanda_oliva.serie_oliva) + 1;
+                    }
+
+                }
+
+                if (req.body.model_aparat == null || req.body.model_aparat == '') {
+                    res.json({ success: false, message: 'Completeaza Model Aparat' });
+                }
+
+                else if (req.body.ureche_protezata == null || req.body.ureche_protezata == '') {
+                    res.json({ success: false, message: 'Completeaza Ureche Protezata' });
+                }
+
+                else if (req.body.material_oliva == null || req.body.material_oliva == '') {
+                    res.json({ success: false, message: 'Completeaza Material Oliva' });
+                }
+
+                else if (req.body.tip_oliva == null || req.body.tip_oliva == '') {
+                    res.json({ success: false, message: 'Completeaza Tip Oliva' });
+                }
+
+                else if (req.body.vent_oliva == null || req.body.vent_oliva == '') {
+                    res.json({ success: false, message: 'Completeaza Vent' });
+                }
+
+                else if (req.body.pret_final == null || req.body.pret_final == '') {
+                    res.json({ success: false, message: 'Completeaza Pret Final' });
+                }
+
+
+                else {
+
+                    oliva.save(function (err) {
+                        if (err) {
+                            res.json({ succes: false, message: err });
+                        } else {
+                            res.json({ success: true, message: 'Comanda Oliva adaugata cu succes.', comanda_oliva: comanda_oliva });
+                        }
+                    });
+
+                }
             }
+
         });
 
     });
@@ -572,116 +561,108 @@ module.exports = function (router) {
 
     router.post('/ite', function (req, res) {
         Ite.findOne({}, {}, { sort: { 'nr_comanda_ite': -1 } }, function (err, comanda_ite) {
-            var token = req.body.token || req.body.query || req.headers['x-access-token'];
             if (err) throw err;
-            if (token) {
-                jwt.verify(token, secret, function (err, decoded) {
-                    if (err) {
-                        res.json({ success: false, message: 'Token invalid' });
-                    } else {
-                        var ite = new Ite();
-                        ite.cabinet = decoded.username;
-                        ite.pacient_id = req.body.ite_pacient_id;
-                        ite.nume = req.body.nume;
-                        ite.telefon = req.body.telefon;
-                        ite.ite_inregistrat_pacient = req.body.ite_inregistrat_pacient;
-                        ite.model_aparat = req.body.model_aparat;
-                        ite.ureche_protezata = req.body.ureche_protezata;
-                        ite.carcasa_ite = req.body.carcasa_ite;
-                        ite.culoare_carcasa = req.body.culoare_carcasa;
-                        ite.buton_programe = req.body.buton_programe;
-                        ite.potentiometru_volum = req.body.potentiometru_volum;
-                        ite.vent_ite = req.body.vent_ite;
-                        ite.pret_lista = req.body.pret_lista;
-                        ite.pret_final = req.body.pret_final;
-                        ite.avans = req.body.avans;
-                        ite.data_avans = new moment().format('DD/MM/YYYY');
-                        ite.rest_plata = req.body.rest_plata;
-                        ite.observatii_ite = req.body.observatii_ite;
-                        ite.ite_taxa_urgenta = req.body.ite_taxa_urgenta;
-                        ite.predat_pacient = '-';
-                        ite.iesit_cabinet = '-';
-                        ite.intrat_cabinet = '-';
-                        ite.completare_cabinet = '-';
+            else {
+                var ite = new Ite();
+                ite.cabinet = req.user.username;
+                ite.pacient_id = req.body.ite_pacient_id;
+                ite.nume = req.body.nume;
+                ite.telefon = req.body.telefon;
+                ite.ite_inregistrat_pacient = req.body.ite_inregistrat_pacient;
+                ite.model_aparat = req.body.model_aparat;
+                ite.ureche_protezata = req.body.ureche_protezata;
+                ite.carcasa_ite = req.body.carcasa_ite;
+                ite.culoare_carcasa = req.body.culoare_carcasa;
+                ite.buton_programe = req.body.buton_programe;
+                ite.potentiometru_volum = req.body.potentiometru_volum;
+                ite.vent_ite = req.body.vent_ite;
+                ite.pret_lista = req.body.pret_lista;
+                ite.pret_final = req.body.pret_final;
+                ite.avans = req.body.avans;
+                ite.data_avans = new moment().format('DD/MM/YYYY');
+                ite.rest_plata = req.body.rest_plata;
+                ite.observatii_ite = req.body.observatii_ite;
+                ite.ite_taxa_urgenta = req.body.ite_taxa_urgenta;
+                ite.predat_pacient = '-';
+                ite.iesit_cabinet = '-';
+                ite.intrat_cabinet = '-';
+                ite.completare_cabinet = '-';
 
 
-                        ite.log_sosit = '-';
-                        ite.log_plecat = '-';
-                        ite.log_preluat = '-';
-                        ite.log_trimis = '-';
-                        ite.observatii_ite_logistic = '-';
+                ite.log_sosit = '-';
+                ite.log_plecat = '-';
+                ite.log_preluat = '-';
+                ite.log_trimis = '-';
+                ite.observatii_ite_logistic = '-';
 
-                        ite.asamblare_sosit = '-';
-                        ite.asamblare_plecat = '-';
-                        ite.finalizat_ite = '-';
-                        ite.observatii_plastie = '-';
-                        ite.executant_ite = '-';
+                ite.asamblare_sosit = '-';
+                ite.asamblare_plecat = '-';
+                ite.finalizat_ite = '-';
+                ite.observatii_plastie = '-';
+                ite.executant_ite = '-';
 
 
 
-                        if (req.body.ureche_protezata == "Bilateral") {
+                if (req.body.ureche_protezata == "Bilateral") {
 
-                            var serie = comanda_ite.serie_ite;
-                            if (serie.includes("-")) {
+                    var serie = comanda_ite.serie_ite;
+                    if (serie.includes("-")) {
 
-                                ite.serie_ite = parseInt(comanda_ite.serie_ite) + 2 + "-" + (parseInt(comanda_ite.serie_ite) + 3)
-                            }
-                            else {
-                                ite.serie_ite = parseInt(comanda_ite.serie_ite) + 1 + "-" + (parseInt(comanda_ite.serie_ite) + 2)
-                            }
-
-                        } else {
-
-                            var serie = comanda_ite.serie_ite;
-                            if (serie.includes("-")) {
-                                ite.serie_ite = parseInt(comanda_ite.serie_ite) + 2;
-                            } else {
-                                ite.serie_ite = parseInt(comanda_ite.serie_ite) + 1;
-                            }
-
-                        }
-                        if (req.body.model_aparat == null || req.body.model_aparat == '') {
-                            res.json({ success: false, message: 'Completeaza Model Aparat' });
-                        }
-
-                        else if (req.body.ureche_protezata == null || req.body.ureche_protezata == '') {
-                            res.json({ success: false, message: 'Alege Ureche Protezata' });
-                        }
-
-                        else if (req.body.carcasa_ite == null || req.body.carcasa_ite == '') {
-                            res.json({ success: false, message: 'Alege Carcasa ITE' });
-                        }
-
-                        else if (req.body.buton_programe == null || req.body.buton_programe == '') {
-                            res.json({ success: false, message: 'Alege Optiune Buton Programe' });
-                        }
-
-                        else if (req.body.potentiometru_volum == null || req.body.potentiometru_volum == '') {
-                            res.json({ success: false, message: 'Alege Optiune Potentiometru Volum' });
-                        }
-
-                        else if (req.body.vent_ite == null || req.body.vent_ite == '') {
-                            res.json({ success: false, message: 'Completeaza Vent' });
-                        }
-
-
-                        else {
-
-                            ite.save(function (err) {
-                                if (err) {
-                                    res.json({ succes: false, message: err });
-                                } else {
-                                    res.json({ success: true, message: 'Comanda ITE adaugata cu succes.', comanda_ite: comanda_ite });
-                                }
-                            });
-
-                        }
+                        ite.serie_ite = parseInt(comanda_ite.serie_ite) + 2 + "-" + (parseInt(comanda_ite.serie_ite) + 3)
+                    }
+                    else {
+                        ite.serie_ite = parseInt(comanda_ite.serie_ite) + 1 + "-" + (parseInt(comanda_ite.serie_ite) + 2)
                     }
 
-                });
-            }
-        });
+                } else {
 
+                    var serie = comanda_ite.serie_ite;
+                    if (serie.includes("-")) {
+                        ite.serie_ite = parseInt(comanda_ite.serie_ite) + 2;
+                    } else {
+                        ite.serie_ite = parseInt(comanda_ite.serie_ite) + 1;
+                    }
+
+                }
+                if (req.body.model_aparat == null || req.body.model_aparat == '') {
+                    res.json({ success: false, message: 'Completeaza Model Aparat' });
+                }
+
+                else if (req.body.ureche_protezata == null || req.body.ureche_protezata == '') {
+                    res.json({ success: false, message: 'Alege Ureche Protezata' });
+                }
+
+                else if (req.body.carcasa_ite == null || req.body.carcasa_ite == '') {
+                    res.json({ success: false, message: 'Alege Carcasa ITE' });
+                }
+
+                else if (req.body.buton_programe == null || req.body.buton_programe == '') {
+                    res.json({ success: false, message: 'Alege Optiune Buton Programe' });
+                }
+
+                else if (req.body.potentiometru_volum == null || req.body.potentiometru_volum == '') {
+                    res.json({ success: false, message: 'Alege Optiune Potentiometru Volum' });
+                }
+
+                else if (req.body.vent_ite == null || req.body.vent_ite == '') {
+                    res.json({ success: false, message: 'Completeaza Vent' });
+                }
+
+
+                else {
+
+                    ite.save(function (err) {
+                        if (err) {
+                            res.json({ succes: false, message: err });
+                        } else {
+                            res.json({ success: true, message: 'Comanda ITE adaugata cu succes.', comanda_ite: comanda_ite });
+                        }
+                    });
+
+                }
+            }
+
+        });
     });
 
 
@@ -2605,7 +2586,7 @@ module.exports = function (router) {
                                 if (err) {
                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                 } else {
-                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                    res.json({ success: true, message: 'Executant Oliva adaugat' });
                                 }
                             });
                         }
@@ -2953,7 +2934,7 @@ module.exports = function (router) {
                                 if (err) {
                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                 } else {
-                                    res.json({ success: true, message: 'Completare adaugata cu succes' });
+                                    res.json({ success: true, message: 'Executant ITE adaugat' });
                                 }
                             });
                         }

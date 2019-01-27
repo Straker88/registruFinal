@@ -1,7 +1,5 @@
-var token = window.localStorage.getItem('token');
 var url = window.location.pathname;
 var user = url.substr(url.lastIndexOf('/') + 1);
-console.log(token + ' ' + 'token profil cab pacienti')
 
 $(document).ready(function () {
     var oTable = $('#tabel').dataTable({
@@ -11,9 +9,6 @@ $(document).ready(function () {
             "contentType": "application/json; charset=utf-8",
             "type": "GET",
             "dataSrc": "pacienti",
-            headers: {
-                'x-access-token': token,
-            },
         },
         "stateSave": false,
         "pageLength": 25,
@@ -163,28 +158,28 @@ $(document).ready(function () {
                 .draw();
         });
     });
-
-    var endYear = new Date(new Date().getFullYear(), 11, 31);
-
-    $('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
-        clearBtn: true,
-        todayHighlight: true,
-        toggleActive: true,
-        endDate: endYear,
-        language: 'ro',
-        format: "mm/yyyy",
-        startView: "months",
-        minViewMode: "months",
-        maxViewMode: "years",
-    });
-
-    $("#fromdate").datepicker({
-        minViewMode: 1,
-
-    }).on('changeDate', function (ev) {
-        $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
-    });
-
 });
+
+var endYear = new Date(new Date().getFullYear(), 11, 31);
+
+$('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
+    clearBtn: true,
+    todayHighlight: true,
+    toggleActive: true,
+    endDate: endYear,
+    language: 'ro',
+    format: "mm/yyyy",
+    startView: "months",
+    minViewMode: "months",
+    maxViewMode: "years",
+});
+
+$("#fromdate").datepicker({
+    minViewMode: 1,
+
+}).on('changeDate', function (ev) {
+    $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
+});
+
 
 

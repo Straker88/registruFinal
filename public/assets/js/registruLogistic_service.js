@@ -1,14 +1,10 @@
 //--------------------- Registru Logistic
-var token = window.localStorage.getItem('token');
 
 
 $(document).ready(function () {
     var oTable = $('#tabel').dataTable({
         "ajax": {
             "url": "api/registruLogistic_service/",
-            headers: {
-                'x-access-token': token
-            },
             "dataType": "json",
             "contentType": "application/json; charset=utf-8",
             "type": "GET",
@@ -167,6 +163,7 @@ $(document).ready(function () {
                 .draw();
         });
     });
+});
 
     var endYear = new Date(new Date().getFullYear(), 11, 31);
 
@@ -189,7 +186,6 @@ $(document).ready(function () {
         $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
     });
 
-});
 
 
 //--------------------- Registru Logistic

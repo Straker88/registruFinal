@@ -15,11 +15,13 @@ module.exports = function (app, passport) {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(session({
-        secret: 'clarfontehnic',
+        secret: 'tehnic',
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false, httpOnly: true, maxAge: 28800000 }
+        rolling: true,
+        cookie: { httpOnly: true, maxAge: 28800000 }
     }));
+
     app.use(passport.initialize());
     app.use(passport.session());
 

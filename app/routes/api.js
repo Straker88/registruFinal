@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var secret = 'clarfontehnic';
 var moment = require('moment');
 var passport = require('passport');
+require('log-timestamp');
 
 module.exports = function (router) {
 
@@ -79,6 +80,7 @@ module.exports = function (router) {
                         res.json({ success: false, message: 'Parola introdusa nu este corecta' });
                     }
                     else {
+                        console.log(user.username + ' ' + 'user /authenticate\n', userLogged.username + ' ' + 'userLogged /authenticate\n', token + ' ' + 'token\n')
                         res.send({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
                     }
                 });
@@ -89,11 +91,14 @@ module.exports = function (router) {
 
     router.post('/me', function (req, res) {
         res.send(req.user);
+        console.log(req.user + ' ' + 'user from /me\n')
     });
 
     router.get('/permission', function (req, res) {
-        var user = req.user
-        res.send({ success: true, permission: user.permission, usernamePermission: user.username });
+        //req.session.passport.user
+        var utilizator = req.user
+        console.log(utilizator.username + ' ' + 'utilizator from /permission\n')
+        res.send({ success: true, permission: utilizator.permission, usernamePermission: utilizator.username });
     });
 
 

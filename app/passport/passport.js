@@ -28,7 +28,7 @@ module.exports = function (app, passport) {
             if (user.error) {
                 token = 'unconfirmed/error';
             } else {
-                token = jwt.sign({ username: user.username }, secret, { expiresIn: '9999h' });
+                token = user._id;
             }
         } else {
             token = 'inactive/error';

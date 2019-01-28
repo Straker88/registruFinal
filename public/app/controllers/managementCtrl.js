@@ -296,6 +296,15 @@ angular.module('managementController', [])
         app.deletePacientAccess = false;
     })
 
+    .controller('raportareTehnicCtrl', function () {
+        var app = this;
+        app.accessDenied = true;
+        app.errorMsg = false;
+        app.editPacientAccess = true;
+        app.deletePacientAccess = false;
+    })
+
+
 
     .controller('editProfilPacientCtrl', function ($route, $scope, $routeParams, Pacient, $timeout) {
         var app = this;

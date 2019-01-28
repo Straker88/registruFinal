@@ -59,15 +59,14 @@ module.exports = function (router) {
 
     // User Login Route ----------------------------------------------
 
-
     router.post('/authenticate', function (req, res, next) {
         passport.authenticate('local', function (err, user, info) {
-            if (err) { return next(err); }
+            if (err) { return (err); }
             if (!user) {
                 return res.redirect('/login');
             }
             req.logIn(user, function (err) {
-                if (err) { return next(err); }
+                if (err) { return (err); }
                 if (!user) {
                     res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
                 }
@@ -80,7 +79,7 @@ module.exports = function (router) {
                         res.json({ success: false, message: 'Parola introdusa nu este corecta' });
                     }
                     else {
-                        res.json({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
+                        res.send({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
                     }
                 });
             });
@@ -93,15 +92,8 @@ module.exports = function (router) {
     });
 
     router.get('/permission', function (req, res) {
-        User.findOne({ username: req.user.username }, function (err, user) {
-            if (err) throw err;
-            if (!user) {
-                res.json({ success: false, message: 'No user was found' });
-            } else {
-                res.json({ success: true, permission: user.permission, usernamePermission: user.username });
-            }
-
-        });
+        var user = req.user
+        res.send({ success: true, permission: user.permission, usernamePermission: user.username });
     });
 
 
@@ -847,7 +839,7 @@ module.exports = function (router) {
     router.get('/registruLogistic_service', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser || mainUser.permission !== 'logistic') {
+            if (!mainUser || mainUser.permission !== 'colete') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
 
@@ -868,7 +860,7 @@ module.exports = function (router) {
     router.get('/registruLogistic_recarcasari', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser || mainUser.permission !== 'logistic') {
+            if (!mainUser || mainUser.permission !== 'colete') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
                 Recarcasare.find({}).select('nr_comanda_recarcasare cabinet data_inregistrare log_sosit log_plecat log_preluat log_trimis recarcasare_inregistrat_pacient denumire_aparat').exec(function (err, recarcasare) {
@@ -887,7 +879,7 @@ module.exports = function (router) {
     router.get('/registruLogistic_olive', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser || mainUser.permission !== 'logistic') {
+            if (!mainUser || mainUser.permission !== 'colete') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
 
@@ -907,7 +899,7 @@ module.exports = function (router) {
     router.get('/registruLogistic_ite', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
-            if (!mainUser || mainUser.permission !== 'logistic') {
+            if (!mainUser || mainUser.permission !== 'colete') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
 
@@ -971,6 +963,24 @@ module.exports = function (router) {
         });
     });
 
+    router.get('/raportareTehnic', function (req, res) {
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
+            if (err) throw err;
+            if (!mainUser || mainUser.permission !== 'admin') {
+                res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
+            } else {
+
+                Service.find({}).select('nr_comanda_service cabinet data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat garantie_serv').exec(function (err, service) {
+                    if (err) throw err;
+                    if (!service) {
+                        res.json({ success: false, message: 'Nu s-au gasit service-uri' });
+                    } else {
+                        res.json({ success: true, service: service });
+                    }
+                });
+            }
+        });
+    });
 
     router.get('/registruService', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
@@ -1314,7 +1324,7 @@ module.exports = function (router) {
             if (newLog_Sosit) {
                 Service.findOne({ _id: editService }, function (err, service) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1338,7 +1348,7 @@ module.exports = function (router) {
             if (newLog_Plecat) {
                 Service.findOne({ _id: editService }, function (err, service) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1362,7 +1372,7 @@ module.exports = function (router) {
             if (newLog_Preluat) {
                 Service.findOne({ _id: editService }, function (err, service) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1386,7 +1396,7 @@ module.exports = function (router) {
             if (newLog_Trimis) {
                 Service.findOne({ _id: editService }, function (err, service) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1843,7 +1853,7 @@ module.exports = function (router) {
             if (newLog_Sosit) {
                 Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1867,7 +1877,7 @@ module.exports = function (router) {
             if (newLog_Plecat) {
                 Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1891,7 +1901,7 @@ module.exports = function (router) {
             if (newLog_Preluat) {
                 Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -1915,7 +1925,7 @@ module.exports = function (router) {
             if (newLog_Trimis) {
                 Recarcasare.findOne({ _id: editRecarcasare }, function (err, recarcasare) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2384,7 +2394,7 @@ module.exports = function (router) {
             if (newLog_Sosit) {
                 Oliva.findOne({ _id: editOliva }, function (err, oliva) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2408,7 +2418,7 @@ module.exports = function (router) {
             if (newLog_Plecat) {
                 Oliva.findOne({ _id: editOliva }, function (err, oliva) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2432,7 +2442,7 @@ module.exports = function (router) {
             if (newLog_Preluat) {
                 Oliva.findOne({ _id: editOliva }, function (err, oliva) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2456,7 +2466,7 @@ module.exports = function (router) {
             if (newLog_Trimis) {
                 Oliva.findOne({ _id: editOliva }, function (err, oliva) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2732,7 +2742,7 @@ module.exports = function (router) {
             if (newLog_Sosit) {
                 Ite.findOne({ _id: editIte }, function (err, ite) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2756,7 +2766,7 @@ module.exports = function (router) {
             if (newLog_Plecat) {
                 Ite.findOne({ _id: editIte }, function (err, ite) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2780,7 +2790,7 @@ module.exports = function (router) {
             if (newLog_Preluat) {
                 Ite.findOne({ _id: editIte }, function (err, ite) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 
@@ -2804,7 +2814,7 @@ module.exports = function (router) {
             if (newLog_Trimis) {
                 Ite.findOne({ _id: editIte }, function (err, ite) {
                     if (err) throw err;
-                    if (mainUser.permission !== 'logistic') {
+                    if (mainUser.permission !== 'colete') {
                         res.json({ success: false, message: 'Se completeaza de catre Dep. Logistic.' });
                     } else {
 

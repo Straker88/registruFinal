@@ -55,8 +55,9 @@ angular.module('mainController', ['authServices', 'userServices'])
             // if (!app.checkingSession) app.checkSession();
 
             if (Auth.isLoggedIn()) {
+                console.log("Auth.isLoggedIn")
                 Auth.getUser().then(function (data) {
-
+                    console.log(data.data.username + ' ' + 'Auth.getUser Main Ctrl')
                     if (data.data.username === undefined) {
                         app.isLoggedIn = false;
                         Auth.logout();
@@ -65,7 +66,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                         app.username = data.data.username;
                         app.isLoggedIn = true;
                         User.getPermission().then(function (data) {
-                            if (data.data.permission === 'user' && data.data.usernamePermission !== 'Logistic' && data.data.permission !== 'logistic') {
+                            if (data.data.permission === 'user') {
                                 app.user = true;
                                 app.loadme = true;
                             }
@@ -75,8 +76,8 @@ angular.module('mainController', ['authServices', 'userServices'])
                             } else if (data.data.permission === 'plastie') {
                                 app.plastie = true;
                                 app.loadme = true;
-                            } else if (data.data.usernamePermission === 'Logistic' && data.data.permission === 'logistic') {
-                                app.logistic = true;
+                            } else if (data.data.usernamePermission === 'DepColete' && data.data.permission === 'colete') {
+                                app.colete = true;
                                 app.loadme = true;
                             } else if (data.data.permission === 'asamblare') {
                                 app.asamblare = true;
@@ -111,48 +112,54 @@ angular.module('mainController', ['authServices', 'userServices'])
                     console.log(app.permission + ' ' + '-' + 'Permission')
 
                     $timeout(function () {
-                        if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel') {
-                            location.reload();
-                            $location.path('/registruService/');
-                            app.loginData = {};
-                            app.successMsg = '';
+                        location.reload();
+                        $location.path('/'); // Redirect to home
+                        app.loginData = ''; // Clear login form
+                        app.successMsg = false; // CLear success message
+                        app.disabled = false; // Enable form on submission
 
-                        }
-                        else if (app.usernamePermission === 'Logistic' && app.permission === 'logistic') {
-                            location.reload();
-                            $location.path('/registruLogistic_service/');
-                            app.loginData = {};
-                            app.successMsg = '';
+                        // if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel') {
+                        //     // location.reload();
+                        //     $location.path('/registruService/');
+                        //     app.loginData = {};
+                        //     app.successMsg = '';
 
-                        }
-                        else if (app.username === 'Cristi Ghiburcea') {
-                            location.reload();
-                            $location.path('/registruIte/');
-                            app.loginData = {};
-                            app.successMsg = '';
+                        // }
+                        // else if (app.usernamePermission === 'Logistic' && app.permission === 'logistic') {
+                        //     // location.reload();
+                        //     $location.path('/registruLogistic_service/');
+                        //     app.loginData = {};
+                        //     app.successMsg = '';
 
-                        }
-                        else if (app.username === 'Chiritoiu Iuliana' || app.username === 'Adrian Ionescu') {
-                            location.reload();
-                            $location.path('/registruOlive/');
-                            app.loginData = {};
-                            app.successMsg = '';
+                        // }
+                        // else if (app.username === 'Cristi Ghiburcea') {
+                        //     // location.reload();
+                        //     $location.path('/registruIte/');
+                        //     app.loginData = {};
+                        //     app.successMsg = '';
 
-                        }
-                        else if (app.username === 'Madalin Ion' || app.username === 'muscallu') {
-                            location.reload();
-                            $location.path('/registruService/');
-                            app.loginData = {};
-                            app.successMsg = '';
+                        // }
+                        // else if (app.username === 'Chiritoiu Iuliana' || app.username === 'Adrian Ionescu') {
+                        //     // location.reload();
+                        //     $location.path('/registruOlive/');
+                        //     app.loginData = {};
+                        //     app.successMsg = '';
 
-                        }
-                        else {
-                            location.reload();
-                            $location.path('/profil/' + app.username);
-                            app.loginData = {};
-                            app.successMsg = '';
+                        // }
+                        // else if (app.username === 'Madalin Ion' || app.username === 'muscallu') {
+                        //     // location.reload();
+                        //     $location.path('/registruService/');
+                        //     app.loginData = {};
+                        //     app.successMsg = '';
 
-                        }
+                        // }
+                        // else {
+                        //     location.reload();
+                        //     $location.path('/profil/' + app.username);
+                        //     app.loginData = {};
+                        //     app.successMsg = '';
+
+                        // }
                     }, 2000);
                 } else {
                     app.loading = false;

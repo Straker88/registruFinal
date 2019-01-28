@@ -35,7 +35,7 @@ var UserSchema = new Schema({
     name: { type: String, required: true, validate: nameValidator },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, validate: passwordValidator, select: false },
-    temporarytoken: { type: String, required: true },
+    temporarytoken: { type: String, required: true, unique: true },
     resettoken: { type: String, required: false },
     permission: { type: String, required: true, default: 'user' },
 });

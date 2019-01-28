@@ -19,6 +19,7 @@
   <script src="assets/js/angular.js"></script>
   <script src="assets/js/angular-route.js"></script>
   <script src="assets/js/directive.pagination.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 
 
 
@@ -36,7 +37,7 @@
           <li id="login">
             <a ng-show="!main.isLoggedIn" href="/login">Login</a>
           </li>
-          <div ng-show="main.logistic" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+          <div ng-show="main.colete" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Registre Generale
               <span class="caret"></span></button>
             <ul class="dropdown-menu">
@@ -69,7 +70,9 @@
           <li>
             <a ng-show="main.asamblare || main.authorized" href="/registruRecarcasari">Registru Recarcasari</a>
           </li>
-
+          <!-- <li>
+            <a ng-show="main.authorized" href="/raportareTehnic">Raportare Tehnic</a>
+          </li> -->
           <li>
             <a ng-show="main.service" href="/piese">Piese</a>
           </li>
@@ -79,16 +82,16 @@
             <ul class="dropdown-menu">
               <li>
 
-                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruServiceCabinet/{{main.username}}">Service</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruServiceCabinet/{{main.username}}">Service</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruOliveCabinet/{{main.username}}">Olive</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruOliveCabinet/{{main.username}}">Olive</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.logistic && !main.service" href="/registruIteCabinet/{{main.username}}">ITE</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruIteCabinet/{{main.username}}">ITE</a>
               </li>
             </ul>
           </div>

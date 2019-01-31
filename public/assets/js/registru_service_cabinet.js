@@ -2,7 +2,7 @@ var url = window.location.pathname;
 var user = url.substr(url.lastIndexOf('/') + 1);
 
 $(document).ready(function () {
-    var oTable = $('#tabel').dataTable({
+    var oTable = $('#tabel').DataTable({
         "serverSide": false,
         "ajax": {
             "url": "api/registruServiceCabinet/" + user,

@@ -1,6 +1,14 @@
 var url = window.location.pathname;
 var id = url.substr(url.lastIndexOf('/') + 1);
 
+$('#olivaForm, #iteForm').on('keyup keypress', function (e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 
 // Registru Service-uri
 //-------------------------------------------------------------------------------------

@@ -74,7 +74,7 @@ angular.module('recarcasareControllers', ['userServices'])
     })
 
 
-    .controller('editRecarcasareCtrl', function ($scope, $routeParams, Recarcasare, $timeout) {
+    .controller('editRecarcasareCtrl', function ($scope, $routeParams, Recarcasare, $timeout, $location) {
         var app = this;
         var eroare = 'Campul trebuie sa contina cel putin 1 carcater.';
 
@@ -977,6 +977,32 @@ angular.module('recarcasareControllers', ['userServices'])
                 app.disabled = true;
             }
 
+        };
+
+        app.deleteRecarcasare = function () {
+            app.errorMsgDeleteRecarcasare = false;
+            var deletedRecarcasare = app.currentRecarcasare;
+
+            Recarcasare.deleteRecarcasare(deletedRecarcasare).then(function (data) {
+                if (data.data.success) {
+                    app.successDeleteRecarcasare = data.data.message;
+                    app.disabled = true;
+                    $timeout(function () {
+                        $location.path('/registruRecarcasari/');
+                        app.successDeleteRecarcasare = false;
+
+                    }, 2000);
+
+                } else {
+                    app.errorMsgDeleteRecarcasare = data.data.message;
+                    $timeout(function () {
+                        $location.path('/');
+                        app.successDeleteRecarcasare = false;
+
+                    }, 2000);
+
+                }
+            });
         };
 
 

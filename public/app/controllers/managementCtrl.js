@@ -8,7 +8,7 @@ angular.module('managementController', [])
         app.errorMsg = false;
         app.editAccess = false;
         app.deleteAccess = false;
-        app.limit = 20;
+        app.limit = 100;
         app.searchLimit = 0;
 
 
@@ -137,7 +137,6 @@ angular.module('managementController', [])
 
             if (valid) {
                 var userObject = {};
-                console.log(userObject)
                 userObject._id = app.currentUser;
                 userObject.name = $scope.newName;
                 User.editUser(userObject).then(function (data) {
@@ -155,7 +154,7 @@ angular.module('managementController', [])
                     }
                 });
             } else {
-                app.errorMsg = 'Please ensure form is filled out properly';
+                app.errorMsg = 'Formularul nu a fost completat corect';
                 app.disabled = false;
             }
         };
@@ -184,7 +183,7 @@ angular.module('managementController', [])
                     }
                 });
             } else {
-                app.errorMsg = 'Please ensure form is filled out properly';
+                app.errorMsg = 'Formularul nu a fost completat corect';
                 app.disabled = false;
             }
         };
@@ -192,7 +191,10 @@ angular.module('managementController', [])
         app.updatePermissions = function (newPermission) {
             app.errorMsg = false;
             app.disableUser = true;
-            app.disableModerator = true;
+            app.disableService = true;
+            app.disableAsamblare = true;
+            app.disablePlastie = true;
+            app.disableColete = true;
             app.disableAdmin = true;
             var userObject = {};
             userObject._id = app.currentUser;
@@ -209,16 +211,46 @@ angular.module('managementController', [])
 
                         if (newPermission === 'user') {
                             app.disableUser = true;
-                            app.disableModerator = false;
+                            app.disableService = false;
+                            app.disableAsamblare = false;
+                            app.disablePlastie = false;
+                            app.disableColete = false;
                             app.disableAdmin = false;
-                        } else if (newPermission === 'moderator') {
+                        } else if (newPermission === 'service') {
                             app.disableUser = false;
-                            app.disableModerator = true;
+                            app.disableService = true;
+                            app.disableAsamblare = false;
+                            app.disablePlastie = false;
+                            app.disableColete = false;
+                            app.disableAdmin = false;
+                        } else if (newPermission === 'asamblare') {
+                            app.disableUser = false;
+                            app.disableService = false;
+                            app.disableAsamblare = true;
+                            app.disablePlastie = false;
+                            app.disableColete = false;
+                            app.disableAdmin = false;
+                        } else if (newPermission === 'plastie') {
+                            app.disableUser = false;
+                            app.disableService = false;
+                            app.disableAsamblare = false;
+                            app.disablePlastie = true;
+                            app.disableColete = false;
+                            app.disableAdmin = false;
+                        } else if (newPermission === 'colete') {
+                            app.disableUser = false;
+                            app.disableService = false;
+                            app.disableAsamblare = false;
+                            app.disablePlastie = false;
+                            app.disableColete = true;
                             app.disableAdmin = false;
 
                         } else if (newPermission === 'admin') {
                             app.disableUser = false;
-                            app.disableModerator = false;
+                            app.disableService = false;
+                            app.disableAsamblare = false;
+                            app.disablePlastie = false;
+                            app.disableColete = false;
                             app.disableAdmin = true;
                         }
                     }, 2000);

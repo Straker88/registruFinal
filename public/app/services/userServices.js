@@ -91,6 +91,10 @@ angular.module('userServices', [])
             return $http.put('/api/editService', id);
         };
 
+        serviceFactory.deleteService = function (id) {
+            return $http.delete('/api/service/' + id);
+        };
+
         return serviceFactory;
     })
 
@@ -113,6 +117,11 @@ angular.module('userServices', [])
             return $http.put('/api/editRecarcasare', id);
         };
 
+        recarcasareFactory.deleteRecarcasare = function (id) {
+            return $http.delete('/api/recarcasare/' + id);
+        };
+
+
         return recarcasareFactory;
     })
 
@@ -132,6 +141,10 @@ angular.module('userServices', [])
 
         olivaFactory.editOliva = function (id) {
             return $http.put('/api/editOliva', id);
+        };
+
+        olivaFactory.deleteOliva = function (id) {
+            return $http.delete('/api/oliva/' + id);
         };
 
         return olivaFactory;
@@ -156,6 +169,11 @@ angular.module('userServices', [])
         iteFactory.editIte = function (id) {
             return $http.put('/api/editIte', id);
         };
+
+        iteFactory.deleteIte = function (id) {
+            return $http.delete('/api/ite/' + id);
+        };
+
 
         return iteFactory;
     });

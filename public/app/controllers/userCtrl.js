@@ -12,11 +12,10 @@ angular.module('userControllers', ['userServices'])
                 User.create(app.regData).then(function (data) {
                     if (data.data.success) {
                         app.loading = false;
-                        app.successMsg = data.data.message + '...Redirecting';
-                        $window.location.reload();
-                        // $timeout(function () {
-                        //     $location.path('/login');
-                        // }, 2000);
+                        app.successMsg = data.data.message + '...Se redirectioneaza';
+                        $timeout(function () {
+                            $location.path('/management');
+                        }, 2000);
                     } else {
                         app.loading = false;
                         app.errorMsg = data.data.message;

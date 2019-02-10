@@ -103,7 +103,7 @@ angular.module('olivaControllers', ['userServices'])
 
 
 
-    .controller('editOlivaCtrl', function ($scope, $routeParams, Oliva, $timeout) {
+    .controller('editOlivaCtrl', function ($scope, $routeParams, Oliva, $timeout, $location) {
         var app = this;
         var eroare = 'Campul trebuie sa contina cel putin 1 carcater.';
 
@@ -634,6 +634,31 @@ angular.module('olivaControllers', ['userServices'])
 
         };
 
+        app.deleteOliva = function () {
+            app.errorMsgDeleteOliva = false;
+            var deletedOliva = app.currentOliva;
+
+            Oliva.deleteOliva(deletedOliva).then(function (data) {
+                if (data.data.success) {
+                    app.successDeleteOliva = data.data.message;
+                    app.disabled = true;
+                    $timeout(function () {
+                        $location.path('/registruOlive/');
+                        app.successDeleteOliva = false;
+
+                    }, 2000);
+
+                } else {
+                    app.errorMsgDeleteOliva = data.data.message;
+                    $timeout(function () {
+                        $location.path('/');
+                        app.successDeleteOliva = false;
+
+                    }, 2000);
+
+                }
+            });
+        };
 
     });
 

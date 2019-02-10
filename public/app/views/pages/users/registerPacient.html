@@ -6,7 +6,7 @@
 
   <form name="regPacForm" ng-submit="registerPac.regPacient(regData, regPacForm.$valid);">
 
-    <div class="row">
+    <div style="margin-top: 20px;" class="row">
       <div class="col-sm-12">
         <div style="width:30%;float: left;margin-right: 10px;">
           <label for="Nume">Nume / Prenume Pacient: <span style="color:#f00;">*</span> </label>
@@ -28,7 +28,7 @@
         </div>
 
 
-        <div style="width:100%;margin-right: 10px; margin-bottom: 10px;float: left;">
+        <div style="width:100%;margin: 20px 0;float: left;">
           <label for="Adresa">Adresa: <span style="color:#f00;">*</span></label>
           <input maxlength="70" type="text" class="form-control" name="adresa" placeholder="-" ng-model="registerPac.regData.adresa"
             autocomplete="off">

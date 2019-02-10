@@ -457,8 +457,26 @@
 <a class="btn btn-info btn-sm hidden-print" style="float:right;margin-bottom: 20px;" ng-click="Back()">Pagina
     Precedenta</a>
 
-
 </form>
+
+<button ng-show="main.authorized" type="button" ng-click="editOliva.deleteOliva();" class="btn btn-danger">Sterge
+    Oliva</button>
+<div class="row show-hide-message" ng-show="editOliva.successDeleteOliva">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-success">{{
+        editOliva.successDeleteOliva }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="editOliva.errorMsgDeleteOliva">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-danger">{{
+        editOliva.errorMsgDeleteOliva }}</div>
+</div>
+
 
 <br>
 <br>

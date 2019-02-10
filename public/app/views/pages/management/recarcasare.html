@@ -724,6 +724,24 @@ editRecarcasare.taxa_constatareForm.taxa_constatare.$valid)"
 
 </form>
 
+<button ng-show="main.authorized" type="button" ng-click="editRecarcasare.deleteRecarcasare();" class="btn btn-danger">Sterge
+    Recarcasare</button>
+<div class="row show-hide-message" ng-show="editRecarcasare.successDeleteRecarcasare">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-success">{{
+        editRecarcasare.successDeleteRecarcasare }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="editRecarcasare.errorMsgDeleteRecarcasare">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-danger">{{
+        editRecarcasare.errorMsgDeleteRecarcasare }}</div>
+</div>
+
 <br>
 <br>
 <br>

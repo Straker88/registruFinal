@@ -80,7 +80,6 @@ module.exports = function (router) {
                         res.json({ success: false, message: 'Parola introdusa nu este corecta' });
                     }
                     else {
-                        console.log(user.username + ' ' + 'user /authenticate\n', userLogged.username + ' ' + 'userLogged /authenticate\n', token + ' ' + 'token\n')
                         res.send({ success: true, message: 'Utilizator autentificat', token: token, username: user.username, permission: user.permission });
                     }
                 });
@@ -91,13 +90,11 @@ module.exports = function (router) {
 
     router.post('/me', function (req, res) {
         res.send(req.user);
-        console.log(req.user + ' ' + 'user from /me\n')
     });
 
     router.get('/permission', function (req, res) {
         //req.session.passport.user
         var utilizator = req.user
-        console.log(utilizator.username + ' ' + 'utilizator from /permission\n')
         res.send({ success: true, permission: utilizator.permission, usernamePermission: utilizator.username });
     });
 
@@ -109,7 +106,6 @@ module.exports = function (router) {
         Pacient.find({ cnp: req.body.cnp }).select('_id cabinet').exec(function (err, pacient_existent) {
             if (err) throw err;
             if (!pacient_existent) {
-                console.log("Eroare Pacient Existent")
             }
             else if (pacient_existent.length > 0) {
 
@@ -707,7 +703,7 @@ module.exports = function (router) {
             User.findOne({ username: req.user.username }, function (err, mainUser) {
                 if (err) throw err;
                 if (!mainUser) {
-                    res.json({ success: false, message: 'No user found' });
+                    res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
                 } else {
                     if (mainUser.permission === 'admin' || mainUser.permission === 'moderator' || mainUser.permission === 'user') {
                         if (!users) {
@@ -716,7 +712,7 @@ module.exports = function (router) {
                             res.json({ success: true, users: users, permission: mainUser.permission, currentUser: mainUser });
                         }
                     } else {
-                        res.json({ success: false, message: 'Insufficient Permissions' });
+                        res.json({ success: false, message: 'Permisiuni Insuficiente' });
                     }
                 }
             });
@@ -1006,6 +1002,8 @@ module.exports = function (router) {
         });
     });
 
+
+
     router.get('/registruRecarcasari', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
@@ -1091,6 +1089,26 @@ module.exports = function (router) {
             }
         });
     });
+
+    router.delete('/service/:id', function (req, res) {
+        var deletedService = req.params.id;
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
+            if (err) throw err;
+            if (!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                if (mainUser.permission !== 'admin') {
+                    res.json({ success: false, message: 'Nu ai permisiunile necesare' });
+                } else {
+                    Service.findByIdAndRemove({ _id: deletedService }, function (err) {
+                        if (err) throw err;
+                        res.json({ success: true, message: 'Comanda Service stearsa cu succes' });
+                    });
+                }
+            }
+        });
+    });
+
     router.get('/recarcasare/:id', function (req, res) {
         var idRecarcasare = req.params.id;
         Recarcasare.findOne({ _id: idRecarcasare }, function (err, recarcasare) {
@@ -1104,6 +1122,26 @@ module.exports = function (router) {
             }
         });
     });
+
+    router.delete('/recarcasare/:id', function (req, res) {
+        var deletedRecarcasare = req.params.id;
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
+            if (err) throw err;
+            if (!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                if (mainUser.permission !== 'admin') {
+                    res.json({ success: false, message: 'Nu ai permisiunile necesare' });
+                } else {
+                    Recarcasare.findByIdAndRemove({ _id: deletedRecarcasare }, function (err) {
+                        if (err) throw err;
+                        res.json({ success: true, message: 'Comanda Recarcasare stearsa cu succes' });
+                    });
+                }
+            }
+        });
+    });
+
 
     router.get('/oliva/:id', function (req, res) {
         var idOliva = req.params.id;
@@ -1119,6 +1157,26 @@ module.exports = function (router) {
         });
     });
 
+    router.delete('/oliva/:id', function (req, res) {
+        var deletedOliva = req.params.id;
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
+            if (err) throw err;
+            if (!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                if (mainUser.permission !== 'admin') {
+                    res.json({ success: false, message: 'Nu ai permisiunile necesare' });
+                } else {
+                    Oliva.findByIdAndRemove({ _id: deletedOliva }, function (err) {
+                        if (err) throw err;
+                        res.json({ success: true, message: 'Comanda Oliva stearsa cu succes' });
+                    });
+                }
+            }
+        });
+    });
+
+
     router.get('/ite/:id', function (req, res) {
         var idIte = req.params.id;
         Ite.findOne({ _id: idIte }, function (err, ite) {
@@ -1129,6 +1187,25 @@ module.exports = function (router) {
             } else {
                 res.json({ success: true, ite: ite });
 
+            }
+        });
+    });
+
+    router.delete('/ite/:id', function (req, res) {
+        var deletedIte = req.params.id;
+        User.findOne({ username: req.user.username }, function (err, mainUser) {
+            if (err) throw err;
+            if (!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                if (mainUser.permission !== 'admin') {
+                    res.json({ success: false, message: 'Nu ai permisiunile necesare' });
+                } else {
+                    Ite.findByIdAndRemove({ _id: deletedIte }, function (err) {
+                        if (err) throw err;
+                        res.json({ success: true, message: 'Comanda ITE stearsa cu succes' });
+                    });
+                }
             }
         });
     });
@@ -2973,7 +3050,7 @@ module.exports = function (router) {
                 res.json({ success: false, message: 'No user was found' });
             } else {
                 if (mainUser.permission !== 'admin') {
-                    res.json({ success: false, message: 'Insufficient Permissions' });
+                    res.json({ success: false, message: 'Permisiuni Insuficiente' });
                 } else {
                     User.findOneAndRemove({ username: deletedUser }, function (err, user) {
                         if (err) throw err;
@@ -2991,19 +3068,19 @@ module.exports = function (router) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser) {
-                res.json({ success: false, message: 'No user found' });
+                res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
             } else {
                 if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
                     User.findOne({ _id: editUser }, function (err, user) {
                         if (err) throw err;
                         if (!user) {
-                            res.json({ success: false, message: 'No user found' });
+                            res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
                         } else {
                             res.json({ success: true, user: user });
                         }
                     });
                 } else {
-                    res.json({ success: false, message: 'Insufficient Permissions' });
+                    res.json({ success: false, message: 'Permisiuni Insuficiente' });
                 }
             }
         });
@@ -3014,33 +3091,32 @@ module.exports = function (router) {
         var editUser = req.body._id;
         if (req.body.name) var newName = req.body.name;
         if (req.body.username) var newUsername = req.body.username;
-        // if (req.body.email) var newEmail = req.body.email;
         if (req.body.permission) var newPermission = req.body.permission;
 
         User.findOne({ username: req.user.username }, function (err, mainUser) {
             if (err) throw err;
             if (!mainUser) {
-                res.json({ success: false, message: 'No user found' });
+                res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
             } else {
                 if (newName) {
                     if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
                         User.findOne({ _id: editUser }, function (err, user) {
                             if (err) throw err;
                             if (!user) {
-                                res.json({ success: false, message: 'No user found' });
+                                res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
                             } else {
                                 user.name = newName;
                                 user.save(function (err) {
                                     if (err) {
                                         res.json({ success: false, message: 'Nu s-a putut salva' });
                                     } else {
-                                        res.json({ success: true, message: 'Name has been updated!' });
+                                        res.json({ success: true, message: 'Numele a most modificat cu succes!' });
                                     }
                                 });
                             }
                         });
                     } else {
-                        res.json({ success: false, message: 'Insufficient Permissions' });
+                        res.json({ success: false, message: 'Permisiuni Insuficiente' });
                     }
                 }
 
@@ -3049,21 +3125,21 @@ module.exports = function (router) {
                         User.findOne({ _id: editUser }, function (err, user) {
                             if (err) throw err;
                             if (!user) {
-                                res.json({ success: false, message: 'No user found' });
+                                res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
                             } else {
                                 user.username = newUsername;
                                 user.save(function (err) {
                                     if (err) {
                                         res.json({ success: false, message: 'Nu s-a putut salva' });
                                     } else {
-                                        res.json({ success: true, message: 'Username has been updated!' });
+                                        res.json({ success: true, message: 'Username a most modificat cu succes!' });
                                     }
                                 });
                             }
                         });
 
                     } else {
-                        res.json({ success: false, message: 'Insufficient Permissions' });
+                        res.json({ success: false, message: 'Permisiuni Insuficiente' });
                     }
                 }
 
@@ -3072,19 +3148,19 @@ module.exports = function (router) {
                         User.findOne({ _id: editUser }, function (err, user) {
                             if (err) throw err;
                             if (!user) {
-                                res.json({ success: false, message: 'No user found' });
+                                res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
                             } else {
                                 if (newPermission === 'user') {
                                     if (user.permission === 'admin') {
                                         if (mainUser.permission !== 'admin') {
-                                            res.json({ success: false, message: 'Insufficient Permissions. You must be an admin to downgrade another admin' });
+                                            res.json({ success: false, message: 'Permisiuni Insuficiente. You must be an admin to downgrade another admin' });
                                         } else {
                                             user.permission = newPermission;
                                             user.save(function (err) {
                                                 if (err) {
                                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                                 } else {
-                                                    res.json({ success: true, message: 'Permissions updated!' });
+                                                    res.json({ success: true, message: 'Permisiuni modificate cu succes!' });
                                                 }
                                             });
                                         }
@@ -3094,22 +3170,22 @@ module.exports = function (router) {
                                             if (err) {
                                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                                             } else {
-                                                res.json({ success: true, message: 'Permissions updated!' });
+                                                res.json({ success: true, message: 'Permisiuni modificate cu succes!' });
                                             }
                                         });
                                     }
                                 }
-                                if (newPermission === 'moderator') {
+                                if (newPermission === 'service' || newPermission === 'asamblare' || newPermission === 'plastie' || newPermission === 'colete') {
                                     if (user.permission === 'admin') {
                                         if (mainUser.permission !== 'admin') {
-                                            res.json({ success: false, message: 'Insufficient Permissions. You must be an admin to downgrade another admin' });
+                                            res.json({ success: false, message: 'Permisiuni Insuficiente. Doar "Admin" poate modifica.' });
                                         } else {
                                             user.permission = newPermission;
                                             user.save(function (err) {
                                                 if (err) {
                                                     res.json({ success: false, message: 'Nu s-a putut salva' });
                                                 } else {
-                                                    res.json({ success: true, message: 'Permissions updated!' });
+                                                    res.json({ success: true, message: 'Permisiuni modificate cu succes!' });
                                                 }
                                             });
                                         }
@@ -3119,7 +3195,7 @@ module.exports = function (router) {
                                             if (err) {
                                                 res.json({ success: false, message: 'Nu s-a putut salva' });
                                             } else {
-                                                res.json({ success: true, message: 'Permissions updated!' });
+                                                res.json({ success: true, message: 'Permisiuni modificate cu succes!' });
                                             }
                                         });
                                     }
@@ -3135,14 +3211,14 @@ module.exports = function (router) {
                                             }
                                         });
                                     } else {
-                                        res.json({ success: false, message: 'Insufficient permissions. You must be an admin to upgrade someone to admin level' });
+                                        res.json({ success: false, message: 'Permisiuni Insuficiente. Doar "Admin" poate modifica.' });
                                     }
                                 }
                             }
                         });
 
                     } else {
-                        res.json({ success: false, message: 'Insufficient Permissions' });
+                        res.json({ success: false, message: 'Permisiuni Insuficiente' });
                     }
                 }
             }

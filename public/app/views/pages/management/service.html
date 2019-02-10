@@ -701,12 +701,29 @@ editService.taxa_constatareForm.taxa_constatare.$valid)"
 </div>
 <br>
 <br>
-
 <a class="btn btn-info btn-sm hidden-print" style="float:right;margin-bottom: 20px;" ng-click="Back()">Pagina
     Precedenta</a>
 
 
 </form>
+
+<button ng-show="main.authorized" type="button" ng-click="editService.deleteService();" class="btn btn-danger">Sterge
+    Service</button>
+<div class="row show-hide-message" ng-show="editService.successDeleteService">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-success">{{
+        editService.successDeleteService }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="editService.errorMsgDeleteService">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-danger">{{
+        editService.errorMsgDeleteService }}</div>
+</div>
 
 <br>
 <br>

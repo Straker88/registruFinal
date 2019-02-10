@@ -104,7 +104,7 @@ angular.module('iteControllers', ['userServices'])
 
 
 
-    .controller('editIteCtrl', function ($scope, $routeParams, Ite, $timeout) {
+    .controller('editIteCtrl', function ($scope, $routeParams, Ite, $timeout, $location) {
         var app = this;
         var eroare = 'Campul trebuie sa contina cel putin 1 carcater.';
 
@@ -636,6 +636,32 @@ angular.module('iteControllers', ['userServices'])
                 app.disabled = true;
             }
 
+        };
+
+        app.deleteIte = function () {
+            app.errorMsgDeleteIte = false;
+            var deletedIte = app.currentIte;
+
+            Ite.deleteIte(deletedIte).then(function (data) {
+                if (data.data.success) {
+                    app.successDeleteIte = data.data.message;
+                    app.disabled = true;
+                    $timeout(function () {
+                        $location.path('/registruIte/');
+                        app.successDeleteIte = false;
+
+                    }, 2000);
+
+                } else {
+                    app.errorMsgDeleteIte = data.data.message;
+                    $timeout(function () {
+                        $location.path('/');
+                        app.successDeleteIte = false;
+
+                    }, 2000);
+
+                }
+            });
         };
 
 

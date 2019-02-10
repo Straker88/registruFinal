@@ -77,7 +77,8 @@ angular.module('serviceControllers', ['userServices'])
     })
 
 
-    .controller('editServiceCtrl', function ($scope, $routeParams, Service, $timeout) {
+
+    .controller('editServiceCtrl', function ($scope, $routeParams, Service, $timeout, $location) {
         var app = this;
         var eroare = 'Campul trebuie sa contina cel putin 1 carcater.';
 
@@ -87,7 +88,6 @@ angular.module('serviceControllers', ['userServices'])
 
         Service.getService($routeParams.id).then(function (data) {
             if (data.data.success) {
-
 
                 //              1.Cabinet ----------------------------------------------
                 $scope.newData_Inregistrare = data.data.service.data_inregistrare;
@@ -913,6 +913,33 @@ angular.module('serviceControllers', ['userServices'])
                 app.disabled = true;
             }
 
+        };
+
+
+        app.deleteService = function () {
+            app.errorMsgDeleteService = false;
+            var deletedService = app.currentService;
+
+            Service.deleteService(deletedService).then(function (data) {
+                if (data.data.success) {
+                    app.successDeleteService = data.data.message;
+                    app.disabled = true;
+                    $timeout(function () {
+                        $location.path('/registruService/');
+                        app.successDeleteService = false;
+
+                    }, 2000);
+
+                } else {
+                    app.errorMsgDeleteService = data.data.message;
+                    $timeout(function () {
+                        $location.path('/');
+                        app.successDeleteService = false;
+
+                    }, 2000);
+
+                }
+            });
         };
 
 

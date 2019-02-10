@@ -729,3 +729,11 @@ td {
   color: #337ab7;
   margin-right: 5px;
 }
+
+ul.navbar-nav > li:hover {
+  background-color: #337ab7;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  background-color: #337ab7 ;
+  border-radius: 0;
+}

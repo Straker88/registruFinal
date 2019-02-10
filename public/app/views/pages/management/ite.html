@@ -360,7 +360,7 @@
 <div class="row hidden-print">
     <h3 class="hidden-print" style="color:#337ab7;border-bottom:1px solid;">Completeaza Laborator Asamblare |
         Nume Pacient:
-        <input style="border: none;width: 35%;" ng-model="newNume" readonly></h3>
+        <input style="border: none;width: 35%;" ng-model="Nume" readonly></h3>
 
     <br>
 
@@ -466,6 +466,25 @@
 
 
 </form>
+
+<button ng-show="main.authorized" type="button" ng-click="editIte.deleteIte();" class="btn btn-danger">Sterge
+    ITE</button>
+<div class="row show-hide-message" ng-show="editIte.successDeleteIte">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-success">{{
+        editIte.successDeleteIte }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="editIte.errorMsgDeleteIte">
+    <div style="width: 40%;
+    padding: 9px;
+    text-align: center;
+    margin: 0 auto;" class="alert alert-danger">{{
+        editIte.errorMsgDeleteIte }}</div>
+</div>
+
 
 <br>
 <br>

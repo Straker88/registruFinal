@@ -52,12 +52,9 @@ angular.module('mainController', ['authServices', 'userServices'])
 
 
         $rootScope.$on('$routeChangeStart', function () {
-            // if (!app.checkingSession) app.checkSession();
 
             if (Auth.isLoggedIn()) {
-                console.log("Auth.isLoggedIn")
                 Auth.getUser().then(function (data) {
-                    console.log(data.data.username + ' ' + 'Auth.getUser Main Ctrl')
                     if (data.data.username === undefined) {
                         app.isLoggedIn = false;
                         Auth.logout();
@@ -76,7 +73,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                             } else if (data.data.permission === 'plastie') {
                                 app.plastie = true;
                                 app.loadme = true;
-                            } else if (data.data.usernamePermission === 'DepColete' && data.data.permission === 'colete') {
+                            } else if (data.data.permission === 'colete') {
                                 app.colete = true;
                                 app.loadme = true;
                             } else if (data.data.permission === 'asamblare') {
@@ -113,10 +110,10 @@ angular.module('mainController', ['authServices', 'userServices'])
 
                     $timeout(function () {
                         location.reload();
-                        $location.path('/'); // Redirect to home
-                        app.loginData = ''; // Clear login form
-                        app.successMsg = false; // CLear success message
-                        app.disabled = false; // Enable form on submission
+                        $location.path('/');
+                        app.loginData = '';
+                        app.successMsg = false;
+                        app.disabled = false;
 
                         // if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel') {
                         //     // location.reload();

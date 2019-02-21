@@ -12,7 +12,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/about.html'
             })
 
-            .when('/register570', {
+            .when('/registerUtilizator', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
                 controllerAs: 'register',
@@ -92,11 +92,14 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true,
                 permission: ['admin', 'service']
             })
+            .when('/raportareCabinete', {
+                templateUrl: 'app/views/pages/management/raportareCabinete.html',
+                authenticated: false,
+                permission: ['admin']
+            })
             .when('/raportareTehnic', {
                 templateUrl: 'app/views/pages/management/raportareTehnic.html',
-                controller: 'raportareTehnicCtrl',
-                controllerAs: 'raportareTehnic',
-                authenticated: true,
+                authenticated: false,
                 permission: ['admin']
             })
             .when('/registruService', {

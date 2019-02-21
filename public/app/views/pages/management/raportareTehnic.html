@@ -3,94 +3,125 @@
 <script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="assets/js/raportareTehnic.js"></script>
 <script type="text/javascript" src="assets/locales/bootstrap-datepicker.ro.min.js"></script>
-<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
 
 <div class="page-header">
-    <h1 style="color: #1789ab;">Registru Service General</h1>
-</div>
-
-<div class="jumbotron text-center" ng-show="registruServ.loading">
-    <p>Se incarca...</p>
-</div>
-<br>
-<div style="font-size:12px; line-height:2.3em;">
-
-    <table id="tabel" class="display" style="width:100%">
-        <thead id="head2">
-            <tr>
-                <th style="width: 60px;">Executant</th>
-                <th>Nr</th>
-                <!-- <th>Inregistrat</th>
-                <th>Nume</th>
-                <th>Denumire Aparat</th>
-                <th>Defectiune</th>
-                <th style="width: 120px;">Intrat Service</th>
-                <th style="width: 120px;">Finalizat Reparatie</th>
-                <th style="width: 120px;">Iesit Service</th>
-                <th style="width: 60px;">F/G</th> -->
-                <!-- <th style="width:20px;pointer-events: none;border-bottom: none;"></th>
-                <th style="width:20px;pointer-events: none;"></th> -->
-            </tr>
-        </thead>
-
-        <thead class="filters">
-            <tr>
-                <th class="FilterinputSearch FilterinputSearchNr">Nr.</th>
-                <th class="FilterinputSearch">Nr</th>
-                <!-- <th class="daterange">
-                    <div class="input-prepend input-group daterange"> <span style="background: #fff;letter-spacing: 0.1em;">Calendar
-                            <i class="glyphicon glyphicon-calendar fa fa-calendar daterange"></i></span>
-                        <p><input class="inputDateRegistruLabServ btn btn-primary btn-sm" name="reportrange" id="reportrange"
-                                readonly></p>
-                    </div>
-                </th>
-                <th class="FilterinputSearch">Nume - Prenume</th>
-                <th class="FilterinputSearch">Denumire Aparat</th>
-                <th class="FilterinputSearch">Defectiune Reclamata</th>
-                <th style="padding-top: 24px;">
-                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
-                        type="text" placeholder="Luna" id="pickyDate" />
-                </th>
-                <th style="padding-top: 24px;">
-                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px;max-width: 120px;text-align: center;"
-                        type="text" placeholder="Luna" id="pickyDate1" />
-                </th>
-
-                <th style="padding-top: 24px;">
-                    <input class="btn btn-primary btn-sm luna" style="margin-bottom: 5px; max-width: 120px;text-align: center;"
-                        type="text" placeholder="Luna" id="pickyDate2" />
-                </th>
-                <th class="FilterinputSearch FilterinputSearchNr">F/G</th> -->
-                <!-- <th style="width:20px;pointer-events: none;"></th>
-                <th style="width:20px;pointer-events: none;"></th> -->
-
-
-            </tr>
-        </thead>
-
-        <tbody>
-        </tbody>
-
-        <tfoot>
-            <tr>
-                <th style="width: 60px;">Executant</th>
-                <th>Nr</th>
-                <!-- <th>Inregistrat</th>
-                <th>Nume</th>
-                <th>Denumire Aparat</th>
-                <th>Defectiune</th>
-                <th>Intrat Service</th>
-                <th>Finalizat Reparatie</th>
-                <th>Iesit Service</th>
-                <th style="width: 60px;">F/G</th> -->
-                <!-- <th style="width:20px;pointer-events: none;"></th>
-                <th style="width:20px;pointer-events: none;"></th> -->
-            </tr>
-        </tfoot>
-
-    </table>
-    <div id="chart"></div>
+    <h1 style="color: #1789ab;">Raport Tehnic</h1>
 </div>
 
 <br>
-<br>
+<div ng-controller="raportareServiceCtrl as raportareTehnic">
+
+    <ul class="nav nav-tabs no-print" style="margin-bottom: 25px;">
+
+        <li role="presentation" ng-click="raportareTehnic.servicePhase();" ng-class="serviceTab">
+            <a href="#">Raport Service</a>
+        </li>
+        <li role="presentation" ng-click="raportareTehnic.plastiePhase();" ng-class="recarcasariTab">
+            <a href="#">Raport Plastie</a>
+        </li>
+        <li role="presentation" ng-click="raportareTehnic.olivePhase();" ng-class="oliveTab">
+            <a href="#">Raport Asamblare</a>
+        </li>
+    </ul>
+
+    <!-- Raport Service -->
+
+    <div ng-show="raportareTehnic.phase1">
+
+        <div class="form-group" style="float:left;width: 30%">
+            <label style="float: left;margin-right: 17px;padding-top: 7px;" for="filtru_luna">Luna:</label>
+            <select style="float:left; max-width:45%;margin-right: 8px;" class="form-control" id="filtru_luna">
+                <option value="01">Ianuarie
+                <option value="02">Februarie
+                <option value="03">Martie
+                <option value="04">Aprilie
+                <option value="05">Mai
+                <option value="06">Iunie
+                <option value="07">Iulie
+                <option value="08">August
+                <option value="09">Septembrie
+                <option value="10">Octombrie
+                <option value="11">Noiembrie
+                <option value="12">Decembrie
+            </select>
+            <button style="float:left;" id='refreshService' type="submit" class="btn btn-primary">Aplica</button>
+
+        </div>
+
+        <div style="font-size:12px; line-height:2.3em;">
+            <table id="tabelService" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="default_curs">Executant</th>
+                        <th class="default_curs">Service-uri</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+                <tfoot class="default_curs">
+                    <tr>
+                        <th>Executant</th>
+                        <th>Service-uri</th>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+        <br>
+        <br>
+    </div>
+
+
+    <!-- Raport Plastie -->
+
+    <div ng-show="raportareTehnic.phase2">
+
+        <div class="form-group" style="float:left;width: 30%">
+            <label style="float: left;margin-right: 17px;padding-top: 7px;" for="filtru_luna">Luna:</label>
+            <select style="float:left; max-width:45%;margin-right: 8px;" class="form-control" id="filtru_luna">
+                <option value="01">Ianuarie
+                <option value="02">Februarie
+                <option value="03">Martie
+                <option value="04">Aprilie
+                <option value="05">Mai
+                <option value="06">Iunie
+                <option value="07">Iulie
+                <option value="08">August
+                <option value="09">Septembrie
+                <option value="10">Octombrie
+                <option value="11">Noiembrie
+                <option value="12">Decembrie
+            </select>
+            <button style="float:left;" id='refreshPlastie ' type="submit" class="btn btn-primary">Aplica</button>
+
+        </div>
+
+        <div style="font-size:12px; line-height:2.3em;">
+            <table id="tabelPlastie" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="default_curs">Executant</th>
+                        <th class="default_curs">Olive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+                <tfoot class="default_curs">
+                    <tr>
+                        <th>Executant</th>
+                        <th>Olive</th>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+        <br>
+        <br>
+    </div>
+
+
+</div>

@@ -69,9 +69,13 @@
           <li>
             <a ng-show="main.asamblare || main.authorized" href="/registruRecarcasari">Registru Recarcasari</a>
           </li>
-          <!-- <li>
-            <a ng-show="main.authorized" href="/raportareTehnic">Raportare Tehnic</a>
-          </li> -->
+          <li>
+            <a href="/raportareCabinete">Raport Cabinete</a>
+          </li>
+          <li>
+            <a href="/raportareTehnic">Raport Tehnic</a>
+          </li>
+
           <li>
             <a ng-show="main.service" href="/piese">Piese</a>
           </li>
@@ -81,16 +85,20 @@
             <ul class="dropdown-menu">
               <li>
 
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruServiceCabinet/{{main.username}}">Service</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
+                  href="/registruServiceCabinet/{{main.username}}">Service</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
+                  href="/registruRecarcasariCabinet/{{main.username}}">Recarcasari</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruOliveCabinet/{{main.username}}">Olive</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
+                  href="/registruOliveCabinet/{{main.username}}">Olive</a>
               </li>
               <li>
-                <a ng-show="main.isLoggedIn && !main.colete && !main.service" href="/registruIteCabinet/{{main.username}}">ITE</a>
+                <a ng-show="main.isLoggedIn && !main.colete && !main.service"
+                  href="/registruIteCabinet/{{main.username}}">ITE</a>
               </li>
             </ul>
           </div>
@@ -114,7 +122,8 @@
             <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Logout</a>
           </li>
           <li>
-            <span ng-show="main.isLoggedIn" style="text-align: right; padding: 15px 0 15px 0; display: block; cursor: not-allowed;">Utilizator
+            <span ng-show="main.isLoggedIn"
+              style="text-align: right; padding: 15px 0 15px 0; display: block; cursor: not-allowed;">Utilizator
               : {{main.username}}</span>
           </li>
         </ul>

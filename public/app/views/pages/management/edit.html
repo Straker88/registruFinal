@@ -48,7 +48,7 @@
     <div ng-class="{ 'has-success': (edit.usernameForm.username.$valid && !edit.usernameForm.username.$pristine), 'has-error': (!edit.usernameForm.username.$valid && !edit.usernameForm.username.$pristine) || (!edit.usernameForm.username.$valid && edit.usernameForm.$submitted) }">
 
         <label>Username:</label>
-        <input class="form-control" type="text" name="username" placeholder="please enter username" ng-model="newUsername"
+        <input disabled class="form-control" type="text" name="username" placeholder="please enter username" ng-model="newUsername"
             ng-minlength="3" ng-maxlength="25" ng-pattern="/^(\w+\s?)*\s*$/" required>
         <p class="help-block" ng-show="(!edit.usernameForm.username.$pristine && edit.usernameForm.username.$error.required) || (edit.usernameForm.$submitted && edit.usernameForm.username.$error.required)">This
             field is required</p>
@@ -59,7 +59,7 @@
     </div>
     <br>
 
-    <button ng-disabled="edit.disabled" class="btn btn-primary" type="submit">Salveaza</button>
+    <!-- <button ng-disabled="edit.disabled" class="btn btn-primary" type="submit">Salveaza</button> -->
 </form>
 
 

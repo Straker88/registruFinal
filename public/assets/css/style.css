@@ -737,3 +737,6 @@ ul.navbar-nav > li:hover {
   background-color: #337ab7 ;
   border-radius: 0;
 }
+.default_curs{
+  cursor: default;
+}

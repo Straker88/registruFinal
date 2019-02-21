@@ -11,7 +11,6 @@ angular.module('managementController', [])
         app.limit = 100;
         app.searchLimit = 0;
 
-
         //              User Controller ----------------------------------------------
         User.getUsers().then(function (data) {
             if (data.data.success) {
@@ -327,16 +326,6 @@ angular.module('managementController', [])
         app.editPacientAccess = false;
         app.deletePacientAccess = false;
     })
-
-    .controller('raportareTehnicCtrl', function () {
-        var app = this;
-        app.accessDenied = true;
-        app.errorMsg = false;
-        app.editPacientAccess = true;
-        app.deletePacientAccess = false;
-    })
-
-
 
     .controller('editProfilPacientCtrl', function ($route, $scope, $routeParams, Pacient, $timeout) {
         var app = this;
@@ -729,4 +718,3 @@ angular.module('managementController', [])
 
 
     })
-

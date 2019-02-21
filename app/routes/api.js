@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var secret = 'clarfontehnic';
 var moment = require('moment');
 var passport = require('passport');
+var _ = require('lodash');
 require('log-timestamp');
 
 module.exports = function (router) {
@@ -694,10 +695,277 @@ module.exports = function (router) {
         });
     });
 
-    //Permissions ----------------------------------------------
+
+    function getUsers() {
+        return new Promise((resolve) => {
+            User.find({ permission: 'user' }).select('username').exec(function (err, user) {
+                return resolve(user)
+            })
+        });
+    }
+    function getTehnic() {
+        return new Promise((resolve) => {
+            User.find({ permission: 'service' }).select('username').exec(function (err, user) {
+                return resolve(user)
+            })
+        });
+    }
+
+    function getServices() {
+        return new Promise((resolve) => {
+            Service.find({}).select('data_inregistrare cabinet finalizat_reparatie executant_reparatie').exec(function (err, service) {
+                return resolve(service)
+
+            })
+        });
+    }
+    function getRecarcasari() {
+        return new Promise((resolve) => {
+            Recarcasare.find({}).select('data_inregistrare cabinet finalizat_recarcasare executant_recarcasare').exec(function (err, recarcasare) {
+                return resolve(recarcasare)
+
+            })
+        });
+    }
+    function getOlive() {
+        return new Promise((resolve) => {
+            Oliva.find({}).select('data_inregistrare cabinet material_oliva finalizat_oliva executant_oliva').exec(function (err, oliva) {
+                return resolve(oliva)
+
+            })
+        });
+    }
+    function getIte() {
+        return new Promise((resolve) => {
+            Ite.find({}).select('data_inregistrare cabinet finalizat_ite executant_ite').exec(function (err, ite) {
+                return resolve(ite)
+
+            })
+        });
+    }
+
+    router.get('/raportareTehnic', function (req, res) {
+        const data_luna = req.query.dataFiltru;
+
+
+        getOlive().then(olive => {
+            getServices().then(services => {
+                getTehnic().then(users => {
+                    let comenzi = []
+                    // console.log(olive)
+                    users.map(user => {
+
+                        var serv = services.filter(services => {
+                            return user.username === services.executant_reparatie
+                        })
+                        var oliv = olive.filter(olive => {
+                            return user.username === olive.executant_oliva
+                        })
+                        console.log(oliv)
+                        comenzi.push({ serv, oliv })
+                    })
+
+                    let raportService = []
+                    let raportRecarcasari = []
+                    let raportPlastie = []
+                    let raportIte = []
+
+                    comenzi.map(item => {
+                        newService = item.serv
+                        newOliva = item.oliv
+
+                        if (newService.length > 0) {
+                            const executant = newService[0].executant_reparatie
+
+                            let data_Comanda = []
+                            newService.map(i => {
+                                var input = i.data_inregistrare;
+
+                                var fields = input.split('/');
+
+                                var luna = fields[1];
+                                if (luna === data_luna) {
+                                    data_Comanda.push(luna)
+                                }
+
+                            })
+                            let counterServ = data_Comanda.length
+                            raportService.push({ executant, counterServ })
+                        }
+                        if (newOliva.length > 0) {
+                            const executant = newOliva[0].executant_oliva
+
+                            let data_Comanda = []
+                            newOliva.map(i => {
+                                var input = i.data_inregistrare;
+
+                                var fields = input.split('/');
+
+                                var luna = fields[1];
+                                if (luna === data_luna) {
+                                    data_Comanda.push(luna)
+                                }
+
+                            })
+                            let counterOliva = data_Comanda.length
+                            raportPlastie.push({ executant, counterOliva })
+                        }
+
+
+
+                    })
+
+
+
+
+
+
+
+                    res.json({ raportService: raportService, raportPlastie: raportPlastie })
+                })
+            })
+        })
+    });
+
+    router.get('/raportareCabinete', function (req, res) {
+        const data_luna = req.query.dataFiltru;
+
+        getOlive().then(olive => {
+            getIte().then(ite => {
+                getRecarcasari().then(recarcasari => {
+                    getServices().then(services => {
+                        getUsers()
+                            .then(users => {
+                                let comenzi = []
+
+                                users.map(user => {
+
+                                    var serv = services.filter(services => {
+                                        return user.username === services.cabinet
+                                    })
+                                    var rec = recarcasari.filter(recarcasari => {
+                                        return user.username === recarcasari.cabinet
+                                    })
+                                    var oliv = olive.filter(olive => {
+                                        return user.username === olive.cabinet
+                                    })
+                                    var it = ite.filter(ite => {
+                                        return user.username === ite.cabinet
+                                    })
+
+
+                                    comenzi.push({ serv, rec, oliv, it })
+                                })
+
+                                let raportSer = []
+                                let raportRec = []
+                                let raportOliv = []
+                                let raportIte = []
+
+                                comenzi.map(item => {
+                                    newService = item.serv
+                                    newRecarcasare = item.rec
+                                    newOliva = item.oliv
+                                    newIte = item.it
+                                    if (newService.length > 0) {
+                                        const cabinet = newService[0].cabinet
+
+                                        let data_Comanda = []
+                                        newService.map(i => {
+                                            var input = i.data_inregistrare;
+
+                                            var fields = input.split('/');
+
+                                            var luna = fields[1];
+                                            if (luna === data_luna) {
+                                                data_Comanda.push(luna)
+                                            }
+
+                                        })
+                                        let counterServ = data_Comanda.length
+                                        raportSer.push({ cabinet, counterServ })
+                                    }
+                                    if (newRecarcasare.length > 0) {
+                                        const cabinet = newRecarcasare[0].cabinet
+                                        let data_Comanda = []
+                                        newRecarcasare.map(i => {
+                                            var input = i.data_inregistrare;
+
+                                            var fields = input.split('/');
+
+                                            var luna = fields[1];
+                                            if (luna === data_luna) {
+                                                data_Comanda.push(luna)
+                                            }
+
+                                        })
+                                        let counterRec = data_Comanda.length
+                                        raportRec.push({ cabinet, counterRec })
+                                    }
+                                    if (newOliva.length > 0) {
+                                        const cabinet = newOliva[0].cabinet
+
+                                        let data_Comanda = []
+                                        newOliva.map(i => {
+                                            var input = i.data_inregistrare;
+                                            var mat_oliva = i.material_oliva
+                                            var fields = input.split('/');
+
+                                            var luna = fields[1];
+                                            if (luna === data_luna) {
+                                                data_Comanda.push({ luna, mat_oliva })
+                                            }
+
+                                        })
+                                        let counterElastica = data_Comanda.filter(function (x) {
+                                            return x.mat_oliva === "Elastica";
+                                        }).length;
+                                        let counterDura = data_Comanda.filter(function (x) {
+                                            return x.mat_oliva === "Dura";
+                                        }).length;
+                                        let counterOliv = data_Comanda.length
+
+                                        raportOliv.push({ cabinet, counterOliv, counterElastica, counterDura })
+                                    }
+                                    if (newIte.length > 0) {
+                                        const cabinet = newIte[0].cabinet
+                                        let data_Comanda = []
+                                        newIte.map(i => {
+                                            var input = i.data_inregistrare;
+
+                                            var fields = input.split('/');
+
+                                            var luna = fields[1];
+                                            if (luna === data_luna) {
+                                                data_Comanda.push(luna)
+                                            }
+
+                                        })
+                                        let counterIte = data_Comanda.length
+                                        raportIte.push({ cabinet, counterIte })
+                                    }
+                                })
+                                let raport1 = _.map(raportSer, function (obj) {
+                                    return _.assign(obj, _.find(raportRec, { cabinet: obj.cabinet }));
+                                });
+                                let raport2 = _.map(raport1, function (obj) {
+                                    return _.assign(obj, _.find(raportOliv, { cabinet: obj.cabinet }));
+                                });
+                                let raportFinal = _.map(raport2, function (obj) {
+                                    return _.assign(obj, _.find(raportIte, { cabinet: obj.cabinet }));
+                                });
+                                res.json(raportFinal)
+                            })
+                    })
+                })
+            })
+        })
+
+    });
+
 
     //Users ----------------------------------------------
-    router.get('/manangement', function (req, res) {
+    router.get('/management', function (req, res) {
         User.find({}, function (err, users) {
             if (err) throw err;
             User.findOne({ username: req.user.username }, function (err, mainUser) {
@@ -917,7 +1185,6 @@ module.exports = function (router) {
         });
     });
 
-
     router.get('/profilPacient/:id', function (req, res) {
         var pacID = req.params.id;
         var username = req.user.username;
@@ -946,14 +1213,12 @@ module.exports = function (router) {
                     if (err) throw err;
                     Recarcasare.find({ "pacient_id": pacient._id, "cabinet": username }, function (err, recarcasare) {
                         if (err) throw err;
-
                         Service.find({ "pacient_id": pacient._id, "cabinet": username }).select('nr_comanda_service data_inregistrare denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat predat_pacient').exec(function (err, service) {
                             if (err) throw err;
                             if (!service || !oliva) {
                                 res.json({ success: false, message: 'Nu s-au gasit service-uri sau olive' });
                             }
                             else {
-
                                 res.json({ success: true, service: service, oliva: oliva, ite: ite, recarcasare: recarcasare });
                             }
                         });

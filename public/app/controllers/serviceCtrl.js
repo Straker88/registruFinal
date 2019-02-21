@@ -76,6 +76,36 @@ angular.module('serviceControllers', ['userServices'])
         $scope.finalizat_service = new moment().format('DD/MM/YYYY');
     })
 
+    .controller('raportareServiceCtrl', function ($scope) {
+        var app = this;
+
+        app.servicePhase = function () {
+            service_loader();
+            $scope.serviceTab = 'active';
+            $scope.plastieTab = 'default';
+            $scope.asamblareTab = 'default';
+            app.phase1 = true;
+            app.phase2 = false;
+            app.phase3 = false;
+            app.errorMsg = false;
+
+        };
+        app.plastiePhase = function () {
+            plastie_loader();
+            $scope.serviceTab = 'default';
+            $scope.plastieTab = 'active';
+            $scope.asamblareTab = 'default';
+            app.phase1 = false;
+            app.phase2 = true;
+            app.phase3 = false;
+            app.errorMsg = false;
+
+        };
+
+
+
+    })
+
 
 
     .controller('editServiceCtrl', function ($scope, $routeParams, Service, $timeout, $location) {

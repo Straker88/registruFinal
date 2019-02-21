@@ -16,7 +16,7 @@ angular.module('userServices', [])
         };
 
         userFactory.getUsers = function () {
-            return $http.get('/api/manangement/');
+            return $http.get('/api/management/');
         };
 
         userFactory.getUser = function (id) {
@@ -30,7 +30,6 @@ angular.module('userServices', [])
         userFactory.editUser = function (id) {
             return $http.put('/api/edit', id);
         };
-
         return userFactory;
     })
 

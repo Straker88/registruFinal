@@ -1,6 +1,6 @@
 //--------------------- Registru Logistic
 $(document).ready(function () {
-    var oTable = $('#tabel').dataTable({
+    var oTable = $('#tabel').DataTable({
         "serverSide": false,
         "ajax": {
             "url": "api/registruLogistic_olive/",
@@ -13,6 +13,7 @@ $(document).ready(function () {
         "deferRender": true,
         "pageLength": 25,
         "searching": true,
+        'processing': true,
 
         columns: [
             { data: "nr_comanda_oliva" },
@@ -51,10 +52,12 @@ $(document).ready(function () {
                 }
             }],
         "order": [[0, 'desc']],
-        "oLanguage": {
+        'language': {
             "sSearch": "Cautare generala",
             "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-        }
+            'loadingRecords': '&nbsp;',
+            'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+        },
     });
 
     var startdate;

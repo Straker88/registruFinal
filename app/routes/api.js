@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 var secret = 'clarfontehnic';
 var moment = require('moment');
 var passport = require('passport');
-var _ = require('lodash');
+var _ = require('underscore');
 require('log-timestamp');
 
 module.exports = function (router) {
@@ -703,9 +703,9 @@ module.exports = function (router) {
             })
         });
     }
-    function getTehnic() {
+    function getTehnicUsers() {
         return new Promise((resolve) => {
-            User.find({ permission: 'service' }).select('username').exec(function (err, user) {
+            User.find({}).select('username permission').exec(function (err, user) {
                 return resolve(user)
             })
         });
@@ -747,81 +747,117 @@ module.exports = function (router) {
     router.get('/raportareTehnic', function (req, res) {
         const data_luna = req.query.dataFiltru;
 
+        getTehnicUsers().then(users => {
+            getIte().then(ite => {
+                getRecarcasari().then(recarcasari => {
+                    getOlive().then(olive => {
+                        getServices().then(services => {
+                            let comenzi = []
+                            users.map(user => {
 
-        getOlive().then(olive => {
-            getServices().then(services => {
-                getTehnic().then(users => {
-                    let comenzi = []
-                    // console.log(olive)
-                    users.map(user => {
+                                var serv = services.filter(services => {
+                                    return user.username === services.executant_reparatie
+                                })
+                                var oliv = olive.filter(olive => {
+                                    return user.username === olive.executant_oliva
+                                })
+                                var rec = recarcasari.filter(recarcasari => {
+                                    return user.username === recarcasari.executant_recarcasare
+                                })
+                                var it = ite.filter(ite => {
+                                    return user.username === ite.executant_ite
+                                })
 
-                        var serv = services.filter(services => {
-                            return user.username === services.executant_reparatie
-                        })
-                        var oliv = olive.filter(olive => {
-                            return user.username === olive.executant_oliva
-                        })
-                        console.log(oliv)
-                        comenzi.push({ serv, oliv })
-                    })
 
-                    let raportService = []
-                    let raportRecarcasari = []
-                    let raportPlastie = []
-                    let raportIte = []
+                                comenzi.push({ serv, oliv, rec, it })
+                            })
 
-                    comenzi.map(item => {
-                        newService = item.serv
-                        newOliva = item.oliv
+                            let raportFinal = []
 
-                        if (newService.length > 0) {
-                            const executant = newService[0].executant_reparatie
+                            comenzi.map(item => {
+                                newService = item.serv
+                                newOliva = item.oliv
+                                newRecarcasare = item.rec
+                                newIte = item.it
 
-                            let data_Comanda = []
-                            newService.map(i => {
-                                var input = i.data_inregistrare;
+                                if (newService.length > 0) {
+                                    const executant = newService[0].executant_reparatie
 
-                                var fields = input.split('/');
+                                    let data_Comanda = []
+                                    newService.map(i => {
+                                        var input = i.data_inregistrare;
 
-                                var luna = fields[1];
-                                if (luna === data_luna) {
-                                    data_Comanda.push(luna)
+                                        var fields = input.split('/');
+
+                                        var luna = fields[1];
+                                        if (luna === data_luna) {
+                                            data_Comanda.push(luna)
+                                        }
+
+                                    })
+                                    let counter = data_Comanda.length + ' ' + '(Service-uri)'
+                                    raportFinal.push({ executant, counter })
+                                }
+                                if (newOliva.length > 0) {
+                                    const executant = newOliva[0].executant_oliva
+
+                                    let data_Comanda = []
+                                    newOliva.map(i => {
+                                        var input = i.data_inregistrare;
+
+                                        var fields = input.split('/');
+
+                                        var luna = fields[1];
+                                        if (luna === data_luna) {
+                                            data_Comanda.push(luna)
+                                        }
+
+                                    })
+                                    let counter = data_Comanda.length + ' ' + '(Olive)'
+                                    raportFinal.push({ executant, counter })
+                                }
+                                if (newRecarcasare.length > 0) {
+                                    const executant = newRecarcasare[0].executant_recarcasare
+
+                                    let data_Comanda = []
+                                    newRecarcasare.map(i => {
+                                        var input = i.data_inregistrare;
+
+                                        var fields = input.split('/');
+
+                                        var luna = fields[1];
+                                        if (luna === data_luna) {
+                                            data_Comanda.push(luna)
+                                        }
+
+                                    })
+                                    let counter = data_Comanda.length + ' ' + '(Recarcasari)'
+                                    raportFinal.push({ executant, counter })
+                                }
+                                if (newIte.length > 0) {
+                                    const executant = newIte[0].executant_ite
+
+                                    let data_Comanda = []
+                                    newIte.map(i => {
+                                        var input = i.data_inregistrare;
+
+                                        var fields = input.split('/');
+
+                                        var luna = fields[1];
+                                        if (luna === data_luna) {
+                                            data_Comanda.push(luna)
+                                        }
+
+                                    })
+                                    let counter = data_Comanda.length + ' ' + '(Ite)'
+                                    raportFinal.push({ executant, counter })
                                 }
 
                             })
-                            let counterServ = data_Comanda.length
-                            raportService.push({ executant, counterServ })
-                        }
-                        if (newOliva.length > 0) {
-                            const executant = newOliva[0].executant_oliva
 
-                            let data_Comanda = []
-                            newOliva.map(i => {
-                                var input = i.data_inregistrare;
-
-                                var fields = input.split('/');
-
-                                var luna = fields[1];
-                                if (luna === data_luna) {
-                                    data_Comanda.push(luna)
-                                }
-
-                            })
-                            let counterOliva = data_Comanda.length
-                            raportPlastie.push({ executant, counterOliva })
-                        }
-
-
-
+                            res.json(raportFinal)
+                        })
                     })
-
-
-
-
-
-
-
-                    res.json({ raportService: raportService, raportPlastie: raportPlastie })
                 })
             })
         })

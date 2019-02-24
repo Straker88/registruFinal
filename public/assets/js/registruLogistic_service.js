@@ -2,7 +2,7 @@
 
 
 $(document).ready(function () {
-    var oTable = $('#tabel').dataTable({
+    var oTable = $('#tabel').DataTable({
         "ajax": {
             "url": "api/registruLogistic_service/",
             "dataType": "json",
@@ -14,6 +14,7 @@ $(document).ready(function () {
         "pageLength": 25,
         "searching": true,
         "pagination": true,
+        'processing': true,
         columns: [
             { data: "nr_comanda_service" },
             { data: "cabinet" },
@@ -45,10 +46,12 @@ $(document).ready(function () {
                 }
             }],
         "order": [[0, 'desc']],
-        "oLanguage": {
+        'language': {
             "sSearch": "Cautare generala",
             "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-        }
+            'loadingRecords': '&nbsp;',
+            'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+        },
     });
 
     var startdate;
@@ -165,26 +168,26 @@ $(document).ready(function () {
     });
 });
 
-    var endYear = new Date(new Date().getFullYear(), 11, 31);
+var endYear = new Date(new Date().getFullYear(), 11, 31);
 
-    $('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
-        clearBtn: true,
-        todayHighlight: true,
-        toggleActive: true,
-        endDate: endYear,
-        language: 'ro',
-        format: "mm/yyyy",
-        startView: "months",
-        minViewMode: "months",
-        maxViewMode: "years",
-    });
+$('#pickyDate, #pickyDate1, #pickyDate2, #pickyDate3').datepicker({
+    clearBtn: true,
+    todayHighlight: true,
+    toggleActive: true,
+    endDate: endYear,
+    language: 'ro',
+    format: "mm/yyyy",
+    startView: "months",
+    minViewMode: "months",
+    maxViewMode: "years",
+});
 
-    $("#fromdate").datepicker({
-        minViewMode: 1,
+$("#fromdate").datepicker({
+    minViewMode: 1,
 
-    }).on('changeDate', function (ev) {
-        $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
-    });
+}).on('changeDate', function (ev) {
+    $("#todate").datepicker("option", "minDate", ev.date.setMonth(ev.date.getMonth() + 1));
+});
 
 
 

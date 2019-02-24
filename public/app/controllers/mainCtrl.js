@@ -114,49 +114,6 @@ angular.module('mainController', ['authServices', 'userServices'])
                         app.loginData = '';
                         app.successMsg = false;
                         app.disabled = false;
-
-                        // if (app.username === 'Ciacan Iosif' || app.username === 'Nedelcu Daniel') {
-                        //     // location.reload();
-                        //     $location.path('/registruService/');
-                        //     app.loginData = {};
-                        //     app.successMsg = '';
-
-                        // }
-                        // else if (app.usernamePermission === 'Logistic' && app.permission === 'logistic') {
-                        //     // location.reload();
-                        //     $location.path('/registruLogistic_service/');
-                        //     app.loginData = {};
-                        //     app.successMsg = '';
-
-                        // }
-                        // else if (app.username === 'Cristi Ghiburcea') {
-                        //     // location.reload();
-                        //     $location.path('/registruIte/');
-                        //     app.loginData = {};
-                        //     app.successMsg = '';
-
-                        // }
-                        // else if (app.username === 'Chiritoiu Iuliana' || app.username === 'Adrian Ionescu') {
-                        //     // location.reload();
-                        //     $location.path('/registruOlive/');
-                        //     app.loginData = {};
-                        //     app.successMsg = '';
-
-                        // }
-                        // else if (app.username === 'Madalin Ion' || app.username === 'muscallu') {
-                        //     // location.reload();
-                        //     $location.path('/registruService/');
-                        //     app.loginData = {};
-                        //     app.successMsg = '';
-
-                        // }
-                        // else {
-                        //     location.reload();
-                        //     $location.path('/profil/' + app.username);
-                        //     app.loginData = {};
-                        //     app.successMsg = '';
-
-                        // }
                     }, 2000);
                 } else {
                     app.loading = false;

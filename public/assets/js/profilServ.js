@@ -2,7 +2,7 @@
 var user = window.localStorage.getItem('user');
 
 $(document).ready(function () {
-    var oTable = $('#tabel').dataTable({
+    var oTable = $('#tabel').DataTable({
         "serverSide": false,
         "ajax": {
             "url": "api/profilService/" + user,
@@ -15,6 +15,7 @@ $(document).ready(function () {
         "deferRender": true,
         "pageLength": 25,
         "searching": true,
+
         columns: [
             { data: "nr_comanda_service" },
             { data: "data_inregistrare" },

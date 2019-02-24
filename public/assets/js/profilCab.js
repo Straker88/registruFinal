@@ -2,7 +2,7 @@ var url = window.location.pathname;
 var user = url.substr(url.lastIndexOf('/') + 1);
 
 $(document).ready(function () {
-    var oTable = $('#tabel').dataTable({
+    var oTable = $('#tabel').DataTable({
         "ajax": {
             "url": "api/profilCabinet/" + user,
             "dataType": "json",
@@ -15,6 +15,13 @@ $(document).ready(function () {
         "searching": true,
         "pagination": true,
         "autoWidth": false,
+        'processing': true,
+        'language': {
+            "sSearch": "Cautare generala",
+            "sLengthMenu": "Afiseaza _MENU_ inregistrari",
+            'loadingRecords': '&nbsp;',
+            'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+        },
 
         columns: [
             { data: "data_inregistrare" },
@@ -40,10 +47,7 @@ $(document).ready(function () {
                 }
             }],
         "order": [[1, 'desc']],
-        "oLanguage": {
-            "sSearch": "Cautare generala",
-            "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-        }
+
     });
 
     var startdate;

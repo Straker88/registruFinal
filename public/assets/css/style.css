@@ -128,7 +128,7 @@ tfoot input {
   box-sizing: border-box;
 }
 .cb-dropdown-wrap {
-  max-height: 80px; /* At most, around 3/4 visible items. */
+  max-height: 80px; 
   position: relative;
   height: 59px;
 }
@@ -150,7 +150,6 @@ tfoot input {
   border: 1px solid #888;
 }
 
-/* For selected filter. */
 .active .cb-dropdown {
   background: pink;
 }
@@ -161,7 +160,6 @@ tfoot input {
   transition: 0.2s height ease-in-out;
 }
 
-/* For selected items. */
 .cb-dropdown li.active {
   background: #ff0;
 }
@@ -170,7 +168,7 @@ tfoot input {
   display: block;
   position: relative;
   cursor: pointer;
-  line-height: 19px; /* Match height of .cb-dropdown-wrap */
+  line-height: 19px;
 }
 
 .cb-dropdown li label > input {
@@ -183,7 +181,7 @@ tfoot input {
 .cb-dropdown li label > span {
   display: block;
   margin-left: 3px;
-  margin-right: 20px; /* At least, width of the checkbox. */
+  margin-right: 20px; 
   font-family: sans-serif;
   font-size: 0.8em;
   font-weight: normal;
@@ -191,7 +189,6 @@ tfoot input {
   padding: 0px 0 0 4px;
 }
 
-/* This fixes the vertical aligning of the sorting icon. */
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc,
@@ -199,20 +196,17 @@ table.dataTable thead .sorting_asc_disabled,
 table.dataTable thead .sorting_desc_disabled {
   background-position: 100% 10px;
 }
+
+table.dataTable thead th, table.dataTable tfoot th{
+  font-weight: 600 !important;
+}
+
 .detalii {
 display: none;
 }
-/* td.ng-binding {
-  text-align: center;
-} */
 th.sorting_disabled {
   padding: 0px !important;
 }
-/* @media (min-width: 1200px){
-.container {
-    width: 1350px;
-}
-} */
 table.dataTable thead th{
   text-align: center;
   font-size: 12px;
@@ -471,8 +465,6 @@ margin: 0 auto;
 }
 .FilterinputSearch input {
   min-height: 30px;
-  /* padding-left: 13px;
-  box-shadow: inset 9px 1px 1px rgba(0, 0, 0, .075); */
   transition: box-shadow ease-in-out .15s;
   border-radius: 4px;
   max-width: 120px;
@@ -739,4 +731,27 @@ ul.navbar-nav > li:hover {
 }
 .default_curs{
   cursor: default;
+}
+.btn .caret {
+  margin-left: 8px;
+}
+
+.buttons-html5{
+background-color: #5cb85c !important;
+color:#fff !important;
+font-size: 14px !important;
+background-image: none !important;
+border: none !important;
+border-radius: 5px !important;
+padding: 0.42em 1em !important;
+}
+.dt-buttons{
+  position: absolute;
+    margin-top: -49px;
+    margin-left: 300px;
+}
+.dataTables_wrapper .dataTables_processing{
+  background-color: none !important;
+  background: none !important;
+  top: -10% !important;
 }

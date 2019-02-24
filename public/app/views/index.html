@@ -20,7 +20,7 @@
   <script src="assets/js/angular-route.js"></script>
   <script src="assets/js/directive.pagination.js"></script>
   <script src="assets/js/main.js"></script>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
+
 
   <title>Registru Dep. Tehnic</title>
 
@@ -56,26 +56,50 @@
           </div>
 
           <li>
-            <a class="active" ng-show="main.service || main.authorized" href="/registruService">Registru Service</a>
+            <a class="active" ng-show="main.service" href="/registruService">Registru Service</a>
           </li>
 
           <li>
-            <a ng-show="main.plastie || main.authorized" href="/registruOlive">Registru Olive</a>
+            <a ng-show="main.plastie" href="/registruOlive">Registru Olive</a>
           </li>
 
           <li>
-            <a ng-show="main.asamblare || main.authorized" href="/registruIte">Registru ITE</a>
+            <a ng-show="main.asamblare" href="/registruIte">Registru ITE</a>
           </li>
           <li>
-            <a ng-show="main.asamblare || main.authorized" href="/registruRecarcasari">Registru Recarcasari</a>
+            <a ng-show="main.asamblare" href="/registruRecarcasari">Registru Recarcasari</a>
           </li>
-          <li>
-            <a href="/raportareCabinete">Raport Cabinete</a>
-          </li>
-          <li>
-            <a href="/raportareTehnic">Raport Tehnic</a>
-          </li>
+          <div ng-show="main.authorized" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Registre Comenzi<span
+                class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/registruService">Registru Service</a>
+              </li>
+              <li>
+                <a href="/registruOlive">Registru Olive</a>
+              </li>
+              <li>
+                <a href="/registruIte">Registru ITE</a>
+              </li>
+              <li>
+                <a href="/registruRecarcasari">Registru Recarcasari</a>
+              </li>
+            </ul>
+          </div>
 
+          <div ng-show="main.authorized" class="dropdown" style="float: left;margin: 8px 15px 0 0;">
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Raportare<span
+                class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/raportareCabinete">Raport Cabinete</a>
+              </li>
+              <li>
+                <a href="/raportareTehnic">Raport Tehnic</a>
+              </li>
+            </ul>
+          </div>
           <li>
             <a ng-show="main.service" href="/piese">Piese</a>
           </li>
@@ -152,6 +176,7 @@
   <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/daterangepicker.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/buttons.dataTables.min.css">
 
   <script src="app/app.js"></script>
   <script src="app/routes.js"></script>

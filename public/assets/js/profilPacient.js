@@ -63,10 +63,13 @@ var oTable = $('#tabel').DataTable({
             }
         }],
     "order": [[0, 'desc']],
-    "oLanguage": {
+    'processing': true,
+    'language': {
         "sSearch": "Cautare generala",
         "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-    }
+        'loadingRecords': '&nbsp;',
+        'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+    },
 
 });
 
@@ -163,10 +166,13 @@ var oTable = $('#tabel_olive').DataTable({
             }
         }],
     "order": [[0, 'desc']],
-    "oLanguage": {
+    'processing': true,
+    'language': {
         "sSearch": "Cautare generala",
         "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-    }
+        'loadingRecords': '&nbsp;',
+        'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+    },
 
 });
 
@@ -275,10 +281,13 @@ var oTable = $('#tabel_ite').DataTable({
             }
         }],
     "order": [[0, 'desc']],
-    "oLanguage": {
+    'processing': true,
+    'language': {
         "sSearch": "Cautare generala",
         "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-    }
+        'loadingRecords': '&nbsp;',
+        'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+    },
 
 });
 
@@ -380,10 +389,13 @@ var oTable = $('#tabel_recarcasari').DataTable({
             }
         }],
     "order": [[0, 'desc']],
-    "oLanguage": {
+    'processing': true,
+    'language': {
         "sSearch": "Cautare generala",
         "sLengthMenu": "Afiseaza _MENU_ inregistrari",
-    }
+        'loadingRecords': '&nbsp;',
+        'processing': '<span style="width:100%;"><img src="/assets/img/clarfon_loader.gif"></span>'
+    },
 
 });
 

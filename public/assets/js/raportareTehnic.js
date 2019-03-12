@@ -35,7 +35,7 @@ $(document).ready(function () {
             {
                 extend: 'excelHtml5',
                 text: 'Exporta in Excel',
-                title: "Raport",
+                title: "Raport Tehnic",
                 init: function (dt, node, config) {
                     $("#filtru_luna").on('change', function () {
                         config.title = "Raport Tehnic Luna:" + ' ' + this.value;
@@ -68,7 +68,7 @@ $(document).ready(function () {
     });
 
 
-    $('#refresh').on('click', function () {
+    $('#filtru_luna').on('change', function () {
         $.ajax({
 
             url: "api/raportareTehnic",

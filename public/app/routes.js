@@ -94,13 +94,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
             })
             .when('/raportareCabinete', {
                 templateUrl: 'app/views/pages/management/raportareCabinete.html',
-                authenticated: false,
-                // permission: ['admin']
+                authenticated: true,
+                permission: ['admin']
             })
             .when('/raportareTehnic', {
                 templateUrl: 'app/views/pages/management/raportareTehnic.html',
-                authenticated: false,
-                // permission: ['admin']
+                authenticated: true,
+                permission: ['admin']
             })
             .when('/registruService', {
                 templateUrl: 'app/views/pages/management/registruService.html',

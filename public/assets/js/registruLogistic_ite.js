@@ -1,7 +1,7 @@
 //--------------------- Registru Logistic
 
 $(document).ready(function () {
-    var oTable = $('#tabel').DataTable({
+    var oTable = $('#tabel').dataTable({
         "ajax": {
             "url": "api/registruLogistic_ite/",
             "dataType": "json",

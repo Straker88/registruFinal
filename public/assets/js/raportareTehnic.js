@@ -32,7 +32,16 @@ $(document).ready(function () {
         serverSide: false,
         "ordering": false,
         buttons: [
-            { extend: 'excelHtml5', text: 'Exporta in Excel' }
+            {
+                extend: 'excelHtml5',
+                text: 'Exporta in Excel',
+                title: "Raport",
+                init: function (dt, node, config) {
+                    $("#filtru_luna").on('change', function () {
+                        config.title = "Raport Tehnic Luna:" + ' ' + this.value;
+                    })
+                }
+            }
         ],
         columns: [
             {
@@ -40,7 +49,19 @@ $(document).ready(function () {
                 "defaultContent": "<i>0</i>"
             },
             {
-                data: "counter",
+                data: "counter_oliva",
+                "defaultContent": "<i>0</i>"
+            },
+            {
+                data: "counter_service",
+                "defaultContent": "<i>0</i>"
+            },
+            {
+                data: "counter_recarcasare",
+                "defaultContent": "<i>0</i>"
+            },
+            {
+                data: "counter_ite",
                 "defaultContent": "<i>0</i>"
             },
         ],

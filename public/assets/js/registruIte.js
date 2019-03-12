@@ -1,7 +1,7 @@
 
 
 $(document).ready(function () {
-    var oTable = $('#tabel').DataTable({
+    var oTable = $('#tabel').dataTable({
         "serverSide": false,
         "ajax": {
             "url": "api/registruIte/",

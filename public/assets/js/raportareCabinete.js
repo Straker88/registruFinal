@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     table = $('#tabel').DataTable({
         dom: "Bfrtip",
@@ -31,8 +32,18 @@ $(document).ready(function () {
         serverSide: false,
         "ordering": false,
         buttons: [
-            { extend: 'excelHtml5', text: 'Exporta in Excel' }
+            {
+                extend: 'excelHtml5',
+                text: 'Exporta in Excel',
+                title: "Raport",
+                init: function (dt, node, config) {
+                    $("#filtru_luna").on('change', function () {
+                        config.title = "Raport Cabinete Luna:" + ' ' + this.value;
+                    })
+                }
+            }
         ],
+
         columns: [
             {
                 data: "cabinet",
@@ -43,16 +54,31 @@ $(document).ready(function () {
                 "defaultContent": "<i>0</i>"
             },
             {
+                data: "counterServBilateral",
+                "defaultContent": "<i>0</i>"
+            },
+            {
                 data: "counterRec",
+                "defaultContent": "<i>0</i>"
+            },
+            {
+                data: "counterRecBilateral",
                 "defaultContent": "<i>0</i>"
             },
             {
                 data: "counterIte",
                 "defaultContent": "<i>0</i>"
             },
-
+            {
+                data: "counterIteBilateral",
+                "defaultContent": "<i>0</i>"
+            },
             {
                 data: "counterOliv",
+                "defaultContent": "<i>0</i>"
+            },
+            {
+                data: "counterOlivaBilateral",
                 "defaultContent": "<i>0</i>"
             },
             {
@@ -68,6 +94,7 @@ $(document).ready(function () {
 
 
     $('#refresh').on('click', function () {
+
         $.ajax({
 
             url: "api/raportareCabinete",

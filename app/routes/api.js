@@ -713,7 +713,7 @@ module.exports = function (router) {
 
     function getServices() {
         return new Promise((resolve) => {
-            Service.find({}).select('data_inregistrare cabinet finalizat_reparatie executant_reparatie').exec(function (err, service) {
+            Service.find({}).select('data_inregistrare cabinet finalizat_reparatie executant_reparatie u_stanga u_dreapta').exec(function (err, service) {
                 return resolve(service)
 
             })
@@ -721,7 +721,7 @@ module.exports = function (router) {
     }
     function getRecarcasari() {
         return new Promise((resolve) => {
-            Recarcasare.find({}).select('data_inregistrare cabinet finalizat_recarcasare executant_recarcasare').exec(function (err, recarcasare) {
+            Recarcasare.find({}).select('data_inregistrare cabinet finalizat_recarcasare executant_recarcasare u_stanga u_dreapta').exec(function (err, recarcasare) {
                 return resolve(recarcasare)
 
             })
@@ -729,7 +729,7 @@ module.exports = function (router) {
     }
     function getOlive() {
         return new Promise((resolve) => {
-            Oliva.find({}).select('data_inregistrare cabinet material_oliva finalizat_oliva executant_oliva').exec(function (err, oliva) {
+            Oliva.find({}).select('data_inregistrare cabinet material_oliva finalizat_oliva executant_oliva ureche_protezata').exec(function (err, oliva) {
                 return resolve(oliva)
 
             })
@@ -737,7 +737,7 @@ module.exports = function (router) {
     }
     function getIte() {
         return new Promise((resolve) => {
-            Ite.find({}).select('data_inregistrare cabinet finalizat_ite executant_ite').exec(function (err, ite) {
+            Ite.find({}).select('data_inregistrare cabinet finalizat_ite executant_ite ureche_protezata').exec(function (err, ite) {
                 return resolve(ite)
 
             })
@@ -772,7 +772,9 @@ module.exports = function (router) {
                                 comenzi.push({ serv, oliv, rec, it })
                             })
 
-                            let raportFinal = []
+                            let raport = []
+                            let raportRec = []
+                            let raportITE = []
 
                             comenzi.map(item => {
                                 newService = item.serv
@@ -795,12 +797,11 @@ module.exports = function (router) {
                                         }
 
                                     })
-                                    let counter = data_Comanda.length + ' ' + '(Service-uri)'
-                                    raportFinal.push({ executant, counter })
+                                    let counter_service = data_Comanda.length
+                                    raport.push({ executant, counter_service })
                                 }
                                 if (newOliva.length > 0) {
                                     const executant = newOliva[0].executant_oliva
-
                                     let data_Comanda = []
                                     newOliva.map(i => {
                                         var input = i.data_inregistrare;
@@ -813,8 +814,8 @@ module.exports = function (router) {
                                         }
 
                                     })
-                                    let counter = data_Comanda.length + ' ' + '(Olive)'
-                                    raportFinal.push({ executant, counter })
+                                    let counter_oliva = data_Comanda.length
+                                    raport.push({ executant, counter_oliva })
                                 }
                                 if (newRecarcasare.length > 0) {
                                     const executant = newRecarcasare[0].executant_recarcasare
@@ -831,8 +832,8 @@ module.exports = function (router) {
                                         }
 
                                     })
-                                    let counter = data_Comanda.length + ' ' + '(Recarcasari)'
-                                    raportFinal.push({ executant, counter })
+                                    let counter_recarcasare = data_Comanda.length
+                                    raportRec.push({ executant, counter_recarcasare })
                                 }
                                 if (newIte.length > 0) {
                                     const executant = newIte[0].executant_ite
@@ -849,11 +850,18 @@ module.exports = function (router) {
                                         }
 
                                     })
-                                    let counter = data_Comanda.length + ' ' + '(Ite)'
-                                    raportFinal.push({ executant, counter })
+                                    let counter_ite = data_Comanda.length
+                                    raportITE.push({ executant, counter_ite })
                                 }
 
                             })
+
+                            let raportAsamblare = _.map(raportITE, function (obj) {
+                                return _.assign(obj, _.find(raportRec, { executant: obj.executant }));
+                            });
+
+
+                            var raportFinal = raportAsamblare.concat(raport);
 
                             res.json(raportFinal)
                         })
@@ -909,34 +917,66 @@ module.exports = function (router) {
                                         let data_Comanda = []
                                         newService.map(i => {
                                             var input = i.data_inregistrare;
+                                            var stanga = i.u_stanga;
+                                            var dreapta = i.u_dreapta;
 
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
                                             if (luna === data_luna) {
-                                                data_Comanda.push(luna)
+                                                data_Comanda.push({ luna, stanga, dreapta })
                                             }
 
                                         })
-                                        let counterServ = data_Comanda.length
-                                        raportSer.push({ cabinet, counterServ })
+
+                                        let counterServ = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].stanga == "da" && data_Comanda[i].dreapta == "da")
+                                                counterServ += 2;
+                                            else {
+                                                counterServ++;
+                                            }
+                                        }
+
+
+                                        let counterServBilateral = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].stanga == "da" && data_Comanda[i].dreapta == "da")
+                                                counterServBilateral++
+                                        }
+
+                                        raportSer.push({ cabinet, counterServ, counterServBilateral })
                                     }
                                     if (newRecarcasare.length > 0) {
                                         const cabinet = newRecarcasare[0].cabinet
                                         let data_Comanda = []
                                         newRecarcasare.map(i => {
                                             var input = i.data_inregistrare;
+                                            var stanga = i.u_stanga;
+                                            var dreapta = i.u_dreapta;
 
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
                                             if (luna === data_luna) {
-                                                data_Comanda.push(luna)
+                                                data_Comanda.push({ luna, stanga, dreapta })
                                             }
 
                                         })
-                                        let counterRec = data_Comanda.length
-                                        raportRec.push({ cabinet, counterRec })
+                                        let counterRec = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].stanga == "da" && data_Comanda[i].dreapta == "da")
+                                                counterRec += 2;
+                                            else {
+                                                counterRec++;
+                                            }
+                                        }
+                                        let counterRecBilateral = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].stanga == "da" && data_Comanda[i].dreapta == "da")
+                                                counterRecBilateral++
+                                        }
+                                        raportRec.push({ cabinet, counterRec, counterRecBilateral })
                                     }
                                     if (newOliva.length > 0) {
                                         const cabinet = newOliva[0].cabinet
@@ -945,40 +985,77 @@ module.exports = function (router) {
                                         newOliva.map(i => {
                                             var input = i.data_inregistrare;
                                             var mat_oliva = i.material_oliva
+                                            var protezat = i.ureche_protezata
+
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
                                             if (luna === data_luna) {
-                                                data_Comanda.push({ luna, mat_oliva })
+                                                data_Comanda.push({ luna, mat_oliva, protezat })
                                             }
 
                                         })
-                                        let counterElastica = data_Comanda.filter(function (x) {
-                                            return x.mat_oliva === "Elastica";
-                                        }).length;
-                                        let counterDura = data_Comanda.filter(function (x) {
-                                            return x.mat_oliva === "Dura";
-                                        }).length;
-                                        let counterOliv = data_Comanda.length
-
-                                        raportOliv.push({ cabinet, counterOliv, counterElastica, counterDura })
+                                        let counterDura = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].mat_oliva == "Dura" && data_Comanda[i].protezat == "Bilateral")
+                                                counterDura += 2;
+                                            else if (data_Comanda[i].mat_oliva == "Dura") {
+                                                counterDura++;
+                                            }
+                                        }
+                                        let counterElastica = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].mat_oliva == "Elastica" && data_Comanda[i].protezat == "Bilateral")
+                                                counterElastica += 2;
+                                            else if (data_Comanda[i].mat_oliva == "Elastica") {
+                                                counterElastica++;
+                                            }
+                                        }
+                                        let counterOliv = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].protezat == "Bilateral")
+                                                counterOliv += 2;
+                                            else {
+                                                counterOliv++;
+                                            }
+                                        }
+                                        let counterOlivaBilateral = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].protezat == "Bilateral")
+                                                counterOlivaBilateral++;
+                                        }
+                                        raportOliv.push({ cabinet, counterOliv, counterOlivaBilateral, counterElastica, counterDura })
                                     }
                                     if (newIte.length > 0) {
                                         const cabinet = newIte[0].cabinet
                                         let data_Comanda = []
                                         newIte.map(i => {
                                             var input = i.data_inregistrare;
-
+                                            var protezat = i.ureche_protezata;
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
                                             if (luna === data_luna) {
-                                                data_Comanda.push(luna)
+                                                data_Comanda.push({ luna, protezat })
                                             }
 
                                         })
-                                        let counterIte = data_Comanda.length
-                                        raportIte.push({ cabinet, counterIte })
+                                        let counterIte = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].protezat == "Bilateral")
+                                                counterIte += 2;
+                                            else {
+                                                counterIte++;
+                                            }
+                                        }
+                                        let counterIteBilateral = 0;
+                                        for (var i = 0; i < data_Comanda.length; ++i) {
+                                            if (data_Comanda[i].protezat == "Bilateral")
+                                                counterIteBilateral++;
+                                        }
+
+
+                                        raportIte.push({ cabinet, counterIte, counterIteBilateral })
                                     }
                                 })
                                 let raport1 = _.map(raportSer, function (obj) {

@@ -2,7 +2,7 @@ var url = window.location.pathname;
 var user = url.substr(url.lastIndexOf('/') + 1);
 
 $(document).ready(function () {
-    var oTable = $('#tabel').DataTable({
+    var oTable = $('#tabel').dataTable({
         "ajax": {
             "url": "api/profilCabinet/" + user,
             "dataType": "json",

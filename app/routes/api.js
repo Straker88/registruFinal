@@ -788,16 +788,25 @@ module.exports = function (router) {
                                     let data_Comanda = []
                                     newService.map(i => {
                                         var input = i.data_inregistrare;
+                                        var stanga = i.u_stanga;
+                                        var dreapta = i.u_dreapta;
 
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
                                         if (luna === data_luna) {
-                                            data_Comanda.push(luna)
+                                            data_Comanda.push({ luna, stanga, dreapta })
                                         }
 
                                     })
-                                    let counter_service = data_Comanda.length
+                                    let counter_service = 0;
+                                    for (var i = 0; i < data_Comanda.length; ++i) {
+                                        if (data_Comanda[i].stanga == "da" && data_Comanda[i].dreapta == "da")
+                                            counter_service += 2;
+                                        else {
+                                            counter_service++;
+                                        }
+                                    }
                                     raport.push({ executant, counter_service })
                                 }
                                 if (newOliva.length > 0) {
@@ -805,17 +814,23 @@ module.exports = function (router) {
                                     let data_Comanda = []
                                     newOliva.map(i => {
                                         var input = i.data_inregistrare;
-
+                                        var protezat = i.ureche_protezata
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
                                         if (luna === data_luna) {
-                                            data_Comanda.push(luna)
+                                            data_Comanda.push({ luna, protezat })
                                         }
 
                                     })
-                                    let counter_oliva = data_Comanda.length
-                                    raport.push({ executant, counter_oliva })
+                                    let counter_oliva = 0;
+                                    for (var i = 0; i < data_Comanda.length; ++i) {
+                                        if (data_Comanda[i].protezat == "Bilateral")
+                                            counter_oliva += 2;
+                                        else {
+                                            counter_oliva++;
+                                        }
+                                    } raport.push({ executant, counter_oliva })
                                 }
                                 if (newRecarcasare.length > 0) {
                                     const executant = newRecarcasare[0].executant_recarcasare
@@ -823,16 +838,25 @@ module.exports = function (router) {
                                     let data_Comanda = []
                                     newRecarcasare.map(i => {
                                         var input = i.data_inregistrare;
+                                        var stanga = i.u_stanga;
+                                        var dreapta = i.u_dreapta;
 
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
                                         if (luna === data_luna) {
-                                            data_Comanda.push(luna)
+                                            data_Comanda.push({ luna, stanga, dreapta })
                                         }
 
                                     })
-                                    let counter_recarcasare = data_Comanda.length
+                                    let counter_recarcasare = 0;
+                                    for (var i = 0; i < data_Comanda.length; ++i) {
+                                        if (data_Comanda[i].stanga == "da" && data_Comanda[i].dreapta == "da")
+                                            counter_recarcasare += 2;
+                                        else {
+                                            counter_recarcasare++;
+                                        }
+                                    }
                                     raportRec.push({ executant, counter_recarcasare })
                                 }
                                 if (newIte.length > 0) {
@@ -841,16 +865,24 @@ module.exports = function (router) {
                                     let data_Comanda = []
                                     newIte.map(i => {
                                         var input = i.data_inregistrare;
+                                        var protezat = i.ureche_protezata
 
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
                                         if (luna === data_luna) {
-                                            data_Comanda.push(luna)
+                                            data_Comanda.push({ luna, protezat })
                                         }
 
                                     })
-                                    let counter_ite = data_Comanda.length
+                                    let counter_ite = 0;
+                                    for (var i = 0; i < data_Comanda.length; ++i) {
+                                        if (data_Comanda[i].protezat == "Bilateral")
+                                            counter_ite += 2;
+                                        else {
+                                            counter_ite++;
+                                        }
+                                    }
                                     raportITE.push({ executant, counter_ite })
                                 }
 

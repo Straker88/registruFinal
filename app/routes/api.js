@@ -76,6 +76,7 @@ module.exports = function (router) {
                     if (!userLogged) {
                         res.json({ success: false, message: 'Nu s-a putut autentifica utilizatorul' });
                     }
+                    console.log(req.body.password);
                     var validPassword = userLogged.validPassword(req.body.password);
                     if (!validPassword) {
                         res.json({ success: false, message: 'Parola introdusa nu este corecta' });
@@ -1399,13 +1400,42 @@ module.exports = function (router) {
             if (!mainUser || mainUser.permission === 'user') {
                 res.json({ success: false, message: 'Utilizator nu exista sau nu are permisiunile necesare' });
             } else {
-
                 Service.find({}).select('nr_comanda_service cabinet data_inregistrare service_inregistrat_pacient denumire_aparat defectiune_reclamata serv_sosit finalizat_reparatie serv_plecat garantie_serv').exec(function (err, service) {
                     if (err) throw err;
                     if (!service) {
                         res.json({ success: false, message: 'Nu s-au gasit service-uri' });
                     } else {
-                        res.json({ success: true, service: service });
+
+                        let params = getAllUrlParams(req.url);
+                        let startdate;
+                        let enddate;
+                        let formattedDate;
+                        let totalService = service;
+
+                        if (params.startdate && params.enddate) {
+                            totalService = [];
+                            startdate = moment(params.startdate, "YYYY/MM/DD").format("DD/MM/YYYY");
+                            enddate = moment(params.enddate, "YYYY/MM/DD").format("DD/MM/YYYY");
+                            console.log(startdate);
+                            console.log(enddate);
+
+                            service.forEach(function (service) {
+                                formattedDate = moment(service.data_inregistrare, "DD/MM/YYYY").format("DD/MM/YYYY");
+                                console.log(formattedDate);
+
+                                // if (startdate <= formattedDate && formattedDate <= enddate) {
+                                if (moment(formattedDate).isBetween(startdate, enddate), null, '[]') {
+
+                                    totalService.push(service);
+                                    console.log("true");
+                                }
+                            })
+                        }
+                        if (params.search) {
+                            console.log(search);
+                        }
+
+                        res.json({ success: true, service: service, recordsTotal: service.length, recordsFiltered: totalService.length });
                     }
                 });
             }
@@ -1413,6 +1443,50 @@ module.exports = function (router) {
     });
 
 
+
+    function getAllUrlParams(url) {
+
+        var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+        var obj = {};
+        if (queryString) {
+            queryString = queryString.split('#')[0];
+            var arr = queryString.split('&');
+
+            for (var i = 0; i < arr.length; i++) {
+                var a = arr[i].split('=');
+
+                var paramName = a[0];
+                var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
+
+                paramName = paramName.toLowerCase();
+                if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+
+                if (paramName.match(/\[(\d+)?\]$/)) {
+
+                    var key = paramName.replace(/\[(\d+)?\]/, '');
+                    if (!obj[key]) obj[key] = [];
+
+                    if (paramName.match(/\[\d+\]$/)) {
+                        var index = /\[(\d+)\]/.exec(paramName)[1];
+                        obj[key][index] = paramValue;
+                    } else {
+                        obj[key].push(paramValue);
+                    }
+                } else {
+                    if (!obj[paramName]) {
+                        obj[paramName] = paramValue;
+                    } else if (obj[paramName] && typeof obj[paramName] === 'string') {
+                        obj[paramName] = [obj[paramName]];
+                        obj[paramName].push(paramValue);
+                    } else {
+                        obj[paramName].push(paramValue);
+                    }
+                }
+            }
+        }
+
+        return obj;
+    }
 
     router.get('/registruRecarcasari', function (req, res) {
         User.findOne({ username: req.user.username }, function (err, mainUser) {
@@ -3501,6 +3575,8 @@ module.exports = function (router) {
         var editUser = req.body._id;
         if (req.body.name) var newName = req.body.name;
         if (req.body.username) var newUsername = req.body.username;
+        if (req.body.password) var newPassword = req.body.password;
+
         if (req.body.permission) var newPermission = req.body.permission;
 
         User.findOne({ username: req.user.username }, function (err, mainUser) {
@@ -3543,6 +3619,29 @@ module.exports = function (router) {
                                         res.json({ success: false, message: 'Nu s-a putut salva' });
                                     } else {
                                         res.json({ success: true, message: 'Username a most modificat cu succes!' });
+                                    }
+                                });
+                            }
+                        });
+
+                    } else {
+                        res.json({ success: false, message: 'Permisiuni Insuficiente' });
+                    }
+                }
+
+                if (newPassword) {
+                    if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                        User.findOne({ _id: editUser }, function (err, user) {
+                            if (err) throw err;
+                            if (!user) {
+                                res.json({ success: false, message: 'Nu s-a gasit Utilizator' });
+                            } else {
+                                user.password = newPassword;
+                                user.save(function (err) {
+                                    if (err) {
+                                        res.json({ success: false, message: 'Nu s-a putut salva' });
+                                    } else {
+                                        res.json({ success: true, message: 'Parola a most modificata cu succes!' });
                                     }
                                 });
                             }

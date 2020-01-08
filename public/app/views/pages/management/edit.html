@@ -11,6 +11,9 @@
     <li role="presentation" ng-click="edit.usernamePhase();" ng-class="usernameTab">
         <a href="#">Username</a>
     </li>
+    <li role="presentation" ng-click="edit.passwordPhase();" ng-class="passwordTab">
+        <a href="#">Parola</a>
+    </li>
     <li role="presentation" ng-click="edit.permissionsPhase();" ng-class="permissionsTab">
         <a href="#">Permisiuni</a>
     </li>
@@ -21,12 +24,15 @@
 
 <form name="edit.nameForm" ng-show="edit.phase1" ng-submit="edit.updateName(newName, edit.nameForm.name.$valid)"
     novalidate>
-    <div ng-class="{ 'has-success':(edit.nameForm.name.$valid && !edit.nameForm.name.$pristine), 'has-error':(!edit.nameForm.name.$valid && !edit.nameForm.name.$pristine) || (!nameForm.name.$valid && nameForm.$submitted) }">
+    <div
+        ng-class="{ 'has-success':(edit.nameForm.name.$valid && !edit.nameForm.name.$pristine), 'has-error':(!edit.nameForm.name.$valid && !edit.nameForm.name.$pristine) || (!nameForm.name.$valid && nameForm.$submitted) }">
         <label>Nume / Prenume:</label>
-        <input ng-disabled="edit.disabled" class="form-control" type="text" name="name" placeholder="please enter name"
-            ng-model="newName" ng-pattern="/^(([a-zA-Z]{3,20})+[ ]+([a-zA-z]{3,20})+)+$/" ng-minlength="3" ng-maxlength="20"
-            required>
-        <p class="help-block" ng-show="(!edit.nameForm.name.$pristine && nameForm.name.$error.required) || (edit.nameForm.$submitted && edit.nameForm.name.$error.required)">This
+        <input ng-disabled="edit.disabled" class="form-control" type="text" name="name" placeholder="nume nou"
+            ng-model="newName" ng-pattern="/^(([a-zA-Z]{3,20})+[ ]+([a-zA-z]{3,20})+)+$/" ng-minlength="3"
+            ng-maxlength="20" required>
+        <p class="help-block"
+            ng-show="(!edit.nameForm.name.$pristine && nameForm.name.$error.required) || (edit.nameForm.$submitted && edit.nameForm.name.$error.required)">
+            This
             field is required</p>
         <ul ng-show="(!edit.nameForm.name.$pristine && edit.nameForm.name.$error.pattern) || (!edit.nameForm.name.$pristine && edit.nameForm.name.$error.minlength) || (!edit.nameForm.name.$pristine && edit.nameForm.name.$error.maxlength)"
             class="help-block">
@@ -42,15 +48,18 @@
     <button ng-disabled="edit.disabled" class="btn btn-primary" type="submit">Salveaza</button>
 </form>
 
-<form name="edit.usernameForm" ng-show="edit.phase2" ng-submit="edit.updateUsername(newUsername, edit.usernameForm.username.$valid)"
-    novalidate>
+<form name="edit.usernameForm" ng-show="edit.phase2"
+    ng-submit="edit.updateUsername(newUsername, edit.usernameForm.username.$valid)" novalidate>
 
-    <div ng-class="{ 'has-success': (edit.usernameForm.username.$valid && !edit.usernameForm.username.$pristine), 'has-error': (!edit.usernameForm.username.$valid && !edit.usernameForm.username.$pristine) || (!edit.usernameForm.username.$valid && edit.usernameForm.$submitted) }">
+    <div
+        ng-class="{ 'has-success': (edit.usernameForm.username.$valid && !edit.usernameForm.username.$pristine), 'has-error': (!edit.usernameForm.username.$valid && !edit.usernameForm.username.$pristine) || (!edit.usernameForm.username.$valid && edit.usernameForm.$submitted) }">
 
         <label>Username:</label>
-        <input disabled class="form-control" type="text" name="username" placeholder="please enter username" ng-model="newUsername"
-            ng-minlength="3" ng-maxlength="25" ng-pattern="/^(\w+\s?)*\s*$/" required>
-        <p class="help-block" ng-show="(!edit.usernameForm.username.$pristine && edit.usernameForm.username.$error.required) || (edit.usernameForm.$submitted && edit.usernameForm.username.$error.required)">This
+        <input disabled class="form-control" type="text" name="username" placeholder="username nou"
+            ng-model="newUsername" ng-minlength="3" ng-maxlength="25" ng-pattern="/^(\w+\s?)*\s*$/" required>
+        <p class="help-block"
+            ng-show="(!edit.usernameForm.username.$pristine && edit.usernameForm.username.$error.required) || (edit.usernameForm.$submitted && edit.usernameForm.username.$error.required)">
+            This
             field is required</p>
         <ul ng-show="(!edit.usernameForm.username.$pristine && edit.usernameForm.username.$error.pattern) || (!edit.usernameForm.username.$pristine && edit.usernameForm.username.$error.minlength) || (!edit.usernameForm.username.$pristine && regForm.username.$error.maxlength) "
             class="help-block">
@@ -62,23 +71,51 @@
     <!-- <button ng-disabled="edit.disabled" class="btn btn-primary" type="submit">Salveaza</button> -->
 </form>
 
+<form name="edit.passwordForm" ng-show="edit.phase3"
+    ng-submit="edit.updatePassword(newPassword, edit.passwordForm.password.$valid)" novalidate>
+
+    <div
+        ng-class="{ 'has-success': (edit.passwordForm.password.$valid && !edit.passwordForm.password.$pristine), 'has-error': (!edit.passwordForm.password.$valid && !edit.passwordForm.password.$pristine) || (!edit.passwordForm.password.$valid && edit.passwordForm.$submitted) }">
+
+        <label>Parola:</label>
+        <input autocomplete="new-password" class="form-control" type="text" name="password" placeholder="parola noua"
+            ng-model="newPassword" ng-minlength="8" ng-maxlength="35"
+            ng-pattern="/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/" required>
+        <p class="help-block"
+            ng-show="(!edit.passwordForm.password.$pristine && edit.passwordForm.password.$error.required) || (edit.passwordForm.$submitted && edit.passwordForm.password.$error.required)">
+            Camp
+            obligatoriu</p>
+        <ul ng-show="(!edit.passwordForm.$pristine && edit.passwordForm.$error.pattern) || (!edit.passwordForm.$pristine && edit.passwordForm.$error.minlength) || (!edit.passwordForm.$pristine && edit.passwordForm.$error.maxlength) "
+            class="help-block">
+            <li>Cel putin o litera mare</li>
+            <li>Cel putin o litera mica</li>
+            <li>Cel putin un numar</li>
+            <li>Cel putin un caracter special</li>
+            <li>Marime cel putin 8 caractere dar nu mai mult de 35</li>
+        </ul>
+    </div>
+    <br>
+
+    <button ng-disabled="edit.disabled" class="btn btn-primary" type="submit">Salveaza</button>
+</form>
+
 
 <div ng-show="edit.phase4">
     <label>Permisiuni Curente: &nbsp&nbsp</label>{{ newPermission }}
     <br>
     <br>
-    <button ng-show="main.authorized" ng-disabled="edit.disableUser" ng-click="edit.updatePermissions('user');" type="button"
-        class="btn btn-success">User</button>&nbsp
+    <button ng-show="main.authorized" ng-disabled="edit.disableUser" ng-click="edit.updatePermissions('user');"
+        type="button" class="btn btn-success">User</button>&nbsp
     <button ng-show="main.authorized" ng-disabled="edit.disableService" ng-click="edit.updatePermissions('service');"
         type="button" class="btn btn-info">Service</button>&nbsp
-    <button ng-show="main.authorized" ng-disabled="edit.disableAsamblare" ng-click="edit.updatePermissions('asamblare');"
-        type="button" class="btn btn-info">Asamblare</button>&nbsp
+    <button ng-show="main.authorized" ng-disabled="edit.disableAsamblare"
+        ng-click="edit.updatePermissions('asamblare');" type="button" class="btn btn-info">Asamblare</button>&nbsp
     <button ng-show="main.authorized" ng-disabled="edit.disablePlastie" ng-click="edit.updatePermissions('plastie');"
         type="button" class="btn btn-info">Plastie</button>&nbsp
     <button ng-show="main.authorized" ng-disabled="edit.disableColete" ng-click="edit.updatePermissions('colete');"
         type="button" class="btn btn-info">Logistic</button>&nbsp
-    <button ng-show="main.authorized" ng-disabled="edit.disableAdmin" ng-click="edit.updatePermissions('admin');" type="button"
-        class="btn btn-warning">Admin</button>&nbsp
+    <button ng-show="main.authorized" ng-disabled="edit.disableAdmin" ng-click="edit.updatePermissions('admin');"
+        type="button" class="btn btn-warning">Admin</button>&nbsp
 
 </div>
 

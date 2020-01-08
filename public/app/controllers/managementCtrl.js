@@ -72,9 +72,10 @@ angular.module('managementController', [])
 
         User.getUser($routeParams.id).then(function (data) {
             if (data.data.success) {
-
+                console.log(data.data);
                 $scope.newName = data.data.user.name;
                 $scope.newUsername = data.data.user.username;
+                $scope.newPassword = '';
                 $scope.newPermission = data.data.user.permission;
                 app.currentUser = data.data.user._id;
             } else {
@@ -85,23 +86,39 @@ angular.module('managementController', [])
         app.namePhase = function () {
             $scope.nameTab = 'active';
             $scope.usernameTab = 'default';
+            $scope.passwordTab = 'default';
             $scope.permissionsTab = 'default';
             app.phase1 = true;
             app.phase2 = false;
+            app.phase3 = false;
             app.phase4 = false;
             app.errorMsg = false;
 
 
         };
 
-
         app.usernamePhase = function () {
 
             $scope.nameTab = 'default';
             $scope.usernameTab = 'active';
+            $scope.passwordTab = 'default';
             $scope.permissionsTab = 'default';
             app.phase1 = false;
             app.phase2 = true;
+            app.phase3 = false;
+            app.phase4 = false;
+            app.errorMsg = false;
+        };
+
+        app.passwordPhase = function () {
+
+            $scope.nameTab = 'default';
+            $scope.usernameTab = 'default';
+            $scope.passwordTab = 'active';
+            $scope.permissionsTab = 'default';
+            app.phase1 = false;
+            app.phase2 = false;
+            app.phase3 = true;
             app.phase4 = false;
             app.errorMsg = false;
         };
@@ -111,9 +128,11 @@ angular.module('managementController', [])
 
             $scope.nameTab = 'default';
             $scope.usernameTab = 'default';
+            $scope.passwordTab = 'default';
             $scope.permissionsTab = 'active';
             app.phase1 = false;
             app.phase2 = false;
+            app.phase3 = false;
             app.phase4 = true;
             app.disableUser = false;
             app.disableModerator = false;
@@ -186,6 +205,35 @@ angular.module('managementController', [])
                 app.disabled = false;
             }
         };
+
+        app.updatePassword = function (newPassword, valid) {
+            app.errorMsg = false;
+            app.disabled = true;
+
+            if (valid) {
+                var userObject = {};
+                userObject._id = app.currentUser;
+                userObject.password = $scope.newPassword;
+                User.editUser(userObject).then(function (data) {
+                    if (data.data.success) {
+                        app.successMsg = data.data.message;
+                        $timeout(function () {
+                            app.passwordForm.password.$setPristine();
+                            app.passwordForm.password.$setUntouched();
+                            app.successMsg = false;
+                            app.disabled = false;
+                        }, 2000);
+                    } else {
+                        app.errorMsg = data.data.message;
+                        app.disabled = false;
+                    }
+                });
+            } else {
+                app.errorMsg = 'Formularul nu a fost completat corect';
+                app.disabled = false;
+            }
+        };
+
 
         app.updatePermissions = function (newPermission) {
             app.errorMsg = false;

@@ -72,7 +72,6 @@ angular.module('managementController', [])
 
         User.getUser($routeParams.id).then(function (data) {
             if (data.data.success) {
-                console.log(data.data);
                 $scope.newName = data.data.user.name;
                 $scope.newUsername = data.data.user.username;
                 $scope.newPassword = '';

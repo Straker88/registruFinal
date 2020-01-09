@@ -12,6 +12,7 @@ $(document).ready(function () {
                 contentType: 'application/x-www-form-urlencoded',
                 data: {
                     dataFiltru: $("#filtru_luna").val(),
+                    dataAn: $("#filtru_an").val()
                 },
                 success: function (data, textStatus, jQxhr) {
                     callback({
@@ -100,6 +101,21 @@ $(document).ready(function () {
             url: "api/raportareCabinete",
             data: {
                 dataFiltru: $("#filtru_luna").val(),
+            },
+            success: function () {
+                table.ajax.reload();
+            },
+        });
+
+    });
+
+    $('#filtru_an').on('change', function () {
+
+        $.ajax({
+
+            url: "api/raportareCabinete",
+            data: {
+                dataAn: $("#filtru_an").val(),
             },
             success: function () {
                 table.ajax.reload();

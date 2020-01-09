@@ -747,7 +747,7 @@ module.exports = function (router) {
 
     router.get('/raportareTehnic', function (req, res) {
         const data_luna = req.query.dataFiltru;
-
+        const data_an = req.query.dataAn;
         getTehnicUsers().then(users => {
             getIte().then(ite => {
                 getRecarcasari().then(recarcasari => {
@@ -795,8 +795,9 @@ module.exports = function (router) {
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
-                                        if (luna === data_luna) {
-                                            data_Comanda.push({ luna, stanga, dreapta })
+                                        var an = fields[2];
+                                        if (luna === data_luna && an === data_an) {
+                                            data_Comanda.push({ an, luna, stanga, dreapta })
                                         }
 
                                     })
@@ -819,8 +820,9 @@ module.exports = function (router) {
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
-                                        if (luna === data_luna) {
-                                            data_Comanda.push({ luna, protezat })
+                                        var an = fields[2];
+                                        if (luna === data_luna && an === data_an) {
+                                            data_Comanda.push({ an, luna, protezat })
                                         }
 
                                     })
@@ -845,8 +847,9 @@ module.exports = function (router) {
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
-                                        if (luna === data_luna) {
-                                            data_Comanda.push({ luna, stanga, dreapta })
+                                        var an = fields[2];
+                                        if (luna === data_luna && an === data_an) {
+                                            data_Comanda.push({ an, luna, stanga, dreapta })
                                         }
 
                                     })
@@ -871,8 +874,9 @@ module.exports = function (router) {
                                         var fields = input.split('/');
 
                                         var luna = fields[1];
-                                        if (luna === data_luna) {
-                                            data_Comanda.push({ luna, protezat })
+                                        var an = fields[2];
+                                        if (luna === data_luna && an === data_an) {
+                                            data_Comanda.push({ an, luna, protezat })
                                         }
 
                                     })
@@ -906,7 +910,7 @@ module.exports = function (router) {
 
     router.get('/raportareCabinete', function (req, res) {
         const data_luna = req.query.dataFiltru;
-
+        const data_an = req.query.dataAn;
         getOlive().then(olive => {
             getIte().then(ite => {
                 getRecarcasari().then(recarcasari => {
@@ -956,9 +960,12 @@ module.exports = function (router) {
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
-                                            if (luna === data_luna) {
-                                                data_Comanda.push({ luna, stanga, dreapta })
+                                            var an = fields[2];
+                                            if (luna === data_luna && an === data_an) {
+                                                data_Comanda.push({ an, luna, stanga, dreapta })
                                             }
+
+
 
                                         })
 
@@ -991,8 +998,9 @@ module.exports = function (router) {
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
-                                            if (luna === data_luna) {
-                                                data_Comanda.push({ luna, stanga, dreapta })
+                                            var an = fields[2];
+                                            if (luna === data_luna && an === data_an) {
+                                                data_Comanda.push({ an, luna, stanga, dreapta })
                                             }
 
                                         })
@@ -1023,8 +1031,9 @@ module.exports = function (router) {
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
-                                            if (luna === data_luna) {
-                                                data_Comanda.push({ luna, mat_oliva, protezat })
+                                            var an = fields[2];
+                                            if (luna === data_luna && an === data_an) {
+                                                data_Comanda.push({ an, luna, mat_oliva, protezat })
                                             }
 
                                         })
@@ -1068,8 +1077,9 @@ module.exports = function (router) {
                                             var fields = input.split('/');
 
                                             var luna = fields[1];
-                                            if (luna === data_luna) {
-                                                data_Comanda.push({ luna, protezat })
+                                            var an = fields[2];
+                                            if (luna === data_luna && an === data_an) {
+                                                data_Comanda.push({ an, luna, protezat })
                                             }
 
                                         })

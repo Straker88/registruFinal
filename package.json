@@ -28,7 +28,7 @@
     "jquery.auto-save-form": "^1.0.0",
     "json": "^9.0.6",
     "jsonwebtoken": "^8.4.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "log-timestamp": "^0.2.1",
     "moment": "^2.23.0",
     "moment-business-days": "^1.1.3",

@@ -48,7 +48,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "qckwinsvc": "^1.0.0",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "underscore-query": "^3.3.2",
     "uuid": "^3.3.2"
   }

@@ -26,7 +26,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "jquery.auto-save-form": "^1.0.0",
-    "json": "^9.0.6",
+    "json": "^10.0.0",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "log-timestamp": "^0.2.1",
